@@ -12,6 +12,8 @@ RUN yum -y update
 RUN yum -y groupinstall "X Window System" 
 RUN yum -y groupinstall "Desktop" 
 RUN yum -y groupinstall "General Purpose Desktop"
+# vnc server
+RUN yum -y install tigervnc-server
 
 # no Upstart or DBus
 # https://github.com/dotcloud/docker/issues/1724#issuecomment-26294856
