@@ -12,6 +12,8 @@ RUN yum -y update
 RUN yum -y groupinstall "X Window System" 
 RUN yum -y groupinstall "Desktop" 
 RUN yum -y groupinstall "General Purpose Desktop"
+# Browser
+RUN yum -y install firefox
 # vnc server
 RUN yum -y install tigervnc-server
 
