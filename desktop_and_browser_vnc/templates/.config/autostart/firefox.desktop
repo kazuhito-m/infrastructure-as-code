@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=firefox
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=firefox
+Name=firefox
+Comment[en_US]=firefox
+Comment=firefox
+
