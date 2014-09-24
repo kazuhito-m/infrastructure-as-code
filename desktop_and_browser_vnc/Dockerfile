@@ -17,6 +17,18 @@ RUN yum -y install firefox
 # vnc server
 RUN yum -y install tigervnc-server
 
+
+# TODO
+# 日本語化
+# ユーザ追加
+# ユーザの独自設定としてStartUpを追加。
+# FirefoxにSeleniumDPluginを入れてみる実験
+# JenkinsでSelenium操ってみる実験。
+# ancy-vncをUbuntu側に入れてみる
+# VNCで入ってみる
+# GuestOS側にansy-vncをいれてみて動かしてみる
+# Jenkinsに「テスト実行を指示する」技を書いてみる
+
 # no Upstart or DBus
 # https://github.com/dotcloud/docker/issues/1724#issuecomment-26294856
 
