@@ -4,6 +4,8 @@ MAINTAINER kazuhito miura <@kazuhito_m>
 
 # ENV DEBIAN_FRONTEND noninteractive
 # ENV HOME /root
+ENV DESKTOP_USER desktopvnc
+
 
 # パッケージ最新アップデー卜
 RUN yum -y update
@@ -17,42 +19,38 @@ RUN yum -y install firefox
 # vnc server
 RUN yum -y install tigervnc-server
 
-
 # TODO
 # 日本語化
+RUN yum -y groupinstall "Japanese Support"
+RUN echo 'LANG="ja_JP.UTF-8"' > /etc/sysconfig/i18n
+
 # ユーザ追加
-# ユーザの独自設定としてStartUpを追加。
-# FirefoxにSeleniumDPluginを入れてみる実験
+RUN useradd -m ${DESKTOP_USER}
+# ユーザの独自設定として.bashrcを追加。
+ADD ./templates/.bashrc /home/${DESKTOP_USER}/.bashrc
+# javaのインストールと、selenium-server-standalone をダウンロード。
+RUN yum -y install java-1.7.0-openjdk wget
+RUN wget http://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar
+RUN mkdir -p /usr/local/bin/selenium/
+RUN mv *.jar /usr/local/bin/selenium/
+RUN chmod 755 /usr/local/bin/selenium/*.jar
+
+# 予め、VNCのパスワード等「vncの静的な情報」を設定しておく。
+RUN rm -rf /home/${DESKTOP_USER}/.vnc/
+ADD ./templates/.vnc/ /home/${DESKTOP_USER}/.vnc/
+RUN chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.vnc/
+
+
 # JenkinsでSelenium操ってみる実験。
 # ancy-vncをUbuntu側に入れてみる
 # VNCで入ってみる
 # GuestOS側にansy-vncをいれてみて動かしてみる
 # Jenkinsに「テスト実行を指示する」技を書いてみる
 
-# no Upstart or DBus
-# https://github.com/dotcloud/docker/issues/1724#issuecomment-26294856
 
-# RUN apt-mark hold initscripts udev plymouth mountall
-# RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
-# 
-# RUN apt-get update \
-#     && apt-get install -y --force-yes --no-install-recommends supervisor \
-#         openssh-server pwgen sudo vim-tiny \
-#         net-tools \
-#         lxde x11vnc xvfb \
-#         gtk2-engines-murrine ttf-ubuntu-font-family \
-#         nodejs \
-#         libreoffice firefox \
-#     && apt-get autoclean \
-#     && apt-get autoremove \
-#     && rm -rf /var/lib/apt/lists/*
-# 
-# ADD noVNC /noVNC/
-# 
-# ADD startup.sh /
-# ADD supervisord.conf /
-# EXPOSE 6080
-# EXPOSE 5900
-# EXPOSE 22
-# WORKDIR /
 # ENTRYPOINT ["/startup.sh"]
+# 開始時に実行するスクリプトを登録
+ADD ./scripts/startup.sh /usr/local/bin/startup.sh
+RUN chmod 755 /usr/local/bin/startup.sh
+CMD ["/usr/local/bin/startup.sh"]
+
