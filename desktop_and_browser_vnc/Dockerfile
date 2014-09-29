@@ -38,8 +38,6 @@ RUN echo 'root:root' | chpasswd
 RUN useradd -m ${DESKTOP_USER}
 RUN echo "${DESKTOP_USER}:${DESKTOP_USER}" | chpasswd
 # ユーザの独自設定として.bashrcを追加。
-ADD ./templates/.bashrc /home/${DESKTOP_USER}/.bashrc
-CMD chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.bashrc
 ADD ./templates/.config /home/${DESKTOP_USER}/.config/
 CMD chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.config/
 
