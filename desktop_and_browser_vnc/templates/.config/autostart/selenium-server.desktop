@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/java -jar /usr/local/bin/selenium/selenium-server-standalone-2.43.1.jar
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=selenium-server
+Name=selenium-server
+Comment[en_US]=selenium-server
+Comment=selenium-server
+
