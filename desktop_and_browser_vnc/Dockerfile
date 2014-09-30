@@ -49,16 +49,6 @@ RUN chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.vnc/
 # vncで大量エラーを吐くので、おまじない。
 RUN dbus-uuidgen > /var/lib/dbus/machine-id
 
-
-# JenkinsでSelenium操ってみる実験。
-# ancy-vncをUbuntu側に入れてみる
-# VNCで入ってみる
-# GuestOS側にansy-vncをいれてみて動かしてみる
-# Jenkinsに「テスト実行を指示する」技を書いてみる
-
-# TODO あとで上に持っていく。
-
-
 # 開始時に実行するスクリプトを登録
 ADD ./scripts/startup.sh /usr/local/bin/startup.sh
 RUN chmod 755 /usr/local/bin/startup.sh
