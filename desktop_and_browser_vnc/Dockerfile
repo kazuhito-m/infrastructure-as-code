@@ -42,7 +42,7 @@ ADD ./templates/.config /home/${DESKTOP_USER}/.config/
 CMD chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.config/
 
 # 予め、VNCのパスワード等「vncの静的な情報」を設定しておく。
-RUN rm -rf /home/${DESKTOP_USER}/.vnc/
+RUN rm -rf /
 ADD ./templates/.vnc/ /home/${DESKTOP_USER}/.vnc/
 RUN chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.vnc/
 
