@@ -2,10 +2,7 @@
 FROM centos:centos6
 MAINTAINER kazuhito miura <@kazuhito_m>
 
-# ENV DEBIAN_FRONTEND noninteractive
-# ENV HOME /root
 ENV DESKTOP_USER desktopvnc
-
 
 # パッケージ最新アップデー卜
 RUN yum -y update
@@ -27,7 +24,6 @@ RUN mkdir -p /usr/local/bin/selenium/
 RUN mv *.jar /usr/local/bin/selenium/
 RUN chmod -R 777 /usr/local/bin/selenium
 
-# TODO
 # 日本語化
 RUN yum -y groupinstall "Japanese Support"
 RUN echo 'LANG="ja_JP.UTF-8"' > /etc/sysconfig/i18n
