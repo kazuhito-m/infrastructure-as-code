@@ -6,12 +6,12 @@ MAINTAINER kazuhito_m
 RUN apt-get update
 RUN apt-get upgrade -y
 # 基本的なソフトは予め入れる
-RUN apt-get install language-pack-ja openssh-server git
+RUN apt-get install -y language-pack-ja openssh-server git
 
 # Timezone/locale 設定
 RUN update-locale LANG=ja_JP.UTF-8
 RUN echo "LC_ALL=ja_JP.UTF-8" >> /etc/default/locale
-RUN mv /etc/localtime{,.org}
+RUN mv /etc/localtime /etc/localtime.org
 RUN ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 # ssh サーバ 設定
