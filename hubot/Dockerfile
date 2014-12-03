@@ -6,7 +6,7 @@ MAINTAINER kazuhito_m
 RUN apt-get update
 RUN apt-get upgrade -y
 # 基本的なソフトは予め入れる
-RUN apt-get install -y language-pack-ja openssh-server git curl
+RUN apt-get install -y language-pack-ja openssh-server git curl openjdk-8-jre
 
 # Timezone/locale 設定
 RUN update-locale LANG=ja_JP.UTF-8
