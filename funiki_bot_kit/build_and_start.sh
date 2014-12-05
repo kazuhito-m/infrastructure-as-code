@@ -4,7 +4,7 @@ BASE_NAME='funiki_bot_kit'
 
 IMAGE_NAME="ubuntu:${BASE_NAME}"
 
-CONTAINER_NO='3'
+CONTAINER_NO='1'
 CONTAINER_NAME="${BASE_NAME}_${CONTAINER_NO}"
 
 # image build

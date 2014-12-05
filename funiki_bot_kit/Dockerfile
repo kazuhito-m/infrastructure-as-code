@@ -33,6 +33,10 @@ RUN apt-get install -y nodejs redis-server
 # hubot インストール
 RUN npm install -g coffee-script hubot yo generator-hubot
 
+# git clone だけして、funiki-hubot の下地までを作っておく。
+RUN cd /home/hubot ; git clone https://github.com/kazuhito-m/funiki-hubot.git
+RUN chown hubot:hubot /home/hubot/funiki-hubot
+
 # デタッチ毎に実行するスクリプトを登録
 ADD ./scripts/startup.sh /usr/local/bin/startup.sh
 RUN chmod 755 /usr/local/bin/startup.sh
