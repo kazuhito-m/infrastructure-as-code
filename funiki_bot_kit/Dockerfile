@@ -35,7 +35,7 @@ RUN npm install -g coffee-script hubot yo generator-hubot
 
 # git clone だけして、funiki-hubot の下地までを作っておく。
 RUN cd /home/hubot ; git clone https://github.com/kazuhito-m/funiki-hubot.git
-RUN chown hubot:hubot /home/hubot/funiki-hubot
+RUN chown -R hubot:hubot /home/hubot/funiki-hubot
 
 # デタッチ毎に実行するスクリプトを登録
 ADD ./scripts/startup.sh /usr/local/bin/startup.sh
