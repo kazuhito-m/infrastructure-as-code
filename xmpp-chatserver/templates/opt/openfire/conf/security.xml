@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security>
+  <encrypt>
+    <algorithm>Blowfish</algorithm>
+    <key>
+      <current></current>
+    </key>
+    <property>
+      <name>database.defaultProvider.username</name>
+      <name>database.defaultProvider.password</name>
+    </property>
+  </encrypt>
+  <foo><bar>Secr3t$tr1ng!</bar></foo>
+</security>

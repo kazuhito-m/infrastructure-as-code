@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jive>
+  <adminConsole>
+    <!-- Disable either port by setting the value to -1 -->
+    <port>9090</port>
+    <securePort>9091</securePort>
+  </adminConsole>
+  <locale>en</locale>
+  <connectionProvider>
+    <className>org.jivesoftware.database.DefaultConnectionProvider</className>
+  </connectionProvider>
+  <database>
+    <defaultProvider>
+      <driver>com.mysql.jdbc.Driver</driver>
+      <serverURL>jdbc:mysql://localhost:3306/openfire?useUnicode=true&amp;amp;characterEncoding=UTF-8&amp;amp;characterSetResults=UTF-8</serverURL>
+      <username encrypted="true">c09997cae486670ae0ff0597c966b187c8dab671774947e8</username>
+      <password encrypted="true">68ee12b81674218fab1312b915bcd4f209c4b4a53a96e59a9ecdba0d17d12c25</password>
+      <testSQL>select 1</testSQL>
+      <testBeforeUse>false</testBeforeUse>
+      <testAfterUse>false</testAfterUse>
+      <minConnections>5</minConnections>
+      <maxConnections>25</maxConnections>
+      <connectionTimeout>1.0</connectionTimeout>
+    </defaultProvider>
+  </database>
+  <setup>true</setup>
+</jive>
+
