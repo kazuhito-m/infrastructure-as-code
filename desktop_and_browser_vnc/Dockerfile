@@ -36,11 +36,14 @@ RUN echo "${DESKTOP_USER}:${DESKTOP_USER}" | chpasswd
 # ユーザの独自設定として.bashrcを追加。
 ADD ./templates/.config /home/${DESKTOP_USER}/.config/
 CMD chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.config/
+RUN chmod -R 755 /home/${DESKTOP_USER}/.config/
 
 # 予め、VNCのパスワード等「vncの静的な情報」を設定しておく。
 RUN rm -rf /home/${DESKTOP_USER}/.vnc/
 ADD ./templates/.vnc/ /home/${DESKTOP_USER}/.vnc/
 RUN chown -R ${DESKTOP_USER}:${DESKTOP_USER} /home/${DESKTOP_USER}/.vnc/
+RUN chmod 600 /home/${DESKTOP_USER}/.vnc/passwd
+RUN chmod 755 /home/${DESKTOP_USER}/.vnc/xstartup
 
 # vncで大量エラーを吐くので、おまじない。
 RUN dbus-uuidgen > /var/lib/dbus/machine-id
