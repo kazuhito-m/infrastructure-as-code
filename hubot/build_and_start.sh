@@ -11,4 +11,4 @@ CONTAINER_NAME="${BASE_NAME}_${CONTAINER_NO}"
 docker build -t ${IMAGE_NAME} .
 
 # container run
-docker run -d --name ${CONTAINER_NAME} -i -p ${CONTAINER_NO}0022:22 ${CONTAINER_NO}6379:6379 -t ${IMAGE_NAME}
+docker run -d --name ${CONTAINER_NAME} -i -p ${CONTAINER_NO}0022:22 -p ${CONTAINER_NO}6379:6379 -t ${IMAGE_NAME}
