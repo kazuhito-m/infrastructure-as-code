@@ -3,8 +3,7 @@ FROM ubuntu:14.10
 MAINTAINER kazuhito_m
 
 # インストール
-RUN apt-get update
-RUN apt-get upgrade -y
+RUN apt-get update ; apt-get upgrade -y
 # 基本的なソフトは予め入れる
 RUN apt-get install -y language-pack-ja openssh-server git curl openjdk-8-jre
 
@@ -27,7 +26,8 @@ RUN apt-get install -y redis-server
 
 # nodejsの設定
 RUN apt-get install -y software-properties-common
-RUN add-apt-repository -y ppa:chris-lea/node.js ; apt-get update
+RUN add-apt-repository -y ppa:chris-lea/node.js 
+RUN apt-get update ; apt-get upgrade -y 
 RUN apt-get install -y nodejs redis-server
 
 # hubot インストール
