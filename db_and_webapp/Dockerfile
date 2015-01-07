@@ -34,6 +34,10 @@ RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 RUN echo 'root:root' | chpasswd
 
+# rootは鍵認証でログインできるように
+ADD ./templates/ssh/id_rsa.pub /root/.ssh/authorized_keys
+RUN chmod 600 /root/.ssh/authorized_keys
+
 # サービス自動起動登録(再起動とかしないから要らん…かも?)
 RUN chkconfig mysqld on
 

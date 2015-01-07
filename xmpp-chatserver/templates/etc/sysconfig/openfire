@@ -1,0 +1,7 @@
+#OPENFIRE_HOME=""
+#OPENFIRE_USER="daemon"
+#OPENFIRE_PIDFILE="/var/run/openfire.pid"
+#OPENFIRE_LOGDIR="/some/where/logs"
+#OPENFIRE_OPTS="-Xmx1024m"
+JAVA_HOME="/usr/lib/jvm/jre"
+

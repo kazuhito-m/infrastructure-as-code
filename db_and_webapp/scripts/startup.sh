@@ -6,8 +6,15 @@
 
 # サービス開始(二回目以降はリスタート)
 service sshd restart
+
+# tomcat6 は途中で死ぬとゴミを残すので、予め「失敗しないカタチ」で削除実行。
+rm -f /var/run/tomcat6.pid
+rm -f /var/lock/subsys/tomcat6
 service tomcat6 restart
+
+# MySql再起動
 service mysqld restart
+
 # 日に二度Tomcatを上げ直すため、cron起動
 service crond restart
 
