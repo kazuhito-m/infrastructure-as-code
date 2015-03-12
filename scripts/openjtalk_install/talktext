@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# OpenJTalkを簡単に使うためのスクリプト。
+# auther kazuhito_m
+
+VOICE=/usr/local/voice/mei/mei_normal.htsvoice
+DIC=/usr/local/dic
+WAV_PLAYER='aplay -D plughw:0,0'
+OPEN_JTALK='/usr/local/bin/open_jtalk'
+
+# 本処理
+
+# 引数をテキストファイル化
+echo ${1} > ./speak.txt
+# 文字列をWavファイル化
+open_jtalk -m ${VOICE} -x ${DIC} -ow ./out.wav ./speak.txt
+# お好みでノーマライズなど。
+sox ./out.wav ./out_norm.wav norm ; mv ./out_norm.wav ./out.wav
+# しゃべらせる
+${WAV_PLAYER} ./out.wav
+rm ./out.wav ./speak.txt
