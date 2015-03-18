@@ -7,26 +7,11 @@
 # の場合のみポート別でUSBバスパワーをOn/Offするものです。
 # 
 # 外部プログラムのhub-ctrlというものをコマンドとして使います。
-# 予め以下のコマンドでビルド/インストールを行ってください。
-# 
-# + RHEL/CentOS系
-#
-# (実行は全てrootとする)
-# (RedHat系)
-# yum install libusb-devel libusb-static gcc
-# (Debian系)
-# sudo apt-get install build-essential libusb-dev
-# wget http://www.gniibe.org/oitoite/ac-power-control-by-USB-hub/hub-ctrl.c
-# gcc -O2 hub-ctrl.c -o hub-ctrl -lusb
-# chmod 755 ./hub-ctrl
-# sudo cp ./hub-ctrl /usr/local/bin/
-# sudo chmod u+s /usr/local/bin/hub-ctrl
-# rm ./hub-ctrl* 
-#
+# 予め、同梱指定ある setup.sh の実行にてビルド/インストールを行ってください。
+ 
 # ポート/デバイスについては、HubとUSB電源を使うガジェットをつないだ状態で、
 # 一度 hub-ctrl をオプション無しで叩き、そこに表示されたものを
 # 以下の定数にセットしてください。
-#
 
 export USB_HUBNUM=0
 export USB_HUBPORT=1
