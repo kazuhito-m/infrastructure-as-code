@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Raspabian(とその他RasPI用のOS群)のセレクタである、NOOBSをSDカードにコピーするスクリプト。
+
 # OSイメージ系固定値
 download_url=http://director.downloads.raspberrypi.org/NOOBS_lite/images/NOOBS_lite-2014-07-08/NOOBS_lite_v1_3_9.zip
 imagefile=NOOBS_lite.zip
