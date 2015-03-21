@@ -14,6 +14,8 @@
 
 # Ruby最新インストール(リポジトリ任せ)
 yum install -y ruby git
+# Ubuntu/Debian
+# sudo apt-get install ruby git
 
 # Chefインストール(ユーザはroot前提。一般ユーザならsudo付けて)
 curl http://www.opscode.com/chef/install.sh | bash
