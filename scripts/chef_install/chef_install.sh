@@ -1,27 +1,29 @@
 #!/bin/bash
 
-# ŠÈˆÕ‚ÈuƒT[ƒo‚ÉChef‚ğ“ü‚ê‚é‚Ü‚Åv‚Æ‚¢‚¤ƒXƒNƒŠƒvƒg‚ğ‚Ü‚Æ‚ß‚éB
-# (ChefˆÈ~‚ÍChef‘¤‚É‚Ü‚©‚¹‚é)
+# ç°¡æ˜“ãªã€Œã‚µãƒ¼ãƒã«Chefã‚’å…¥ã‚Œã‚‹ã¾ã§ã€ã¨ã„ã†ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã¾ã¨ã‚ã‚‹ã€‚
+# (Chefä»¥é™ã¯Chefå´ã«ã¾ã‹ã›ã‚‹)
 #
-# ¦‹É—ÍŠy‚·‚é‚Ì‚ÅA–{“–‚Í—Ç‚­‚È‚¢‚ªyum‚ÉˆË‘¶‚µ‚½‚èA‚¢‚ë‚¢‚ë‹Ø‚Ìˆ«‚¢‚±‚Æ‚ğ‚µ‚Ä‚¢‚é‚Ì‚Í³’m‚ÌãB
+# â€»æ¥µåŠ›æ¥½ã™ã‚‹ã®ã§ã€æœ¬å½“ã¯è‰¯ããªã„ãŒyumã«ä¾å­˜ã—ãŸã‚Šã€ã„ã‚ã„ã‚ç­‹ã®æ‚ªã„ã“ã¨ã‚’ã—ã¦ã„ã‚‹ã®ã¯æ‰¿çŸ¥ã®ä¸Šã€‚
 #
-# ‘ÎÛ:CentOS7
+# å¯¾è±¡:CentOS7
 # user:root
-# ì‹Ædir:”CˆÓ
+# ä½œæ¥­dir:ä»»æ„
 #
 
-# TODO •K—v‚Æ‚ ‚ç‚Î‚±‚±‚ÉŠÂ‹«‚Ì‘O€”õ(Proxy‚Æ‚©)
+# TODO å¿…è¦ã¨ã‚ã‚‰ã°ã“ã“ã«ç’°å¢ƒã®å‰æº–å‚™(Proxyã¨ã‹)
 
-# RubyÅVƒCƒ“ƒXƒg[ƒ‹(ƒŠƒ|ƒWƒgƒŠ”C‚¹)
-yum install -y ruby git
+# Rubyæœ€æ–°ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«(ãƒªãƒã‚¸ãƒˆãƒªä»»ã›)
+# yum install -y ruby git
 # Ubuntu/Debian
+# sudo apt-get update -y
+# sudo apt-get upgrade -y
 # sudo apt-get install ruby git
 
-# ChefƒCƒ“ƒXƒg[ƒ‹(ƒ†[ƒU‚Íroot‘O’ñBˆê”Êƒ†[ƒU‚È‚çsudo•t‚¯‚Ä)
+# Chefã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«(ãƒ¦ãƒ¼ã‚¶ã¯rootå‰æã€‚ä¸€èˆ¬ãƒ¦ãƒ¼ã‚¶ãªã‚‰sudoä»˜ã‘ã¦)
 curl http://www.opscode.com/chef/install.sh | bash
 
-# ƒŒƒ|ƒWƒgƒŠ‚Ìì¬B
+# ãƒ¬ãƒã‚¸ãƒˆãƒªã®ä½œæˆã€‚
 git clone http://github.com/opscode/chef-repo.git
 
-# ƒNƒbƒNƒuƒbƒN‚Ìì¬B
+# ã‚¯ãƒƒã‚¯ãƒ–ãƒƒã‚¯ã®ä½œæˆã€‚
 knife configure
