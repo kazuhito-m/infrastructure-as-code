@@ -29,3 +29,5 @@ gradle -v #確認
 
 # Heroku Toolbelt インストール
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+echo 'End install.'
