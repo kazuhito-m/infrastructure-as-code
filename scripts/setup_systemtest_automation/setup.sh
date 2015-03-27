@@ -20,11 +20,11 @@ curl -s get.gvmtool.net | bash
 source ~/.gvm/bin/gvm-init.sh
 
 # groovy インストール
-gvm i groovy
+gvm install groovy
 groovy -v #確認
 
 # gradle インストール
-gvm i gradle
+gvm install gradle
 gradle -v #確認
 
 # Heroku Toolbelt インストール
