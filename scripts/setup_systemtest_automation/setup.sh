@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
-# システムテスト自動化ワークショップ用、Ubunutのセットアップ用スクリプト。
+# システムテスト自動化ワークショップ用、Linuxセットアップ用スクリプト。
+# 対象としてはUbuntu/Debianのみとする。
 
 # Javaセットアップ
 sudo apt-get install openjdk-8-jdk curl -y
