@@ -13,7 +13,7 @@
 # TODO 必要とあらばここに環境の前準備(Proxyとか)
 
 # Ruby最新インストール(リポジトリ任せ)
-# yum install -y ruby git
+yum install -y ruby ruby-devel chef git
 
 # Ubuntu/Debian
 #
@@ -22,10 +22,11 @@
 # sudo apt-get install -y ruby git curl
 
 # Chefインストール(ユーザはroot前提。一般ユーザならsudo付けて)
-curl http://www.opscode.com/chef/install.sh | bash
+# * 方針を変え、すべてパッケージで入れることに
+# curl http://www.opscode.com/chef/install.sh | bash
 
 # レポジトリの作成。
-git clone http://github.com/opscode/chef-repo.git
+# git clone http://github.com/opscode/chef-repo.git
 
 # クックブックの作成。
-knife configure
+# knife configure
