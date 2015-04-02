@@ -13,6 +13,7 @@
 # TODO 必要とあらばここに環境の前準備(Proxyとか)
 
 # Ruby最新インストール(リポジトリ任せ)
+# これでは何故か取れない。他のリポジトリを足すソースを追加する。:
 yum install -y ruby ruby-devel chef git
 
 # Ubuntu/Debian
