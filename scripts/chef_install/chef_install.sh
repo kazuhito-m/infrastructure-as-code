@@ -20,7 +20,7 @@ yum install -y ruby ruby-devel chef git
 #
 # sudo apt-get update -y
 # sudo apt-get upgrade -y
-# sudo apt-get install -y ruby git curl
+# sudo apt-get install -y ruby git curl chef
 
 # Chefインストール(ユーザはroot前提。一般ユーザならsudo付けて)
 # * 方針を変え、すべてパッケージで入れることに
