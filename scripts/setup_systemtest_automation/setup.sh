@@ -2,6 +2,7 @@
 
 # システムテスト自動化ワークショップ用、Linuxセットアップ用スクリプト。
 # 対象としてはUbuntu/Debianのみとする。
+# auther Kazuhito Miura (kazuhito_m)
 
 # Javaセットアップ
 sudo apt-get install openjdk-8-jdk curl -y
