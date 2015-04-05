@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 # システムテスト自動化ワークショップ用、Linuxセットアップ用スクリプト。
 # 対象としてはUbuntu/Debianのみとする。
