@@ -14,13 +14,13 @@
 
 # Ruby最新インストール(リポジトリ任せ)
 # これでは何故か取れない。他のリポジトリを足すソースを追加する。:
-yum install -y ruby ruby-devel chef git
+# yum install -y ruby ruby-devel chef git
 
 # Ubuntu/Debian
 #
-# sudo apt-get update -y
-# sudo apt-get upgrade -y
-# sudo apt-get install -y ruby git curl chef
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install -y ruby git curl chef
 
 # Chefインストール(ユーザはroot前提。一般ユーザならsudo付けて)
 # * 方針を変え、すべてパッケージで入れることに
