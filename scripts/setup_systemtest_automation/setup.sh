@@ -1,6 +1,8 @@
-#!/bin/bash -x
+#!/bin/bash
 
-# システムテスト自動化ワークショップ用、Ubunutのセットアップ用スクリプト。
+# システムテスト自動化ワークショップ用、Linuxセットアップ用スクリプト。
+# 対象としてはUbuntu/Debianのみとする。
+# auther Kazuhito Miura (kazuhito_m)
 
 # Javaセットアップ
 sudo apt-get install openjdk-8-jdk curl -y
@@ -20,12 +22,14 @@ curl -s get.gvmtool.net | bash
 source ~/.gvm/bin/gvm-init.sh
 
 # groovy インストール
-gvm i groovy
+gvm install groovy
 groovy -v #確認
 
 # gradle インストール
-gvm i gradle
+gvm install gradle
 gradle -v #確認
 
 # Heroku Toolbelt インストール
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+echo 'End install.'
