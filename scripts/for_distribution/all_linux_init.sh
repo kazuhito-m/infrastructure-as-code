@@ -13,4 +13,10 @@ login kazuhito-m
 password xxxxxxxx
 _EOT_
 
+# コーデックなど一式をグループインストール
+sudo apt-get install ubuntu-restricted-extras
+
+# クロームがいいかなー
+sudo apt-get install chromium-browser
+
 
