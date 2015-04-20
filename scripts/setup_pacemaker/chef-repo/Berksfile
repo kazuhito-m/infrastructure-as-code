@@ -1,4 +1,9 @@
-site :opscode
+# site :opscode 
+# 上記が古い、下に書き換えろ！という警告があるもので、従う。
+source "https://supermarket.chef.io"
+
+cookbook 'openssh'
+cookbook 'user'
 
 source "https://api.berkshelf.com"
 cookbook 'apache2'
