@@ -1,6 +1,6 @@
 FROM centos:centos6.6
 
-MAINTAINER Kazuhito Miura 
+MAINTAINER Kazuhito Miura
 
 # ベースとなる装備(ソース管理とChefなど)インストール
 RUN yum update -y
@@ -34,9 +34,18 @@ RUN bash -lc "cd ${CHEFHOME} && berks vendor cookbooks"
 RUN bash -lc "chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/ncms01.json"
 
 # 外側に出したいPortを定義
-EXPOSE 21
+# EXPOSE 21
+
+# 暫定対応。Rootのパスワード固定
+# TODO Chefに移して葬る
+RUN yum install -y openssh-server
+RUN echo 'root:root' | chpasswd
+RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+RUN service sshd restart
 
 # デタッチ毎に実行するスクリプトを登録
 ADD ./scripts/startup.sh /usr/local/bin/startup.sh
 RUN chmod 755 /usr/local/bin/startup.sh
 CMD ["/usr/local/bin/startup.sh"]
+
