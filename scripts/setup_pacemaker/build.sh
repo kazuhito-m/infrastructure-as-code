@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_NAME='ncms-base'
+BASE_NAME='pm01'
 
 IMAGE_NAME="centos:${BASE_NAME}"
 
