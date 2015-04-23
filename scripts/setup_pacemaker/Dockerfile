@@ -31,7 +31,7 @@ ADD chef-repo /chef-repo
 # Chefのこのマシン専用レシピの実行。
 ENV https_proxy http://proxy.nintendo.co.jp:8080
 RUN bash -lc "cd ${CHEFHOME} && berks vendor cookbooks"
-RUN bash -lc "chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/ncms01.json"
+RUN bash -lc "chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/pm01.json"
 
 # 外側に出したいPortを定義
 EXPOSE 21
