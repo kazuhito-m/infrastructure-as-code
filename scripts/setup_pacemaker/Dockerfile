@@ -8,15 +8,15 @@ RUN yum groupinstall -y "Development Tools"
 RUN yum install -y git svn openssl-devel tar
 
 # Rubyのバージョンが古すぎるということがあったので、諦めて手動インストール
-RUN git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+RUN find /root/
+RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
+RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
 ENV PATH /root/.rbenv/bin:$PATH
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc ; echo 'eval "$(rbenv init -)"' >> ~/.bashrc ; source ~/.bashrc
-ENV PATH /root/.rbenv/bin:$PATH
 RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh # or /etc/profile
 
 # rbenv自体のインストール作業。
-RUN ./root/.rbenv/plugins/ruby-build/install.sh
+RUN /root/.rbenv/plugins/ruby-build/install.sh
 RUN rbenv install 2.2.2 && rbenv global 2.2.2
 
 # Chefと周辺プロダクトをインストール。
@@ -29,9 +29,8 @@ ENV CHEFHOME /chef-repo
 ADD chef-repo /chef-repo
  
 # Chefのこのマシン専用レシピの実行。
-ENV https_proxy http://proxy.nintendo.co.jp:8080
 RUN bash -lc "cd ${CHEFHOME} && berks vendor cookbooks"
-RUN bash -lc "chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/ncms01.json"
+RUN bash -lc "chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/pm01.json"
 
 # 外側に出したいPortを定義
 EXPOSE 21
