@@ -1,5 +1,5 @@
 name             'adduser'
-maintainer       'kazuhito_m'
+maintainer       'YOUR_COMPANY_NAME'
 maintainer_email 'YOUR_EMAIL'
 license          'All rights reserved'
 description      'Installs/Configures adduser'

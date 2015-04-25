@@ -5,5 +5,9 @@ source "https://supermarket.chef.io"
 cookbook 'openssh'
 cookbook 'user'
 
+cookbook 'tomcat'
+
 source "https://api.berkshelf.com"
 cookbook 'apache2'
+
+cookbook 'td-agent'
