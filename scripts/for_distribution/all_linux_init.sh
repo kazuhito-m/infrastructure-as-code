@@ -17,6 +17,8 @@ _EOT_
 sudo apt-get install ubuntu-restricted-extras
 
 # クロームがいいかなー
-sudo apt-get install chromium-browser
-
+# 参考:http://tecadmin.net/install-google-chrome-in-ubuntu/
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update -y
 
