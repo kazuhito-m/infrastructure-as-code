@@ -5,32 +5,34 @@ MAINTAINER Kazuhito Miura
 # ベースとなる装備(ソース管理とChefなど)インストール
 RUN yum update -y
 RUN yum groupinstall -y "Development Tools"
-RUN yum install -y git svn openssl-devel tar
+RUN yum install -y git openssl-devel tar
 
 # Rubyのバージョンが古すぎるということがあったので、諦めて手動インストール
-RUN find /root/
-RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
-RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
-ENV PATH /root/.rbenv/bin:$PATH
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc ; echo 'eval "$(rbenv init -)"' >> ~/.bashrc ; source ~/.bashrc
-RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh # or /etc/profile
+ENV BASE /root
+ENV RBENV_ROOT ${BASE}/.rbenv
+ENV PATH ${RBENV_ROOT}/bin:$PATH
+RUN git clone https://github.com/sstephenson/rbenv.git ${RBENV_ROOT}
+RUN git clone https://github.com/sstephenson/ruby-build.git ${RBENV_ROOT}/plugins/ruby-build
+RUN echo "export RBENV_ROOT=${RBENV_ROOT}"  >> $BASE/.bashrc
+RUN echo 'export PATH="${RBENV_ROOT}/bin:$PATH"' >> $BASE/.bashrc 
+RUN echo 'eval "$(rbenv init -)"' >> $BASE/.bashrc
 
 # rbenv自体のインストール作業。
-RUN /root/.rbenv/plugins/ruby-build/install.sh
-RUN rbenv install 2.2.2 && rbenv global 2.2.2
+ENV RUBY_VER 2.2.2
+RUN source ${BASE}/.bashrc && ${RBENV_ROOT}/plugins/ruby-build/install.sh && rbenv install ${RUBY_VER} && rbenv global ${RUBY_VER}
 
 # Chefと周辺プロダクトをインストール。
-RUN echo 'eval "install: --no-document"' >> .gemrc
-RUN echo 'eval "update: --no-document"' >> .gemrc
-RUN bash -l -c 'gem install chef knife-solo bundler berkshelf --no-ri --no-rdoc -V'
+RUN echo 'eval "install: --no-document"' >> ${BASE}/.gemrc
+RUN echo 'eval "update: --no-document"'  >> ${BASE}/.gemrc
+RUN bash -lc "source ${BASE}/.bashrc && gem install chef knife-solo bundler berkshelf --no-ri --no-rdoc -V"
 
 # Chefのレシピを一式持っていく
 ENV CHEFHOME /chef-repo
-ADD chef-repo /chef-repo
+ADD chef-repo ${CHEFHOME}
  
 # Chefのこのマシン専用レシピの実行。
-RUN bash -lc "cd ${CHEFHOME} && berks vendor cookbooks"
-RUN bash -lc "chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/pm01.json"
+RUN bash -lc "source ${BASE}/.bashrc && cd ${CHEFHOME} && berks vendor cookbooks"
+RUN bash -lc "source ${BASE}/.bashrc && chef-solo -c ${CHEFHOME}/solo.rb -j ${CHEFHOME}/nodes/pm01.json"
 
 # 外側に出したいPortを定義
 # EXPOSE 21
