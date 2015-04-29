@@ -1,0 +1,12 @@
+{
+  "ntp": {
+    "servers": ["ntp.nintendo.co.jp"]
+  },
+  "run_list": [
+    "recipe[ntp]",
+    "recipe[japanize]",
+    "recipe[docker]",
+    "recipe[docker::systemd]",
+    "recipe[user-customize]"
+  ]
+}

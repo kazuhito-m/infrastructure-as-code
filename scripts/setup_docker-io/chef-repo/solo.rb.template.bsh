@@ -1,0 +1,7 @@
+cat << EOS 
+file_cache_path "/tmp/chef-solo"
+cookbook_path ["$(pwd)/cookbooks", "$(pwd)/site-cookbooks"]
+role_path "roles"
+log_level :info # debug
+EOS
+

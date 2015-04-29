@@ -1,0 +1,7 @@
+name             'japanize'
+maintainer       'YOUR_NAME'
+maintainer_email 'YOUR_EMAIL'
+license          'All rights reserved'
+description      'Installs/Configures japanize'
+long_description 'Installs/Configures japanize'
+version          '0.1.0'
