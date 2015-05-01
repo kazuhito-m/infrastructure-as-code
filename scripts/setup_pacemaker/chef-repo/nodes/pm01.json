@@ -9,6 +9,6 @@
   "recipe[apache2::mod_ssl]",
   "recipe[custom-java8]",
   "recipe[tomcat]",
-#  "recipe[tomcat::users]",
-  "recipe[td-agent]"
+  "recipe[td-agent]",
+  "recipe[custom-pacemaker]"
 ]}
