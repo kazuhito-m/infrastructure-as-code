@@ -15,4 +15,7 @@
 end
 
 # 設定ファイルをコピー
+cookbook_file "/etc/corosync/service.d/pcmk" do
+  mode 00644
+end
 
