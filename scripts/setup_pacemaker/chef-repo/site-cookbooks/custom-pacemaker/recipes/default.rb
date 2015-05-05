@@ -19,3 +19,14 @@ cookbook_file "/etc/corosync/service.d/pcmk" do
   mode 00644
 end
 
+# 前提として、syslogが動いていること。
+service "rsyslog" do
+  action [ :enable, :start ]
+  supports :status => true, :restart => true, :reload => true
+end
+
+# corosyncのサービスを登録＆起動。
+# service "corosync" do
+#   action [ :enable, :start ]
+#   supports :status => true, :restart => true, :reload => true
+# end
