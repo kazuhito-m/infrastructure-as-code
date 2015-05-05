@@ -25,8 +25,17 @@ service "rsyslog" do
   supports :status => true, :restart => true, :reload => true
 end
 
+# corosyncの設定ファイルをリンクで配置。
+# 
+# Dockerでマウントしたホストディレクトリのファイル corosync.conf を、所定位置にシンボリックリンクを貼る
+# ※これを固定出来ないせいで、ホスト側の固定ファイルに頼ることとなり、Docker依存の構造が必須に。
+link "/etc/corosync/corosync.conf" do
+  to "/chef-repo/site-cookbooks/custom-pacemaker/files/default/corosync.conf"
+  action :create
+end
+
 # corosyncのサービスを登録＆起動。
-# service "corosync" do
-#   action [ :enable, :start ]
-#   supports :status => true, :restart => true, :reload => true
-# end
+service "corosync" do
+  action [ :enable, :start ]
+  supports :status => true, :restart => true, :reload => true
+end
