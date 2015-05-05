@@ -13,3 +13,6 @@
     action :install
   end
 end
+
+# 設定ファイルをコピー
+
