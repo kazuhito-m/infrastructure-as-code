@@ -10,5 +10,6 @@
   "recipe[custom-java8]",
   "recipe[tomcat]",
   "recipe[td-agent]",
+  "recipe[custom-mysql]",
   "recipe[custom-pacemaker]"
 ]}
