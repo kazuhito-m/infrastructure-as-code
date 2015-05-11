@@ -4,6 +4,9 @@
       "base_version" : "6"
     }
   },
+  "custom-mysql" : {
+    "server_id" : "1"
+  },
   "run_list":[
     "recipe[apache2]",
     "recipe[apache2::mod_ssl]",
