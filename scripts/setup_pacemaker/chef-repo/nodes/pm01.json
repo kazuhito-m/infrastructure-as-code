@@ -5,7 +5,7 @@
     }
   },
   "custom-mysql" : {
-    "server_id" : "1"
+    "server_id" : "1001"
   },
   "run_list":[
     "recipe[apache2]",

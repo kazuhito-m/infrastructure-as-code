@@ -8,7 +8,7 @@ user=mysql
 symbolic-links=0
 character-set-server=utf8
 log-bin=mysql-bin
-server-id=1002
+server-id=<%= node['custom-mysql']['server_id'] %>
 
 default-storage-engine=INNODB
 sql-mode='STRICT_ALL_TABLES,NO_AUTO_VALUE_ON_ZERO'
