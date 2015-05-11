@@ -11,3 +11,5 @@ source "https://api.berkshelf.com"
 cookbook 'apache2'
 
 cookbook 'td-agent'
+
+cookbook 'mysql'
