@@ -28,7 +28,8 @@ sort_buffer_size=512K
 innodb_lock_wait_timeout=120
 wait_timeout=3600
 binlog_format=mixed
-binlog_row_image=minimal
+# なぜか使えないので、コメントアウト。
+# binlog_row_image=minimal
 
 [mysqld_safe]
 log-error=/var/log/mysqld.log
