@@ -21,15 +21,23 @@ template "my.cnf" do
   mode "0644"
 end
 
+# ファイルを一時的に設定追加。
+bash "my.cnf setting templary change" do
+  code <<-EOH
+     sed 's/\\[mysqld\]/\\[mysqld\\]\\nskip-grant-tables/g' /etc/my.cnf > /etc/my.cnf.conv
+     mv /etc/my.cnf.conv /etc/my.cnf
+  EOH
+end
+
 service "mysqld" do 
-  action [:enable, :start]
+  action [:enable, :restart]
 end
 
 # pluginテーブルやら「最初に必要なテーブル郡」を作るため、mysql付属の特殊コマンドを使う。
-bash "mysql update" do
+bash "mysql upgrade" do
   user "mysql"
   group "mysql"
-  code "mysql_upgrade"
+  code "mysql_upgrade --force"
 end
 
 # 一時的に変えていた設定を削除し、再度起動。
