@@ -14,11 +14,13 @@ sddev=/dev/mmcblk0
 imagefile=raspbian.zip
 
 # ※必要な場合蘇らせる
-# sudo dd if=/dev/zero of=${sddev}
+sudo dd if=/dev/zero of=${sddev}
+
+# 初回手順では以下の通り行ったが…パーティションごと上書かられるので、いらないかも。
 
 # SDカードをパーティション設定＆フォーマット
-sudo fdisk ${sddev} # vfat、1パーティションで切る。
-sudo mkfs.vfat ${sddev}p1
+# sudo fdisk ${sddev} # vfat、1パーティションで切る。
+# sudo mkfs.vfat ${sddev}p1
 
 
 #ファイルをダウンロードして展開
