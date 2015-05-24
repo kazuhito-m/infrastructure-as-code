@@ -17,3 +17,9 @@ RaspberyPiに(USB機器を電源管理出来る)USBハブと音声とJenkinsと�
 + ../../usb-baspower-control_install - USBバスコントロールのスクリプト
 
 の内容を含むものとなり、冗長だが「取り敢えずベタ書きで書く」ことにし、あとで整理する。
+
+# スクリプトに現れない作業
+
+0. SDカードにraspbian焼付け。
+
+   ../../setup_sdcard_for_raspbian/setup_sdcard_for_latest_raspbian_only.sh を使い、SDカード焼付け。
