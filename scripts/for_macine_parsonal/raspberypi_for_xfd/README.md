@@ -29,3 +29,7 @@ RaspberyPiに(USB機器を電源管理出来る)USBハブと音声とJenkinsと�
   SDカードを突っ込んで初回だけディスプレイつなげてセットアップ。すぐにfinishで終了。
   
   ifconfig で「DHCPでフラれたipaddress」だけ調べ、それ以降は他端末からSSH。
+  
+0. chef-solo 系のセットアップ
+
+   ../../chef_install/chef_install.sh の内容を叩く。
