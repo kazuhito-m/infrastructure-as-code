@@ -5,7 +5,7 @@
 #
 # ※極力楽するので、本当は良くないがyumに依存したり、いろいろ筋の悪いことをしているのは承知の上。
 #
-# 対象:CentOS7
+# 対象:Ubuntu系
 # user:root
 # 作業dir:任意
 #
@@ -16,11 +16,15 @@
 # これでは何故か取れない。他のリポジトリを足すソースを追加する。:
 # yum install -y ruby ruby-devel chef git
 
-# Ubuntu/Debian
-#
+# Ubuntu/Debian/raspabian
+
+# chef環境一式のインストール
 sudo apt-get update -y
 sudo apt-get upgrade -y
-sudo apt-get install -y ruby git curl chef
+sudo apt-get install -y ruby git curl
+
+# gemに降りて、chef/knife-solo 系のインストール。
+gem install chef knife-solo bundler berkshelf --no-ri --no-rdoc -V
 
 # Chefインストール(ユーザはroot前提。一般ユーザならsudo付けて)
 # * 方針を変え、すべてパッケージで入れることに
