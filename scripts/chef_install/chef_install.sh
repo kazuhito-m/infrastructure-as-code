@@ -24,6 +24,8 @@ sudo apt-get upgrade -y
 sudo apt-get install -y ruby git curl
 
 # gemに降りて、chef/knife-solo 系のインストール。
+gem update --system
+gem update
 gem install chef knife-solo bundler berkshelf --no-ri --no-rdoc -V
 
 # Chefインストール(ユーザはroot前提。一般ユーザならsudo付けて)
