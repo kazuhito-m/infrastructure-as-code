@@ -21,7 +21,7 @@
 # chef環境一式のインストール
 sudo apt-get update -y
 sudo apt-get upgrade -y
-sudo apt-get install -y ruby ruby-dev git curl
+sudo apt-get install -y ruby ruby-dev autoconf git curl
 
 # gemに降りて、chef/knife-solo 系のインストール。
 gem update --system
