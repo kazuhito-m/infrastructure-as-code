@@ -32,7 +32,21 @@ sudo apt-get update
 sudo apt-get install jenkins
 # これだけで入るので、あとは http://locahost:8080 で確認。
 # 最初に二つのプラグインを入れる
-# + Hudson Post build task
+# + Post build task
 # + CloudBees Folders Plugin
 
 # その後、Jobを固めたファイルを然るべきところに展開する。
+sudo su jenkins
+tar xzf ./resources/jenkins_jobs.tgz 
+mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.org
+mv ./jobs /var/lib/jenkns/jobs
+exit
+# jenkins 再起動
+sudo /etc/init.d/jenkins restart
+# 音関係を鳴らす関係上、sudoノンパスでいけるようにしておく。
+sudo visudo
+# -- add ---
+# special settings
+jenkins ALL=(ALL) NOPASSWD:ALL
+
+
