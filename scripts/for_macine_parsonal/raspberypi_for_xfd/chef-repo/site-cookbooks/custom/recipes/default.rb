@@ -7,6 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# 必要なパッケージをインストール
+%w{ build-essential libusb-dev}.each do |pkg|
+  package pkg do
+    action :install
+  end 
+end 
+
 # hub-cntlのコンパイル
 # hub-ctrlを使うスクリプトの設定
 # jenkins のセットアップ
