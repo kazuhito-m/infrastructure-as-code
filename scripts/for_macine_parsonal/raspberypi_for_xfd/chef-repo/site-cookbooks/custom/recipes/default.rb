@@ -14,6 +14,8 @@
   end 
 end 
 
+# ※出来ればCentOSとUbuntu両方行けるようにする
+
 # hub-cntlのコンパイル
 # hub-ctrlを使うスクリプトの設定
 # jenkins のセットアップ
