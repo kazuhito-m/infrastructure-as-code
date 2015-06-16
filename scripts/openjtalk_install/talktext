@@ -5,7 +5,8 @@
 
 VOICE=/usr/local/voice/mei/mei_normal.htsvoice
 DIC=/usr/local/dic
-WAV_PLAYER='aplay -D plughw:0,0'
+# WAV_PLAYER='aplay -D plughw:0,0'
+WAV_PLAYER='aplay' # 適宜環境で修正してください。(どうしようもなければsudoつけて下さい。)
 OPEN_JTALK='/usr/local/bin/open_jtalk'
 
 # 本処理

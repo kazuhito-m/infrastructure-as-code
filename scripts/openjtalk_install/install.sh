@@ -2,8 +2,8 @@
 
 # OpenJtalkと、HTS-Engine、またボイスのデータをCentOSにインストールするシェルスクリプト。
 # 以下のコマンドに依存します。予めyum等でインストールしておいてください。
+#   gzip,tar,gcc,make,sudo,sox
 # また、sudoをたたくこととなるため、sudoに権限が与えられてるユーザで実行してください。
-#   gzip,tar,gcc,make,sudo 
 
 # hts_engine のインストール
 tar xvzf hts_engine_API-*.tar.gz
@@ -27,5 +27,5 @@ chmod 755 ./voice
 sudo mv ./voice /usr/local/voice
 
 # script install
-chmod 755 ./talktext
+chmod 4755 ./talktext
 sudo cp ./talktext /usr/local/bin/talktext
