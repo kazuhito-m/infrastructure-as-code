@@ -16,6 +16,13 @@ _EOT_
 # コーデックなど一式をグループインストール
 sudo apt-get install -y ubuntu-restricted-extras
 
+# editor系一式
+sudo apt-get install -y leafpad
+# Atom Editor
+sudo add-apt-repository ppa:webupd8team/atom
+sudo apt-get update
+sudo apt-get install atom
+
 # クロームがいいかなー
 # 参考:http://tecadmin.net/install-google-chrome-in-ubuntu/
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
