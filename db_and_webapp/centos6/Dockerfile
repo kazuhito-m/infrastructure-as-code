@@ -5,7 +5,7 @@ MAINTAINER kazuhito_m
 # インストール
 
 RUN yum update -y
-RUN yum -y install java-1.7.0-openjdk
+RUN yum -y install java-1.8.0-openjdk
 RUN yum -y install openssh-server
 RUN yum -y install tomcat6 tomcat6-webapps tomcat6-admin-webapps
 RUN yum -y install mysql-server
