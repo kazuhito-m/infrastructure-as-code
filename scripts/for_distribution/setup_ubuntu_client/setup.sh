@@ -52,6 +52,10 @@ exit
 sudo /etc/init.d/jenkins restart
 # 音関係を鳴らす関係上、sudoノンパスでいけるようにしておく。
 sudo visudo
+
+# docker インストール
+sudo apt-get install docker
+
 # -- add ---
 # special settings
 jenkins ALL=(ALL) NOPASSWD:ALL
