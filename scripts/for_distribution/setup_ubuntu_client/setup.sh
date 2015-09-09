@@ -57,9 +57,9 @@ sudo visudo
 sudo apt-get install docker
 
 # scala develop environment 
-sudo apt-get -y install scala
-wget https://dl.bintray.com/sbt/debian/sbt-0.13.7.deb
 sudo apt-get update
+sudo apt-get -y install scala
+wget https://dl.bintray.com/sbt/debian/sbt-0.13.9.deb
 sudo dpkg -i sbt-0.13.7.deb
 sbt
 
