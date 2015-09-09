@@ -56,6 +56,14 @@ sudo visudo
 # docker インストール
 sudo apt-get install docker
 
+# scala develop environment 
+sudo apt-get -y install scala
+wget https://dl.bintray.com/sbt/debian/sbt-0.13.7.deb
+sudo apt-get update
+sudo dpkg -i sbt-0.13.7.deb
+sbt
+
+
 # -- add ---
 # special settings
 jenkins ALL=(ALL) NOPASSWD:ALL
