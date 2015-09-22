@@ -57,13 +57,23 @@ sudo visudo
 sudo apt-get install docker
 
 # scala develop environment 
+SCALA_VER='2.12.0-M2'
 SBT_VER='0.13.9'
-sudo apt-get update
-sudo apt-get -y install scala
+wget www.scala-lang.org/files/archive/scala-${SCALA_VER}.deb
 wget https://dl.bintray.com/sbt/debian/sbt-${SBT_VER}.deb
-sudo dpkg -i sbt-${SBT_VER}.deb
-sbt -v
+sudo apt-get update
+sudo dpkg -i scala-${SCALA_VER}.deb sbt-${SBT_VER}.deb
+# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
+wget https://raw.github.com/n8han/conscript/master/setup.sh
+chmod 755 ./setup.sh
+./setup.sh
+rm ./setup.sh
+^/bin/cs n8han/giter8
 
+# DTM関係よろずインストール
+sudo apt-get install rosegarden hydrogen ardour
+# ソフトシンセや「音源材料」系
+sudo apt-get install fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2
 
 # -- add ---
 # special settings
