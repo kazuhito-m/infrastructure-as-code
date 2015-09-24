@@ -73,7 +73,7 @@ rm ./setup.sh
 # DTM関係よろずインストール
 sudo apt-get install rosegarden hydrogen ardour
 # ソフトシンセや「音源材料」系
-sudo apt-get install fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2
+sudo apt-get install qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2
 
 # -- add ---
 # special settings
