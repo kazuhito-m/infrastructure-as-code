@@ -77,6 +77,10 @@ sudo apt-get install qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins
 
 # PlantUMLインストール
 sudo apt-get install -y graphviz doxygen
+# 依存関係の都合上、JDK6を入れないと、以下のDEBパッケージが入れられず…。(新しく環境を作るときは、ここを判断してください。汚すので。)
+sudo apt-get install -y openjdk-6-jre
+# 更に！依存関係がおかしくなったので、以下のコマンドで整えるはめに。(クリーンインストール時は、PlantUMLやめとこうかな？)
+sudo apt-get -f install
 # PlantUML自体は、Debパッケージでリソースからインストール
 sudo dpkg -i ./resources/plantuml_7707-1_all.deb
 # ついでに「Atomのプラグイン」があるみたいだけど、コマンドライン案件ではないので、URL貼っとく。
