@@ -75,6 +75,13 @@ sudo apt-get install rosegarden hydrogen ardour
 # ソフトシンセや「音源材料」系
 sudo apt-get install qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2
 
+# PlantUMLインストール
+sudo apt-get install -y graphviz doxygen
+# PlantUML自体は、Debパッケージでリソースからインストール
+sudo dpkg -i ./resources/plantuml_7707-1_all.deb
+# ついでに「Atomのプラグイン」があるみたいだけど、コマンドライン案件ではないので、URL貼っとく。
+# http://pierre3.hatenablog.com/entry/2015/08/23/220217
+
 # -- add ---
 # special settings
 jenkins ALL=(ALL) NOPASSWD:ALL
