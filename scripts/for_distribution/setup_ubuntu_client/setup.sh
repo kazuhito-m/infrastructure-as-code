@@ -85,6 +85,8 @@ sudo apt-get -f install
 sudo dpkg -i ./resources/plantuml_7707-1_all.deb
 # ついでに「Atomのプラグイン」があるみたいだけど、コマンドライン案件ではないので、URL貼っとく。
 # http://pierre3.hatenablog.com/entry/2015/08/23/220217
+# もしかしたら…これでイケるかも？
+apm install plantuml-viewer language-plantuml
 
 # -- add ---
 # special settings
