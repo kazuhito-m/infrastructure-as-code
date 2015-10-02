@@ -83,6 +83,14 @@ sudo apt-get install -y openjdk-6-jre
 sudo apt-get -f install
 # PlantUML自体は、Debパッケージでリソースからインストール
 sudo dpkg -i ./resources/plantuml_7707-1_all.deb
+# なんか文字化けまくるので、スクリプトに小細工
+sudo vi /usr/bin/plantuml
+# javaコマンド実行前に"export LANG=ja_JP.UTF-8"を入れる。
+# しかもバグがあるみたいなので、最新のJarと置き換え
+curl http://sourceforge.net/projects/plantuml/files/plantuml.jar/download > ./plantuml.jar
+sudo mv ./plantuml.jar /usr/share/plantuml/plantuml.jar
+
+
 # ついでに「Atomのプラグイン」があるみたいだけど、コマンドライン案件ではないので、URL貼っとく。
 # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 # もしかしたら…これでイケるかも？
