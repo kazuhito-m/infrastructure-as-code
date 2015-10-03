@@ -3,6 +3,10 @@
 # Directory name rename
 LANG=C xdg-user-dirs-gtk-update
 
+# 画面整え
+# すべての設定->外観->Launcherアイコンのサイズ を 32 に
+# すべての設定->ディスプレイ->拡大縮小 を 0.75 に
+
 # git settings
 git config --global user.email "sumpic@hotmail.com"
 git config --global user.name "kazuhito-m"
