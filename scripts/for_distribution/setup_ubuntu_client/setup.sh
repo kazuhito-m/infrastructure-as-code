@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 # Directory name rename
 LANG=C xdg-user-dirs-gtk-update
@@ -44,7 +44,7 @@ sudo apt-get install jenkins
 
 # その後、Jobを固めたファイルを然るべきところに展開する。
 sudo su jenkins
-tar xzf ./resources/jenkins_jobs.tgz 
+tar xzf ./resources/jenkins_jobs.tgz
 mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.org
 mv ./jobs /var/lib/jenkns/jobs
 exit
@@ -56,7 +56,7 @@ sudo visudo
 # docker インストール
 sudo apt-get install docker
 
-# scala develop environment 
+# scala develop environment
 SCALA_VER='2.12.0-M2'
 SBT_VER='0.13.9'
 wget www.scala-lang.org/files/archive/scala-${SCALA_VER}.deb
@@ -87,17 +87,16 @@ sudo dpkg -i ./resources/plantuml_7707-1_all.deb
 sudo vi /usr/bin/plantuml
 # javaコマンド実行前に"export LANG=ja_JP.UTF-8"を入れる。
 # しかもバグがあるみたいなので、最新のJarと置き換え
-curl http://sourceforge.net/projects/plantuml/files/plantuml.jar/download > ./plantuml.jar
-sudo mv ./plantuml.jar /usr/share/plantuml/plantuml.jar
-
+sudo cp ./resources/plantuml.jar /usr/share/plantuml/plantuml.jar
 
 # ついでに「Atomのプラグイン」があるみたいだけど、コマンドライン案件ではないので、URL貼っとく。
 # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 # もしかしたら…これでイケるかも？
 apm install plantuml-viewer language-plantuml
 
+# BootableUSBとか焼くために、UNetBootin入れとく。。
+sudo apt-get install -y unetbootin
+
 # -- add ---
 # special settings
 jenkins ALL=(ALL) NOPASSWD:ALL
-
-
