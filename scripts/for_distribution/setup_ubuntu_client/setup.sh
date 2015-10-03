@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# full update
+sudo apt-get install -y update
+sudo apt-get install -y upgrade
+
 # Directory name rename
 LANG=C xdg-user-dirs-gtk-update
 
