@@ -105,6 +105,9 @@ apm install plantuml-viewer language-plantuml
 # BootableUSBとか焼くために、UNetBootin入れとく。。
 sudo apt-get install -y unetbootin
 
+# ディスクのコントロールのため、GPartedは必須にしておく
+sudo apt-get install -y gparted
+
 # -- add ---
 # special settings
 jenkins ALL=(ALL) NOPASSWD:ALL
