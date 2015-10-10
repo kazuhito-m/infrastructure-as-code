@@ -113,7 +113,7 @@ sudo apt-get install -y gparted
 sudo apt-get install -y imagemagick 
 
 # その他「ノンジャンルで雑多」なもの
-sudo apt-get install -y stopwatch 
+sudo apt-get install -y stopwatch tree
 
 # -- add ---
 # special settings
