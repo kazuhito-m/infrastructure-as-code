@@ -109,6 +109,12 @@ sudo apt-get install -y unetbootin
 # ディスクのコントロールのため、GPartedは必須にしておく
 sudo apt-get install -y gparted
 
+# 画像変換の"mogrify"コマンドのため、以下を入れる。
+sudo apt-get install -y imagemagick 
+
+# その他「ノンジャンルで雑多」なもの
+sudo apt-get install -y stopwatch 
+
 # -- add ---
 # special settings
 jenkins ALL=(ALL) NOPASSWD:ALL
