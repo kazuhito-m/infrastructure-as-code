@@ -113,7 +113,7 @@ sudo apt-get install -y gparted
 sudo apt-get install -y imagemagick 
 
 # その他「ノンジャンルで雑多」なもの
-sudo apt-get install -y stopwatch tree
+sudo apt-get install -y stopwatch tree vim
 
 # -- add ---
 # special settings
