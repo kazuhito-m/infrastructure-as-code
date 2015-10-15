@@ -112,6 +112,11 @@ sudo apt-get install -y gparted
 # 画像変換の"mogrify"コマンドのため、以下を入れる。
 sudo apt-get install -y imagemagick 
 
+# Fablic入れる方法
+sudo apt-get install python-setuptools
+sudo easy_install pip 
+sudo pip install fabric
+
 # その他「ノンジャンルで雑多」なもの
 sudo apt-get install -y stopwatch tree vim
 
