@@ -11,6 +11,10 @@ GIT_USER=kazuhito-m
 
 sudo useradd -m ${MY_USER}
 sudo passwd ${MY_USER}
+# グループに追加(これはUbuntu固有？)
+for i in  sudo adm dialout cdrom floppy sudo audio dip video plugdev netdev ; do
+  sudo gpasswd -a ${MY_USER} ${i}
+done
 sudo usermod -G sudo ${MY_USER}
 # 鍵コピー
 sudo mkdir /home/${MY_USER}/.ssh
@@ -32,4 +36,5 @@ sudo chown ${MY_USER}:${MY_USER} /home/${MY_USER}/.netrc
 
 # ユーザをロックする
 #  sudo usermod -L ${DEFAULT_USER}
+# …が、これではうまく行かず。なんだろう。
 
