@@ -34,7 +34,6 @@ _EOT_
 sudo mv ./.netrc /home/${MY_USER}/
 sudo chown ${MY_USER}:${MY_USER} /home/${MY_USER}/.netrc
 
-# ユーザをロックする
-#  sudo usermod -L ${DEFAULT_USER}
-# …が、これではうまく行かず。なんだろう。
+# ユーザをs削除する。
+# sudo userdel -r ubuntu
 
