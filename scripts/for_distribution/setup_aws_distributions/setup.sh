@@ -30,4 +30,5 @@ sudo mv ./.netrc /home/${MY_USER}/
 sudo chown ${MY_USER}:${MY_USER} /home/${MY_USER}/.netrc
 
 # ユーザをロックする
-# passwd -l ${DEFAULT_USER}
+#  sudo usermod -L ${DEFAULT_USER}
+
