@@ -11,6 +11,7 @@ GIT_USER=kazuhito-m
 
 sudo useradd -m ${MY_USER}
 sudo passwd ${MY_USER}
+sudo usermod -G sudo ${MY_USER}
 # 鍵コピー
 sudo mkdir /home/${MY_USER}/.ssh
 sudo cp /home/${DEFAULT_USER}/.ssh/authorized_keys /home/${MY_USER}/.ssh/authorized_keys
