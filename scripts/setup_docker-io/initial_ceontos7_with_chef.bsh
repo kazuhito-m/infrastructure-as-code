@@ -8,14 +8,6 @@
 # 
 # ※極力楽するので、本当は良くないがyumに依存したり、いろいろ筋の悪いことをしているのは承知の上。
 
-# この環境用の設定
-export http_proxy=proxy.nintendo.co.jp:8080
-export HTTP_PROXY=${http_proxy}
-export ftp_proxy=${http_proxy}
-export FTP_PROXY=${http_proxy}
-export https_proxy=${http_proxy}
-export HTTPS_PROXY=${http_proxy}
-
 # Ruby最新インストール(リポジトリ任せ)
 yum update -y 
 yum install -y ruby ruby-devel git svn gcc openssl-devel zlib-devel gcc-c++ autoconf automake
@@ -52,14 +44,6 @@ done
 
 # Chefによるサーバのセットアップ
 cd ./chef-repo
-
-# Chef用のプロキシー設定
-export http_proxy=http://proxy.nintendo.co.jp:8080
-export HTTP_PROXY=${http_proxy}
-export ftp_proxy=${http_proxy}
-export FTP_PROXY=${http_proxy}
-export https_proxy=${http_proxy}
-export HTTPS_PROXY=${http_proxy}
 
 # solo.rb の書き換え
 bash ./solo.rb.template.bsh > ./solo.rb
