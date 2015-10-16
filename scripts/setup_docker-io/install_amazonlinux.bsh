@@ -23,3 +23,5 @@ sudo chmod +s /usr/bin/docker
 
 echo "Server setup for Docker finished!"
 
+# 試しに「最新Jenkins」を立ち上げてみる例
+# docker run -d -p 8080:8080 jenkins:latest
