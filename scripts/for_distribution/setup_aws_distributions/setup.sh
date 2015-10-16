@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 # AWS系(AmazonLinuxなど)で「最初にやること」を記述したシェル
+# 基本的には「どのディストリでも動く方法」をとるが、ディストリ特殊なものはコメントで書く。	
 
 MY_USER=kazuhito
 DEFAULT_USER=${USER}
@@ -36,4 +37,21 @@ sudo chown ${MY_USER}:${MY_USER} /home/${MY_USER}/.netrc
 
 # ユーザをs削除する。
 # sudo userdel -r ubuntu
+
+# ココからは「Ubuntuかつデスクトップ運用したい場合」のみの設定。
+# まずは「デスクトップを上げたいユーザでログインし、以下のコマンドを打つ。
+sudo apt-get update -y
+sudo apt-get install -y gnome-core ubuntu-desktop vnc4server
+sudo service gdm start
+# 初回、vncserverパスワード決め
+vncserver :1
+# すぐさま殺す
+vncserver -kill :1
+# ~/.vnc/xstartup 書き換え
+mv ~/.vnc/xstartup ~/.vnc/xstartup.org
+grep -v '^x-.*' > ~/.vnc/xstartup
+echo 'exec gnome-session &' >> ~/.vnc/xstartup
+
+
+
 
