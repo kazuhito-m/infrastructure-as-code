@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Dockeをセットアップするスクリプト群。
+#
+# 対象:Amazon Linux
+# user:sudoが使えるユーザならだれでも
+# 作業dir:任意
+# 
+# Chefを使わず、直接インストールします(なのでこれはこのディレクトリにあるファイル群とは別に独立しています。)
+
+echo "Server setup for Docker finished!"
+
