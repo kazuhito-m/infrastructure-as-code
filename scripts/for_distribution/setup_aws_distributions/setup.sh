@@ -49,7 +49,7 @@ vncserver :1
 vncserver -kill :1
 # ~/.vnc/xstartup 書き換え
 mv ~/.vnc/xstartup ~/.vnc/xstartup.org
-grep -v '^x-.*' > ~/.vnc/xstartup
+grep -v '^x-.*' ~/.vnc/xstartup.org > ~/.vnc/xstartup
 echo 'exec gnome-session &' >> ~/.vnc/xstartup
 
 
