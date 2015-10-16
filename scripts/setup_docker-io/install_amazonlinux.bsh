@@ -8,5 +8,18 @@
 # 
 # Chefを使わず、直接インストールします(なのでこれはこのディレクトリにあるファイル群とは別に独立しています。)
 
+sudo wget https://get.docker.io/builds/Linux/x86_64/docker-latest -O /usr/bin/docker
+sudo chmod +x /usr/bin/docker
+echo 'DL and copy finished! echo docker version'
+docker version
+
+echo 'Deamon setup start.'
+sudo wget https://raw.githubusercontent.com/dotcloud/docker/master/contrib/init/upstart/docker.conf -O /etc/init/docker.conf
+sudo initctl reload-configuration
+sudo initctl list | grep docker
+sudo initctl start docker
+
+sudo chmod +s /usr/bin/docker
+
 echo "Server setup for Docker finished!"
 
