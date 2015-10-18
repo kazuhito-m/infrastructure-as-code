@@ -41,8 +41,7 @@ sudo chown ${MY_USER}:${MY_USER} /home/${MY_USER}/.netrc
 # まずは「デスクトップを上げたいユーザでログインし、以下のコマンドを打つ。
 sudo apt-get update -y
 sudo apt-get upgrade -y
-sudo apt-get install -y gnome-core ubuntu-desktop vnc4server
-sudo service gdm start
+sudo apt-get install -y gnome-core ubuntu-desktop tightvncserver 
 # 初回、vncserverパスワード決め
 vncserver :1
 # すぐさま殺す
@@ -58,3 +57,4 @@ metacity &
 nautilus -n &
 gnome-terminal &
 _EOS_
+chmod 755 ~/.vnc/xstartup
