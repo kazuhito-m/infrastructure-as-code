@@ -23,3 +23,6 @@ def all_upgrade():
 	sudo("apt-get update", pty=False)
 	sudo("apt-get upgrade -y", pty=False)
 	sudo("apt-get dist-upgrade -y", pty=False)
+
+def rename_home_template_dirs():
+	sudo("LANG=C xdg-user-dirs-update --force")
