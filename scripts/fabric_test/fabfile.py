@@ -25,4 +25,4 @@ def all_upgrade():
 	sudo("apt-get dist-upgrade -y", pty=False)
 
 def rename_home_template_dirs():
-	sudo("LANG=C xdg-user-dirs-update --force")
+	run("LANG=C xdg-user-dirs-update --force")
