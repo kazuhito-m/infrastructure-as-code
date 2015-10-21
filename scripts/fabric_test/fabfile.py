@@ -25,4 +25,6 @@ def all_upgrade():
 	sudo("apt-get dist-upgrade -y", pty=False)
 
 def rename_home_template_dirs():
-	run("LANG=C xdg-user-dirs-update --force")
+	run("LC_ALL=C dg-user-dirs-update --force")
+	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
+
