@@ -1,4 +1,4 @@
 #!/bin/bash
 
-fab  -H 172.17.0.2 -u japanize
+fab  -H 54.178.170.79 -u japanize
 
