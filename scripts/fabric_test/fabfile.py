@@ -12,7 +12,7 @@ def hello():
 def japanize():
 	# change locale
 	sudo("apt-get install -y language-pack-ja", pty=False)
-	sudo("update-locale ja_JP.UTF-8")
+	sudo("update-locale LANG=ja_JP.UTF-8")
 	# change timezone
 	sudo("mv /etc/localtime{,.org}")
 	sudo("ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime")
