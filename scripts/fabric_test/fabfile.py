@@ -28,5 +28,7 @@ def rename_home_template_dirs():
 	run("LC_ALL=C xdg-user-dirs-update --force")
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
-
-
+def install_msvsc():
+  run("curl https://az764295.vo.msecnd.net/public/0.9.1/VSCode-linux64.zip > vscode.zip")
+  run("unzip ./vscode.zip")
+  # プラグイン系が .vscode/extensions/ に拡張が、.config/Code/User にユーザ設定が保存されている。
