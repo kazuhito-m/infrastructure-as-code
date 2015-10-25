@@ -40,3 +40,13 @@ def install_msvsc():
 	run("umake -v web visual-studio-code")
 	# exec manualy command when miss install.
 	# extends in .vscode/extensions/ , configfile in .config/Code/User
+
+def install_web_tools():
+	# reference : http://tecadmin.net/install-google-chrome-in-ubuntu/
+	run("wget -q -O ./linux_signing_key.pub https://dl-ssl.google.com/linux/linux_signing_key.pub ")
+	sudo("apt-key add ./linux_signing_key.pub")
+	run("rm ./linux_signing_key.pub")
+	sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
+	sudo("apt-get update -y", pty=False)
+	sudo("apt-get install -y google-chrome-stable", pty=False)
+
