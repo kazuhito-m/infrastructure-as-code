@@ -30,8 +30,8 @@ def rename_home_template_dirs():
 
 def install_msvsc():
 	run("wget https://az764295.vo.msecnd.net/public/0.9.1/VSCode-linux64.zip", pty=False)
-	run("unzip ./VSCode*.zip")
-	sudo("mv ./VSCode* /usr/local/lib/vscode/")
-	sudo("ln -s /usr/local/lib/vscode/Code /usr/local/bin/VSCode")
+	run("unzip ./VSCode*.zip", pty=False)
 	run("rm ./VSCode*.zip")
+	sudo("mv ./VSCode* /usr/local/lib/")
+	sudo("ln -s /usr/local/lib/VSCode*/Code /usr/local/bin/VSCode")
 	# extends in .vscode/extensions/ , configfile in .config/Code/User
