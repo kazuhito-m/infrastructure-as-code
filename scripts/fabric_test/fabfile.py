@@ -3,6 +3,7 @@ from fabric.api import local, run, sudo
 
 SELF_MAIL_ADDRESS = "sumpic@hotmail.com"
 USER_NAME = "kazuhito-m"
+GIT_PASS = "xxxx"
 
 def hello():
 
@@ -57,6 +58,10 @@ def install_web_tools():
 
 def install_git_and_setting():
 	# sudo("apt-get install -y git")
-	run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
-	run("git config --global user.name \"" + USER_NAME  + "\"")
-
+	# run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
+	# run("git config --global user.name \"" + USER_NAME  + "\"")
+	netrc = """
+machine github.com
+login """ + USER_NAME + """
+password """ + GIT_PASS
+	print(netrc)
