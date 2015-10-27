@@ -57,7 +57,7 @@ def install_web_tools():
 	sudo("apt-get install -y google-chrome-stable", pty=False)
 
 def install_git_and_setting():
-	sudo("apt-get install -y git")
+	sudo("apt-get install -y git", pty=False)
 	run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
 	run("git config --global user.name \"" + USER_NAME  + "\"")
 	netrc = """machine github.com
@@ -66,4 +66,4 @@ password """ + GIT_PASS
 	run("echo '" + netrc + "' > ~/.netrc")
 
 def install_multi_media():
-	sudo("apt-get install -y ubuntu-restricted-extras")
+	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
