@@ -4,26 +4,6 @@
 # すべての設定->外観->Launcherアイコンのサイズ を 32 に
 # すべての設定->ディスプレイ->拡大縮小 を 0.75 に
 
-# コーデックなど一式をグループインストール
-sudo apt-get install -y ubuntu-restricted-extras
-
-# editor系一式
-sudo apt-get install -y leafpad
-# Atom Editor
-sudo add-apt-repository ppa:webupd8team/atom
-sudo apt-get update
-sudo apt-get install atom
-
-# クロームがいいかなー
-# 参考:http://tecadmin.net/install-google-chrome-in-ubuntu/
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-sudo apt-get update -y
-sudo apt-get install -y  google-chrome-stable
-
-# ドローイングソフト系
-sudo apt-get install -y gimp
-
 # Jenkinsの直指定インストール。
 wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
 sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
