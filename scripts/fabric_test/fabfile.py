@@ -65,5 +65,6 @@ login """ + USER_NAME + """
 password """ + GIT_PASS
 	run("echo '" + netrc + "' > ~/.netrc")
 
-def install_multi_media():
-	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
+# 14.04 ではそのパッケージが無い。
+# def install_multi_media():
+# 	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
