@@ -1,4 +1,8 @@
+#coding:utf-8
 from fabric.api import local, run, sudo
+
+SELF_MAIL_ADDRESS = "sumpic@hotmail.com"
+USER_NAME = "kazuhito-m"
 
 def hello():
 
@@ -29,6 +33,7 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def install_msvsc():
+	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
 #	run("wget https://az764295.vo.msecnd.net/public/0.9.1/VSCode-linux64.zip", pty=False)
 #	run("unzip ./VSCode*.zip", pty=False)
 #	run("rm ./VSCode*.zip")
@@ -38,7 +43,7 @@ def install_msvsc():
 	sudo("apt-get update -y")
 	sudo("apt-get install -y ubuntu-make")
 	run("umake -v web visual-studio-code")
-	# exec manualy command when miss install.
+	# ここだけは、対話型で打たねばならない(自動的にはこける)
 	# extends in .vscode/extensions/ , configfile in .config/Code/User
 
 def install_web_tools():
@@ -49,4 +54,9 @@ def install_web_tools():
 	sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
 	sudo("apt-get update -y", pty=False)
 	sudo("apt-get install -y google-chrome-stable", pty=False)
+
+def install_git_and_setting():
+	# sudo("apt-get install -y git")
+	run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
+	run("git config --global user.name \"" + USER_NAME  + "\"")
 
