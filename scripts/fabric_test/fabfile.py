@@ -68,3 +68,12 @@ password """ + GIT_PASS
 # 14.04 ではそのパッケージが無い。
 # def install_multi_media():
 # 	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
+
+def install_text_editors():
+	# editor系一式
+	sudo("apt-get install -y leafpad", pty=False)
+	# Atom Editor
+	sudo("add-apt-repository ppa:webupd8team/atom", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install atom", pty=False)
+
