@@ -57,9 +57,9 @@ def install_web_tools():
 	sudo("apt-get install -y google-chrome-stable", pty=False)
 
 def install_git_and_setting():
-	# sudo("apt-get install -y git")
-	# run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
-	# run("git config --global user.name \"" + USER_NAME  + "\"")
+	sudo("apt-get install -y git")
+	run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
+	run("git config --global user.name \"" + USER_NAME  + "\"")
 	netrc = """machine github.com
 login """ + USER_NAME + """
 password """ + GIT_PASS
