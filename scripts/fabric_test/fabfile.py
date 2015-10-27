@@ -76,4 +76,8 @@ def install_text_editors():
 	sudo("add-apt-repository ppa:webupd8team/atom", pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install atom", pty=False)
+	# TODO Reafpad,gedtの設定ファイル持ってくる。
+
+def install_drowing_editor():
+	 sudo("apt-get install -y gimp pinta", pty=False)
 
