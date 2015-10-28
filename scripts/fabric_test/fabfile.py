@@ -78,7 +78,7 @@ password """ + GIT_PASS
 
 def install_text_editors():
 	# editor系一式
-	sudo("apt-get install -y leafpad", pty=False)
+	sudo("apt-get install -y leafpad vim", pty=False)
 	# Atom Editor
 	sudo("add-apt-repository ppa:webupd8team/atom", pty=False)
 	sudo("apt-get update", pty=False)
@@ -86,7 +86,7 @@ def install_text_editors():
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_tools():
-	sudo("apt-get install -y gimp pinta", pty=False)
+	sudo("apt-get install -y gimp pinta imagemagick", pty=False)
 
 def install_jenkins():
 	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
@@ -113,3 +113,10 @@ def install_dtm_tools():
 	sudo("apt-get install -y rosegarden hydrogen ardour", pty=False)
 	# ソフトシンセや「音源材料」系
 	sudo("apt-get install -y qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2", pty=False)
+
+def install_system_maintenance():
+	sudo("apt-get install -y gparted unetbootin tree", pty=False)
+
+def install_common_tools():
+	sudo("apt-get install -y stopwatch", pty=False)
+
