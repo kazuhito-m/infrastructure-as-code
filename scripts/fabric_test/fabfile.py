@@ -34,8 +34,12 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def install_vncserver():
-	print("TODO あとで実装。")
-	
+	sudo("apt-get install -y gnome-core ubuntu-desktop tightvncserver", pty=False)
+	run("rm -rf ~/.vnc")
+	run("mkdir ^/.vnc")
+	put("./resources/.vnc/","~/")
+	run("chmod 600 ~/.vnc/passwd")
+	run("chmod 755 ~/.vnc/xstartup")
 
 def install_msvsc():
 	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
@@ -83,7 +87,7 @@ def install_text_editors():
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_editor():
-	 sudo("apt-get install -y gimp pinta", pty=False)
+	sudo("apt-get install -y gimp pinta", pty=False)
 
 def install_jenkins():
 	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
