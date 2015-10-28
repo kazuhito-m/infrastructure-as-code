@@ -108,3 +108,8 @@ def install_jenkins():
 	sudo("update-rc.d jenkins default")
 	sudo("service jenkins start")
 
+def install_dtm_tools():
+	# DTM関係よろずインストール
+	sudo("apt-get install -y rosegarden hydrogen ardour", pty=False)
+	# ソフトシンセや「音源材料」系
+	sudo("apt-get install -y qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2", pty=False)
