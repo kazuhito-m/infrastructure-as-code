@@ -110,7 +110,7 @@ def install_jenkins():
 
 def install_dtm_tools():
 	# DTM関係よろずインストール
-	sudo("apt-get install -y rosegarden hydrogen ardour", pty=False)
+	sudo("apt-get install -y audacity rosegarden hydrogen ardour", pty=False)
 	# ソフトシンセや「音源材料」系
 	sudo("apt-get install -y qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2", pty=False)
 
@@ -120,8 +120,8 @@ def install_system_maintenance():
 def install_common_tools():
 	sudo("apt-get install -y stopwatch", pty=False)
 
-
-def insatall_developers_tools()
+def insatall_developers_tools():
+	# java8 installl
+	sudo("apt-get install -y openjdk-8-jdk", pty=False)
 	# Fablic install.
-	# Fablic install
 	sudo("apt-get install -y fabric", pty=False)
