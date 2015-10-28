@@ -33,6 +33,10 @@ def rename_home_template_dirs():
 	run("LC_ALL=C xdg-user-dirs-update --force")
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
+def install_vncserver():
+	print("TODO あとで実装。")
+	
+
 def install_msvsc():
 	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
 #	run("wget https://az764295.vo.msecnd.net/public/0.9.1/VSCode-linux64.zip", pty=False)
@@ -82,8 +86,22 @@ def install_drowing_editor():
 	 sudo("apt-get install -y gimp pinta", pty=False)
 
 def install_jenkins():
-	run("wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key")
-	sudo("apt-key add -y jenkins-ci.org.key", pty=False)
+	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
+	sudo("apt-key add /tmp/jenkins-ci.org.key", pty=False)
 	sudo("sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'")
 	sudo("apt-get -y update", pty=False)
 	sudo("apt-get install -y jenkins", pty=False)
+	# これだけで入るので、あとは http://locahost:8080 で確認。
+	# 最初に二つのプラグインを入れる
+	# + Post build task
+	# + CloudBees Folders Plugin
+	# その後、Jobを固めたファイルを然るべきところに展開する。
+	# sudo su jenkins
+	# tar xzf ./resources/jenkins_jobs.tgz
+	# mv /var/lib/jenkins/jobs /var/lib/jenkins/jobs.org
+	# mv ./jobs /var/lib/jenkns/jobs
+	# exit
+	# TODO ここの上の実装
+	sudo("update-rc.d jenkins default")
+	sudo("service jenkins start")
+
