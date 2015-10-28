@@ -1,5 +1,5 @@
 #coding:utf-8
-from fabric.api import local, run, sudo
+from fabric.api import local, run, sudo, put
 
 SELF_MAIL_ADDRESS = "sumpic@hotmail.com"
 USER_NAME = "kazuhito-m"
@@ -36,7 +36,6 @@ def rename_home_template_dirs():
 def install_vncserver():
 	sudo("apt-get install -y gnome-core ubuntu-desktop tightvncserver", pty=False)
 	run("rm -rf ~/.vnc")
-	run("mkdir ^/.vnc")
 	put("./resources/.vnc/","~/")
 	run("chmod 600 ~/.vnc/passwd")
 	run("chmod 755 ~/.vnc/xstartup")
@@ -86,7 +85,7 @@ def install_text_editors():
 	sudo("apt-get install atom", pty=False)
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
-def install_drowing_editor():
+def install_drowing_tools():
 	sudo("apt-get install -y gimp pinta", pty=False)
 
 def install_jenkins():
