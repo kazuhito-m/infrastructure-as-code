@@ -81,3 +81,9 @@ def install_text_editors():
 def install_drowing_editor():
 	 sudo("apt-get install -y gimp pinta", pty=False)
 
+def install_jenkins():
+	run("wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key")
+	sudo("apt-key add -y jenkins-ci.org.key", pty=False)
+	sudo("sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'")
+	sudo("apt-get -y update", pty=False)
+	sudo("apt-get install -y jenkins", pty=False)
