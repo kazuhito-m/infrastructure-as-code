@@ -120,3 +120,8 @@ def install_system_maintenance():
 def install_common_tools():
 	sudo("apt-get install -y stopwatch", pty=False)
 
+
+def insatall_developers_tools()
+	# Fablic install.
+	# Fablic install
+	sudo("apt-get install -y fabric", pty=False)
