@@ -10,6 +10,7 @@ def setup_all():
 	# japanize)(
 	# install_vncserver()
 	# rename_home_template_dirs()
+	install_modan_fonts()
 	install_web_tools()
 	install_git_and_setting()
 	# install_multi_media()
@@ -21,7 +22,6 @@ def setup_all():
 	install_developers_tools()
 	install_msvsc()
 	# install_jenkins()
-
 def japanize():
 	# change locale
 	sudo("apt-get install -y language-pack-ja", pty=False)
@@ -43,6 +43,7 @@ def rename_home_template_dirs():
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
+	# TODO 自身のいつも使ってるフォントを追加。
 
 def install_vncserver():
 	sudo("apt-get install -y gnome-core ubuntu-desktop tightvncserver", pty=False)
