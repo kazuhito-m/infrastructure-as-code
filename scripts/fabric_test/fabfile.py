@@ -41,6 +41,9 @@ def rename_home_template_dirs():
 	run("LC_ALL=C xdg-user-dirs-update --force")
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
+def install_modan_fonts():
+	sudo("apt-get install -y fonts-migmix" , pty=False)
+
 def install_vncserver():
 	sudo("apt-get install -y gnome-core ubuntu-desktop tightvncserver", pty=False)
 	run("rm -rf ~/.vnc")
@@ -135,8 +138,12 @@ def install_msvsc():
 	# extends in .vscode/extensions/ , configfile in .config/Code/User
 
 def install_nodejs():
-	sudo("add-apt-repository ppa:chris-lea/node.js", pty=False)
-	sudo("sudo apt-get update -y", pty=False)
-	sudo("sudo apt-get install -y nodejs npm", pty=False)
+	# 最初はPPAでやろうとおもったが…なくなってるみたいなので、しゃーなしでスクリプトでやることに
+	# sudo("add-apt-repository ppa:chris-lea/node.js", pty=False)
+	# sudo("sudo apt-get update -y", pty=False)
+	# sudo("sudo apt-get install -y nodejs npm", pty=False)
+	run("wget -O /tmp/setup_nodejs https://deb.nodesource.com/setup_0.12")
+	sudo("bash /tmp/setup_nodejs", pty=False)
+	sudo("apt-get install -y nodejs", pty=False)
 	run("node -v")
 	
