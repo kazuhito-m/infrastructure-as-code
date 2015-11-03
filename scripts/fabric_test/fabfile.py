@@ -55,7 +55,8 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -y stopwatch convmv", pty=False)
+	sudo("apt-get install -y stopwatch convmv incron", pty=False)
+	sudo("sysv-rc-conf incron on")
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -146,7 +147,7 @@ def install_system_maintenance():
 
 def install_developers_tools():
 	# java8 installl
-	sudo("apt-get install -y openjdk-8-jdk", pty=False)
+	sudo("apt-get install -y openjdk-8-jdk galternatives", pty=False)
 	# Fablic install.
 	sudo("apt-get install -y fabric", pty=False)
 	# VCS visualize tools
