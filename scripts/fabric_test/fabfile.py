@@ -30,6 +30,7 @@ def setup_all():
 	install_nodejs()
 	install_plantuml()
 	install_scala_and_sbt()
+	# install_touchpad_controltool()
 
 def japanize():
 	# change locale
@@ -51,10 +52,10 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	sudo("apt-get install -y curl nautilus-dropbox" , pty=False)
+	sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -y stopwatch", pty=False)
+	sudo("apt-get install -y stopwatch convmv", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -104,7 +105,7 @@ def install_text_editors():
 	# editor系一式
 	sudo("apt-get install -y leafpad vim", pty=False)
 	# Atom Editor
-	sudo("add-apt-repository ppa:webupd8team/atom", pty=False)
+	sudo("add-apt-repository -y ppa:webupd8team/atom", pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install atom", pty=False)
 	# plugin設定
@@ -148,6 +149,12 @@ def install_developers_tools():
 	sudo("apt-get install -y openjdk-8-jdk", pty=False)
 	# Fablic install.
 	sudo("apt-get install -y fabric", pty=False)
+	# VCS visualize tools
+	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
+	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
+	# datavese viewer
+	sudo("apt-get install libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
+
 
 def install_msvsc():
 	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
@@ -204,4 +211,9 @@ def install_scala_and_sbt():
  	run("/tmp/sc_setup.sh")
  	run("cs n8han/giter8")
 
+# touchpadを無効化するツールをインストール
+def install_touchpad_controltool():
+	sudo("add-apt-repository -y ppa:atareao/atareao")
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y touchpad-indicator", pty=False)
 
