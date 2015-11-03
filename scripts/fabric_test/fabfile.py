@@ -6,24 +6,26 @@ USER_NAME = "kazuhito-m"
 GIT_PASS = "xxxx"
 
 def setup_all():
+# def japanize():
 	all_upgrade()
 	# japanize()
-	# install_vncserver()
 	rename_home_template_dirs()
 	basic_tools_setup()
+	install_common_tools()
 	install_modan_fonts()
+	# install_vncserver()
 	install_web_tools()
 	install_git_and_setting()
-	# install_multi_media()
 	install_text_editors()
 	install_drowing_tools()
+	#  install_jenkins()
 	install_dtm_tools()
 	install_system_maintenance()
-	install_common_tools()
 	install_developers_tools()
 	install_msvsc()
+	install_nodejs()
 	install_plantuml()
-	# install_jenkins()
+	install_scala_and_sbt()
 def japanize():
 	# change locale
 	sudo("apt-get install -y language-pack-ja", pty=False)
@@ -45,6 +47,9 @@ def rename_home_template_dirs():
 
 def basic_tools_setup():
 	sudo("apt-get install -y nautilus-dropbox" , pty=False)
+
+def install_common_tools():
+	sudo("apt-get install -y stopwatch", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -125,9 +130,6 @@ def install_dtm_tools():
 
 def install_system_maintenance():
 	sudo("apt-get install -y gparted unetbootin tree", pty=False)
-
-def install_common_tools():
-	sudo("apt-get install -y stopwatch", pty=False)
 
 def install_developers_tools():
 	# java8 installl
