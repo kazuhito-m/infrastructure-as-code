@@ -10,6 +10,7 @@ def setup_all():
 	# japanize()
 	# install_vncserver()
 	rename_home_template_dirs()
+	basic_tools_setup()
 	install_modan_fonts()
 	install_web_tools()
 	install_git_and_setting()
@@ -41,6 +42,9 @@ def all_upgrade():
 def rename_home_template_dirs():
 	run("LC_ALL=C xdg-user-dirs-update --force")
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
+
+def basic_tools_setup():
+	sudo("apt-get install -y nautilus-dropbox" , pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -164,16 +168,19 @@ def install_plantuml():
  	run("which atom && apm install  plantuml-viewer language-plantuml")
 
 def install_scala_and_sbt():
-	SCALA_VER='2.12.0-M2'
-	SBT_VER='0.13.9'
-	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
-	run("wget -O /tmp/sbt.deb https://dl.bintray.com/sbt/debian/sbt-" + SBT_VER + ".deb")
-	sudo("apt-get update" , pty=False)
-	sudo("dpkg -i /tmp/scala.deb /tmp/sbt.deb")
-	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
-	run("wget -O sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
-	run("chmod 755 /tmp/sc_setup.sh")
-	run("/tmp/setup.sh")
-	run("^/bin/cs n8han/giter8")
+	SCALA_VER='2.12.0-M3'
+	# run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
+	# sudo("dpkg -i /tmp/scala.deb" , pty=False)
+	# sbt apt regist
+ 	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
+  	sudo("apt-get update -y" , pty=False)
+ 	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
+ 	sudo("apt-get update -y" , pty=False)
+ 	sudo("apt-get install -y sbt", pty=False)
+# 	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
+# 	run("wget -O sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
+# 	run("chmod 755 /tmp/sc_setup.sh")
+# 	run("/tmp/setup.sh")
+# 	run("^/bin/cs n8han/giter8")
 
 
