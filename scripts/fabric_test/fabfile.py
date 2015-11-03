@@ -58,7 +58,6 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -y stopwatch convmv incron indicator-multiload tree", pty=False)
-	sudo("sysv-rc-conf incron on")
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
