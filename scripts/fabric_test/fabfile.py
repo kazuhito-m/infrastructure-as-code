@@ -57,7 +57,7 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -y stopwatch convmv incron indicator-multiload", pty=False)
+	sudo("apt-get install -y stopwatch convmv incron indicator-multiload tree", pty=False)
 	sudo("sysv-rc-conf incron on")
 
 def install_modan_fonts():
