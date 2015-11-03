@@ -49,6 +49,10 @@ def basic_tools_setup():
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
 	# TODO 自身のいつも使ってるフォントを追加。
+	# dropboxからフォントを落とす
+	sudo("apt-get install -y git curl", pty=False)
+	run("wget -O /tmp/dropbox_uploader.sh https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh")
+	run("chmod +x /tmp/dropbox_uploader.sh")
 
 def install_vncserver():
 	sudo("apt-get install -y gnome-core ubuntu-desktop tightvncserver", pty=False)
@@ -168,19 +172,22 @@ def install_plantuml():
  	run("which atom && apm install  plantuml-viewer language-plantuml")
 
 def install_scala_and_sbt():
-	SCALA_VER='2.12.0-M3'
-	# run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
-	# sudo("dpkg -i /tmp/scala.deb" , pty=False)
-	# sbt apt regist
- 	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
-  	sudo("apt-get update -y" , pty=False)
- 	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
- 	sudo("apt-get update -y" , pty=False)
- 	sudo("apt-get install -y sbt", pty=False)
-# 	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
-# 	run("wget -O sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
-# 	run("chmod 755 /tmp/sc_setup.sh")
-# 	run("/tmp/setup.sh")
-# 	run("^/bin/cs n8han/giter8")
+ 	# scala install
+ 	SCALA_VER='2.12.0-M3'
+ 	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
+ 	sudo("dpkg -i /tmp/scala.deb" , pty=False)
+ 	# sbt apt regist
+   	sudo("mkdir -p /etc/apt/sources.list.d/")
+   	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
+    	sudo("apt-get update" , pty=False)
+   	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
+   	sudo("apt-get update -y" , pty=False)
+   	sudo("apt-get install -y sbt", pty=False)
+  	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
+	sudo("apt-get install -y curl", pty=False)
+ 	run("wget -O /tmp/sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
+ 	run("chmod 755 /tmp/sc_setup.sh")
+ 	run("/tmp/sc_setup.sh")
+ 	run("cs n8han/giter8")
 
 
