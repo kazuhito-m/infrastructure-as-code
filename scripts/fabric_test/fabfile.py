@@ -1,7 +1,7 @@
 #coding:utf-8
 from fabric.api import local, run, sudo, put
 
-SELF_MAIL_ADDRESS = "sumpic@hotmail.com"
+SELF_MAIL_ADDRESS = "test@gmail.com"
 USER_NAME = "kazuhito-m"
 GIT_PASS = "xxxx"
 
@@ -36,7 +36,7 @@ def setup_all():
 
 def japanize():
 	# change locale
-	sudo("apt-get install -y language-pack-ja ibus-mozc uim-mozc", pty=False)
+	sudo("apt-get install -y language-pack-ja ibus-mozc", pty=False)
 	sudo("update-locale LANG=ja_JP.UTF-8")
 	# change timezone
 	sudo("mv /etc/localtime{,.org}")
@@ -54,7 +54,7 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions" , pty=False)
+	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl" , pty=False)
 
 def install_common_tools():
 	sudo("apt-get install -y stopwatch convmv incron indicator-multiload tree", pty=False)
@@ -63,12 +63,11 @@ def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
 	# dropboxからフォントを落とす
 	sudo("apt-get install -y curl", pty=False)
-	run("wget -O /tmp/dropbox_uploader.sh https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh")
+	run("wget --no-check-certificate -O /tmp/dropbox_uploader.sh https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh")
 	run("chmod +x /tmp/dropbox_uploader.sh")
 	# 設定ファイルをプット
 	put("./resources/.dropbox_uploader" , "/tmp/.dropbox_uploader")
-	# run("/tmp/dropbox_uploader.sh -f /tmp/.dropbox_uploader  download /fonts /tmp/fonts")
-	run("chmod 755 /tmp/fonts/install-fonts.bsh")
+	run("/tmp/dropbox_uploader.sh -k -f/tmp/.dropbox_uploader download /fonts/ /tmp/fonts")
 	# DropBox内にあったスクリプトで全量インストール
 	sudo("cd /tmp/fonts/ && for i in $(find ./ -type f | grep -i '^.*\..t.$') ; do cp ${i} /usr/local/share/fonts/ ; done")
 	sudo("chmod 644 /usr/local/share/fonts/*")
@@ -83,10 +82,10 @@ def install_vncserver():
 
 def install_web_tools():
 	# reference : http://tecadmin.net/install-google-chrome-in-ubuntu/
-	run("wget -q -O ./linux_signing_key.pub https://dl-ssl.google.com/linux/linux_signing_key.pub ")
+	run("wget -q --no-check-certificate -O ./linux_signing_key.pub https://dl-ssl.google.com/linux/linux_signing_key.pub ")
 	sudo("apt-key add ./linux_signing_key.pub")
 	run("rm ./linux_signing_key.pub")
-	# sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
+	sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
 	sudo("apt-get update -y", pty=False)
 	sudo("apt-get install -y google-chrome-stable", pty=False)
 
@@ -112,9 +111,11 @@ def install_text_editors():
 	# editor系一式
 	sudo("apt-get install -y leafpad vim", pty=False)
 	# Atom Editor
-	sudo("add-apt-repository -y ppa:webupd8team/atom", pty=False)
-	sudo("apt-get update", pty=False)
-	sudo("apt-get install atom", pty=False)
+	# sudo("add-apt-repository -y ppa:webupd8team/atom", pty=False)
+	# sudo("apt-get update", pty=False)
+	# sudo("apt-get install atom", pty=False)
+	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
+	sudo("dpkg -i /tmp/atom.deb")
 	# plugin設定
 	run("apm install plantuml-viewer language-plantuml localize japanese-menu markdown-scroll-sync") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
