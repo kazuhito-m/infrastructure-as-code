@@ -31,6 +31,7 @@ def setup_all():
 	install_nodejs()
 	install_plantuml()
 	install_scala_and_sbt()
+	install_golang()
 	# install_touchpad_controltool()
 
 def japanize():
@@ -217,6 +218,19 @@ def install_scala_and_sbt():
  	run("chmod 755 /tmp/sc_setup.sh")
  	run("/tmp/sc_setup.sh")
  	run("cs n8han/giter8")
+
+def install_golang():
+	sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
+	sudo("apt-get update")
+	sudo("apt-get install -y golang")
+	# GOPATH系の設定
+	run("echo 'export GO_WORKSPACE=current' >> ~/.bashrc")
+	run("echo 'export GOPATH=~/go/third:~/go/${GO_WORKSPACE}' >> ~/.bashrc")
+	run("echo 'export PATH=${PATH}:~/go/third/bin:~/go/${GO_WORKSPACE}/bin' >> ~/.bashrc")
+	run("mkdir -p ~/go/{third,${GO_WORKSPACE}}")
+	run("mkdir -p ~/go/${GO_WORKSPACE}/{src,bin,pkg}")
+	# InteliJ Ideaにgo-langの開発環境を設定
+	# 基本的には、[ここ](http://stormcat.hatenablog.com/entry/2015/04/13/123000)をトレースする。
 
 # touchpadを無効化するツールをインストール
 def install_touchpad_controltool():
