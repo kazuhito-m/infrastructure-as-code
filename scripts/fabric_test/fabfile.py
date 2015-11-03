@@ -117,7 +117,7 @@ def install_text_editors():
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install atom", pty=False)
 	# plugin設定
-	run("apm install plantuml-viewer language-plantuml") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
+	run("apm install plantuml-viewer language-plantuml localize japanese-menu markdown-scroll-sync") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_tools():
