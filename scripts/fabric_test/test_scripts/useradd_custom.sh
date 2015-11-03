@@ -3,7 +3,7 @@
 USER_NAME=${1}
 
 # ユーザ作成 & パスワード
-sudo useradd -m ${USER_NAME}
+sudo useradd -m -s /bin/bash ${USER_NAME}
 echo "${USER_NAME}:test" | sudo chpasswd
 
 # sudo 与える
