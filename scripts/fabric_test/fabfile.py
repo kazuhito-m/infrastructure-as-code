@@ -30,6 +30,7 @@ def setup_all():
 	install_nodejs()
 	install_plantuml()
 	install_scala_and_sbt()
+
 def japanize():
 	# change locale
 	sudo("apt-get install -y language-pack-ja", pty=False)
