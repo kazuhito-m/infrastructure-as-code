@@ -163,3 +163,17 @@ def install_plantuml():
  	# atomがインストールされていた場合、atomのプラグインを入れる
  	run("which atom && apm install  plantuml-viewer language-plantuml")
 
+def install_scala_and_sbt():
+	SCALA_VER='2.12.0-M2'
+	SBT_VER='0.13.9'
+	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
+	run("wget -O /tmp/sbt.deb https://dl.bintray.com/sbt/debian/sbt-" + SBT_VER + ".deb")
+	sudo("apt-get update" , pty=False)
+	sudo("dpkg -i /tmp/scala.deb /tmp/sbt.deb")
+	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
+	run("wget -O sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
+	run("chmod 755 /tmp/sc_setup.sh")
+	run("/tmp/setup.sh")
+	run("^/bin/cs n8han/giter8")
+
+
