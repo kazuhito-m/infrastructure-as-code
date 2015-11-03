@@ -7,9 +7,9 @@ GIT_PASS = "xxxx"
 
 def setup_all():
 	all_upgrade()
-	# japanize)(
+	# japanize()
 	# install_vncserver()
-	# rename_home_template_dirs()
+	rename_home_template_dirs()
 	install_modan_fonts()
 	install_web_tools()
 	install_git_and_setting()
@@ -21,6 +21,7 @@ def setup_all():
 	install_common_tools()
 	install_developers_tools()
 	install_msvsc()
+	install_plantuml()
 	# install_jenkins()
 def japanize():
 	# change locale
@@ -81,6 +82,8 @@ def install_text_editors():
 	sudo("add-apt-repository ppa:webupd8team/atom", pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install atom", pty=False)
+	# plugin設定
+	run("apm install plantuml-viewer language-plantuml") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_tools():
@@ -148,3 +151,15 @@ def install_nodejs():
 	sudo("apt-get install -y nodejs", pty=False)
 	run("node -v")
 	
+def install_plantuml():
+	# 要るものは予め落としておく
+	run("wget -O /tmp/plantuml.jar http://downloads.sourceforge.net/project/plantuml/plantuml.jar")
+	# debパッケージ入れた後 最新Jarで上書き…とかしようと思ったがうまくいかなかったので、debのインストールと同じ構成を自力で作る。
+	sudo("mkdir -p /usr/share/plantuml/")
+	sudo("mv /tmp/plantuml.jar /usr/share/plantuml/")
+	sudo("chmod 755 /usr/share/plantuml/plantuml.jar")
+	sudo("echo 'java -jar /usr/share/plantuml/plantuml.jar ${@}' > /usr/bin/plantuml")
+	sudo("chmod 755 /usr/bin/plantuml")
+ 	# atomがインストールされていた場合、atomのプラグインを入れる
+ 	run("which atom && apm install  plantuml-viewer language-plantuml")
+
