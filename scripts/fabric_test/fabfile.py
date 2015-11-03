@@ -5,8 +5,12 @@ SELF_MAIL_ADDRESS = "sumpic@hotmail.com"
 USER_NAME = "kazuhito-m"
 GIT_PASS = "xxxx"
 
+# 実行前に、以下のじゅんびが　必要です
+# 
+# 上部の定数を個人設定の本当の値に置き換える
+# ./resource/.dropbox_uploader に値をいれたものを配置する
+#
 def setup_all():
-# def japanize():
 	all_upgrade()
 	# japanize()
 	rename_home_template_dirs()
@@ -46,18 +50,25 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	sudo("apt-get install -y nautilus-dropbox" , pty=False)
+	sudo("apt-get install -y curl nautilus-dropbox" , pty=False)
 
 def install_common_tools():
 	sudo("apt-get install -y stopwatch", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
-	# TODO 自身のいつも使ってるフォントを追加。
 	# dropboxからフォントを落とす
-	sudo("apt-get install -y git curl", pty=False)
+	sudo("apt-get install -y curl", pty=False)
 	run("wget -O /tmp/dropbox_uploader.sh https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh")
 	run("chmod +x /tmp/dropbox_uploader.sh")
+	# 設定ファイルをプット
+	put("./resources/.dropbox_uploader" , "/tmp/.dropbox_uploader")
+	# run("/tmp/dropbox_uploader.sh -f /tmp/.dropbox_uploader  download /fonts /tmp/fonts")
+	run("chmod 755 /tmp/fonts/install-fonts.bsh")
+	# DropBox内にあったスクリプトで全量インストール
+	sudo("cd /tmp/fonts/ && for i in $(find ./ -type f | grep -i '^.*\..t.$') ; do cp ${i} /usr/local/share/fonts/ ; done")
+	sudo("chmod 644 /usr/local/share/fonts/*")
+	sudo("fc-cache -fv")
 
 def install_vncserver():
 	sudo("apt-get install -y gnome-core ubuntu-desktop tightvncserver", pty=False)
