@@ -121,7 +121,11 @@ def install_text_editors():
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_tools():
-	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
+	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick byzanz", pty=False)
+	# アニメGIFを作るツールの動作方法は…
+	# xwininfo # ここでウィンドウを指定し、情報を取得する
+	# byzanz-record -d 180 -x 1379 -y 234 -w 1008 -h 722 test2.gif # その情報を元にキャプチャを始める。(終了したくなったらCtrl+c)
+	# TODO 上を上手いことやるscriptを作る
 
 def install_jenkins():
 	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
@@ -238,3 +242,10 @@ def install_touchpad_controltool():
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y touchpad-indicator", pty=False)
 
+
+
+# TODOList
+# + Amazonの検索とか「余計なお世話」を殺す
+#   + http://ubuntuapps.blog67.fc2.com/blog-entry-695.html
+# + 拡張子から起動するアプリケーションの関連付け
+#   + http://pctonitijou.blog.fc2.com/blog-entry-230.html
