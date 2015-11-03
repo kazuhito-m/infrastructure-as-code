@@ -21,8 +21,9 @@ def setup_all():
 	install_web_tools()
 	install_git_and_setting()
 	install_text_editors()
+	install_multi_media()
 	install_drowing_tools()
-	#  install_jenkins()
+	# install_jenkins()
 	install_dtm_tools()
 	install_system_maintenance()
 	install_developers_tools()
@@ -55,7 +56,7 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -y stopwatch convmv incron", pty=False)
+	sudo("apt-get install -y stopwatch convmv incron indicator-multiload", pty=False)
 	sudo("sysv-rc-conf incron on")
 
 def install_modan_fonts():
@@ -98,9 +99,14 @@ login """ + USER_NAME + """
 password """ + GIT_PASS
 	run("echo '" + netrc + "' > ~/.netrc")
 
-# 14.04 ではそのパッケージが無い。
-# def install_multi_media():
-# 	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
+def install_multi_media():
+	# なぜか、14以降のUbuntuではパッケージなくなってるきがする…環境依存？
+	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
+	# ffmpeg
+	sudo("apt-add-repository -y ppa:samrog131/ppa", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install ffmpeg-real", pty=False)
+	run("'export PATH=${PATH}:/opt/ffmpeg/bin' >> ~/.bashrc")
 
 def install_text_editors():
 	# editor系一式
@@ -114,7 +120,7 @@ def install_text_editors():
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_tools():
-	sudo("apt-get install -y gimp pinta imagemagick", pty=False)
+	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
 
 def install_jenkins():
 	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
