@@ -12,7 +12,7 @@ GIT_PASS = "xxxx"
 #
 def setup_all():
 	all_upgrade()
-	# japanize()
+	japanize()
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
@@ -21,7 +21,7 @@ def setup_all():
 	install_web_tools()
 	install_git_and_setting()
 	install_text_editors()
-	install_multi_media()
+	# install_multi_media()
 	install_drowing_tools()
 	# install_jenkins()
 	install_dtm_tools()
@@ -44,7 +44,7 @@ def japanize():
 
 def all_upgrade():
 	sudo("apt-get update", pty=False)
-#	sudo("do-release-upgrade", pty=False)
+	# sudo("do-release-upgrade -d", pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get upgrade -y", pty=False)
 	sudo("apt-get dist-upgrade -y", pty=False)
@@ -54,10 +54,11 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions ca-certificates openssl" , pty=False)
+	# sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions ca-certificates openssl" , pty=False)
+	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -y stopwatch convmv incron indicator-multiload tree", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -100,12 +101,15 @@ password """ + GIT_PASS
 
 def install_multi_media():
 	# なぜか、14以降のUbuntuではパッケージなくなってるきがする…環境依存？
-	sudo("apt-get install -y ubuntu-restricted-extras", pty=False)
+	# sudo("apt-get install -f -y ubuntu-restricted-extras", pty=False)
+	# ※どうしても対話型になるので、後で入れる
+	# TODO CLIだけで片付ける方法
+	# TODO ↓のリポジトリもなくなっているので、ffmpegを入れる方法
 	# ffmpeg
-	sudo("apt-add-repository -y ppa:samrog131/ppa", pty=False)
+	# sudo("apt-add-repository -y ppa:samrog131/ppa", pty=False)
 	sudo("apt-get update", pty=False)
-	sudo("apt-get install ffmpeg-real", pty=False)
-	run("'export PATH=${PATH}:/opt/ffmpeg/bin' >> ~/.bashrc")
+	# sudo("apt-get install ffmpeg-real", pty=False)
+	# run("'export PATH=${PATH}:/opt/ffmpeg/bin' >> ~/.bashrc")
 
 def install_text_editors():
 	# editor系一式
@@ -117,7 +121,7 @@ def install_text_editors():
 	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
 	sudo("dpkg -i /tmp/atom.deb")
 	# plugin設定
-	run("apm install plantuml-viewer language-plantuml localize japanese-menu markdown-scroll-sync") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
+	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_drowing_tools():
@@ -165,8 +169,7 @@ def install_developers_tools():
 	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
 	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
 	# datavese viewer
-	sudo("apt-get install libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
-
+	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
 
 def install_msvsc():
 	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
