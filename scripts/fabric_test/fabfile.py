@@ -1,5 +1,5 @@
 #coding:utf-8
-from fabric.api import local, run, sudo, put
+from fabric.api import local, run, sudo, put, env
 
 SELF_MAIL_ADDRESS = "test@gmail.com"
 USER_NAME = "kazuhito-m"
@@ -245,7 +245,11 @@ def install_touchpad_controltool():
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y touchpad-indicator", pty=False)
 
-
+def install_docker_latest():
+	sudo("wget -qO- https://get.docker.com/ | sh")
+	sudo("usermod -aG docker " + env.user)
+	# インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
+	# 再起動後は軽快に動く。
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
