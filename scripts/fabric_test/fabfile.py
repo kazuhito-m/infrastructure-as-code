@@ -33,6 +33,7 @@ def setup_all():
 	install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
+	# install_docker_latest()
 
 def japanize():
 	# change locale
