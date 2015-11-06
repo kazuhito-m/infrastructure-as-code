@@ -34,6 +34,7 @@ def setup_all():
 	install_golang()
 	# install_touchpad_controltool()
 	# install_docker_latest()
+	install_communication_tools()
 
 def japanize():
 	# change locale
@@ -251,6 +252,10 @@ def install_docker_latest():
 	sudo("usermod -aG docker " + env.user)
 	# インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
 	# 再起動後は軽快に動く。
+
+def install_communication_tools():
+	run("wget -O /tmp/slack-desktop.deb https://slack-ssb-updates.global.ssl.fastly.net/linux_releases/slack-desktop-1.2.5-amd64.deb")
+	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
