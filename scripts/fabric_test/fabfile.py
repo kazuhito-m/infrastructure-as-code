@@ -6,7 +6,7 @@ USER_NAME = "kazuhito-m"
 GIT_PASS = "xxxx"
 
 # 実行前に、以下のじゅんびが　必要です
-# 
+#
 # 上部の定数を個人設定の本当の値に置き換える
 # ./resource/.dropbox_uploader に値をいれたものを配置する
 #
@@ -57,10 +57,10 @@ def rename_home_template_dirs():
 
 def basic_tools_setup():
 	# sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions ca-certificates openssl" , pty=False)
-	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl" , pty=False)
+	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl nkf cifs-utils" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -196,7 +196,7 @@ def install_nodejs():
 	sudo("bash /tmp/setup_nodejs", pty=False)
 	sudo("apt-get install -y nodejs", pty=False)
 	run("node -v")
-	
+
 def install_plantuml():
 	# 要るものは予め落としておく
 	run("wget -O /tmp/plantuml.jar http://downloads.sourceforge.net/project/plantuml/plantuml.jar")
