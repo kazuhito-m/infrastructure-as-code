@@ -15,6 +15,7 @@ NeoBundle 'Shougo/unite.vim.git'
 
  
 " vim-markdown
+NeoBundle 'Shougo/vimfiler'
 NeoBundle 'godlygeek/tabular.git'
 NeoBundle 'plasticboy/vim-markdown.git'
  
