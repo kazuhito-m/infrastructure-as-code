@@ -130,7 +130,8 @@ def install_text_editors():
 def install_vim_all():
 	sudo("apt-get install -y vim", pty=False)
 	put("./resources/.vimrc","~/.vimrc")
-        
+	run("mkdir -p ~/.vim/bundle")
+	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
 def install_drowing_tools():
 	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick byzanz", pty=False)
