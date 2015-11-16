@@ -14,8 +14,9 @@
 + システムモニターをランチャーに登録
 + AlsaMixier調整（ChromeBook限定？）
 + 右上の時計の設定変更(時分秒まで表示するように)
-+
-+
++ VIM関連
+  + `vim` コマンドでvim起動
+  + `:NeoBundleInstall` を叩く
 +
 +
 +
