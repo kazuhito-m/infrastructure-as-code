@@ -21,6 +21,7 @@ def setup_all():
 	install_web_tools()
 	install_git_and_setting()
 	install_text_editors()
+	install_vim_all()
 	# install_multi_media()
 	install_drowing_tools()
 	# install_jenkins()
@@ -128,6 +129,7 @@ def install_text_editors():
 
 def install_vim_all():
 	sudo("apt-get install -y vim", pty=False)
+	put("./resources/.vimrc","~/.vimrc")
         
 
 def install_drowing_tools():
