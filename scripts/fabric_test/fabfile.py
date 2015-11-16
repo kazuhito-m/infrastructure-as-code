@@ -60,7 +60,7 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl nkf cifs-utils" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -115,7 +115,7 @@ def install_multi_media():
 
 def install_text_editors():
 	# editor系一式
-	sudo("apt-get install -y leafpad vim", pty=False)
+	sudo("apt-get install -y leafpad", pty=False)
 	# Atom Editor
 	# sudo("add-apt-repository -y ppa:webupd8team/atom", pty=False)
 	# sudo("apt-get update", pty=False)
@@ -125,6 +125,10 @@ def install_text_editors():
 	# plugin設定
 	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
+
+def install_vim_all():
+	sudo("apt-get install -y vim", pty=False)
+        
 
 def install_drowing_tools():
 	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick byzanz", pty=False)
