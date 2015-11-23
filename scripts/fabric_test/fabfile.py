@@ -16,6 +16,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
+	# install_network_tools()
 	install_modan_fonts()
 	# install_vncserver()
 	install_web_tools()
@@ -62,6 +63,9 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight", pty=False)
+
+def install_network_tools():
+	sudo("apt-get install -y wireshark", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
