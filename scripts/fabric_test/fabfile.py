@@ -135,6 +135,7 @@ def install_vim_all():
 	sudo("apt-get install -y vim", pty=False)
 	put("./resources/.vimrc","~/.vimrc")
 	run("mkdir -p ~/.vim/bundle")
+	run("rm -rf ~/.vim/bundle/neobundle.vim")  # 二回目以降の冪当性確保(手動設定を全てご破算にしてしまうのはいかがなものか)
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
 def install_drowing_tools():
