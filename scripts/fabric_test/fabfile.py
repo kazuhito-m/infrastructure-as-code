@@ -270,6 +270,9 @@ def install_communication_tools():
 	run("wget -O /tmp/slack-desktop.deb https://slack-ssb-updates.global.ssl.fastly.net/linux_releases/slack-desktop-1.2.5-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
 
+def insatll_virtualbox():
+        sudo("apt-get install -y vertualbox")
+
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
 #   + http://ubuntuapps.blog67.fc2.com/blog-entry-695.html
