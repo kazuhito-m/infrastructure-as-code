@@ -27,3 +27,7 @@ def install_minecraft():
 
 def install_windows_environment():
 	sudo("apt-get install -f -y wine", pty=False)
+	# WineでMidiを鳴らせるよう、Ubuntu側でソフトウェアシンセをインストール。
+	sudo("apt-get install -f -y timidity timidity-interfaces-extra install freepats fluid-soundfont-gm fluid-soundfont-gs" , pty=False)
+
+	
