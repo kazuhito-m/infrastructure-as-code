@@ -8,6 +8,8 @@ from fabric.api import local, run, sudo, put, env
 def setup_all():
 	all_upgrade()
 	install_common_tools()
+	install_minecraft()
+	install_windows_environment()
 
 def all_upgrade():
 	sudo("apt-get update", pty=False)
@@ -18,6 +20,10 @@ def all_upgrade():
 
 def install_common_tools():
 	sudo("apt-get install -f -y tree indicator-multiload clipit openssh-server", pty=False)
+
+def install_minecraft():
+	sudo("apt-get install -f -y openjdk-8-jdk openjdk-8-jre", pty=False)
+	# TODO Minecraftのファイルダウンロードとインストール
 
 def install_windows_environment():
 	sudo("apt-get install -f -y wine", pty=False)
