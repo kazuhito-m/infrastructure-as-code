@@ -19,3 +19,5 @@ def all_upgrade():
 def install_common_tools():
 	sudo("apt-get install -f -y tree indicator-multiload clipit openssh-server", pty=False)
 
+def install_windows_environment():
+	sudo("apt-get install -f -y wine", pty=False)
