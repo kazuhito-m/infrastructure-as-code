@@ -58,7 +58,7 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	# sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions ca-certificates openssl" , pty=False)
+	# sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions ca-certificates openssl unity-tweak-tool" , pty=False)
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl nkf cifs-utils" , pty=False)
 
 def install_common_tools():
