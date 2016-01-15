@@ -9,6 +9,7 @@ def setup_all():
     all_upgrade()
     install_custom_tools()
     set_static_ip()
+    install_rescure_tools()
 
 def install_custom_tools():
 	sudo("apt-get install -f -y openssh-server", pty=False)
@@ -23,3 +24,7 @@ def set_static_ip():
 
 def install_viratual_macine_environment():
 	sudo("apt-get install -f -y virtualbox", pty=False)
+
+def install_rescure_tools()
+	sudo("apt-get install -f -y testdisk", pty=False)
+	
