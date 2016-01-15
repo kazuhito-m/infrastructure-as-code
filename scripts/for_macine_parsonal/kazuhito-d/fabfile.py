@@ -26,5 +26,5 @@ def install_viratual_macine_environment():
 	sudo("apt-get install -f -y virtualbox", pty=False)
 
 def install_rescure_tools()
-	sudo("apt-get install -f -y testdisk", pty=False)
+	sudo("apt-get install -f -y testdisk foremost", pty=False)
 	
