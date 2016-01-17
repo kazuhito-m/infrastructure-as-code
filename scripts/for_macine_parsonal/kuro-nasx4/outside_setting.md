@@ -58,3 +58,7 @@ IPV6INIT=no
 物理的にコードをつなぐ。
 
 測定方法は[ココ](http://kazuhito-m.github.io/tech/2016/01/14/serial-console-in-linux/)。
+
+## USBメモリにCDROMの内容を全追加してKURO-NAS/X4に刺す
+
+掲題の通り。指して起動。
