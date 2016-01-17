@@ -43,7 +43,6 @@ cp /mnt/iso/firmware/* /var/lib/tftpboot/
 ```bash
 vi /etc/sysconfig/network-scripts/ifcfg-eth0
 DEVICE="eth0"
-NM_CONTROLLED="yes"
 ONBOOT="yes"
 TYPE="Ethernet"
 BOOTPROTO=none
