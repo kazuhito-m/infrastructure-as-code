@@ -28,8 +28,30 @@ service xinetd restart
 
 本質的には関係ないが…KURO−NAS/X4のCDROMのisoイメージを持っているので、マウントしておく。
 
+KURO-NAS/X4 から参照する、ファームウェアイメージをTFTP公開ディレクトリにコピーしておく。
+
 ```bash
-mount -t iso9660 -o loop ./KURONAS100.iso /var/lib/tftpboot/
+mkdir /mnt/iso
+mount -t iso9660 -o loop ./KURONAS100.iso /mnt/iso
+cp /mnt/iso/firmware/* /var/lib/tftpboot/
+```
+
+## IPアドレスを「KURO-NASが認識する固定IP」へと振替える
+
+以下の内容で設定する。
+
+```bash
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE="eth0"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+TYPE="Ethernet"
+BOOTPROTO=none
+IPADDR=192.168.11.1
+NETMASK=255.255.255.0
+USERCTL=no
+PEERDNS=no
+IPV6INIT=no
 ```
 
 ## シリアルケーブル(RS232C)でKURO−NAS/X4につなぐ
@@ -37,5 +59,3 @@ mount -t iso9660 -o loop ./KURONAS100.iso /var/lib/tftpboot/
 物理的にコードをつなぐ。
 
 測定方法は[ココ](http://kazuhito-m.github.io/tech/2016/01/14/serial-console-in-linux/)。
-
-## IPアドレスを「KURO-NASが認識する固定IP」へと振替える
