@@ -62,7 +62,7 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl nkf cifs-utils" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight byobu", pty=False)
 
 def install_network_tools():
 	sudo("apt-get install -y wireshark", pty=False)
