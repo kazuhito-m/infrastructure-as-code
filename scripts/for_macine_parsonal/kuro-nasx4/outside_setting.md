@@ -62,3 +62,7 @@ IPV6INIT=no
 ## USBメモリにCDROMの内容を全追加してKURO-NAS/X4に刺す
 
 掲題の通り。指して起動。
+
+## 作業用PCとKURO-NAS/X4をルータにつなぐ
+
+`192.168.11.2` を設定した有線ルータを用意し、KURO-NAS/X4とTFTPを仕込んだCentOSのマシンをつなぎ、KURO-NAS/X4の電源を入れる。
