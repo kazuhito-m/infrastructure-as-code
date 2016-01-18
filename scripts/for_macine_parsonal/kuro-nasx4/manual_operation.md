@@ -13,7 +13,14 @@
 ./install.sh -D /dev/sdb1 -m /mnt/usbdisk1 -t vfat .
 ```
 
-このコマンドを実行以降、設定が終われば自動的に再起動、それ以降は「普通のDebian」として、DHCPでとったIPアドレスで設定、LAN上か参照出来る。
+このコマンドを実行以降、設定が終われば自動的に再起動、それ以降は「普通のDebian」として、DHCPでとったIPアドレスで設定、LAN上から参照出来る。
+
+シリアルコンソール上での最後の仕事とし、SSHのインストール。
+
+```bash
+apt-get update
+apt-get -y install ssh
+```
 
 ## Debian上からの通常作業
 
