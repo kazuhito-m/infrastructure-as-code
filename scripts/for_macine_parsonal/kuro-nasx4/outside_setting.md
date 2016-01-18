@@ -66,3 +66,7 @@ IPV6INIT=no
 ## 作業用PCとKURO-NAS/X4をルータにつなぐ
 
 `192.168.11.2` を設定した有線ルータを用意し、KURO-NAS/X4とTFTPを仕込んだCentOSのマシンをつなぎ、KURO-NAS/X4の電源を入れる。
+
+KURO-NAS/X4 がファームを読み、CentOSのシリアルコンソールから `# ` のルートコンソールが観測されれば、準備完了。
+
+この後の作業は、 [manual_operation.md](./manual_operation.md) へ。
