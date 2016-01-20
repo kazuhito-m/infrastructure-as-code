@@ -173,7 +173,7 @@ def install_dtm_tools():
 	sudo("apt-get install -y qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2", pty=False)
 
 def install_system_maintenance():
-	sudo("apt-get install -y gparted unetbootin tree", pty=False)
+	sudo("apt-get install -y gparted gpart unetbootin tree", pty=False)
 
 def install_developers_tools():
 	# java8 installl
