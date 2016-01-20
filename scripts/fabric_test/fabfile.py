@@ -90,11 +90,11 @@ def install_vncserver():
 
 def install_web_tools():
 	# reference : http://tecadmin.net/install-google-chrome-in-ubuntu/
-	run("wget -q --no-check-certificate -O ./linux_signing_key.pub https://dl-ssl.google.com/linux/linux_signing_key.pub ")
-	sudo("apt-key add ./linux_signing_key.pub")
-	run("rm ./linux_signing_key.pub")
 	# 同じ処理を「ファイルの名前だけ変えて」やってる気がするので、片方はコメントアウト(問題あるなら修正すること)
-	# sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
+	# run("wget -q --no-check-certificate -O ./linux_signing_key.pub https://dl-ssl.google.com/linux/linux_signing_key.pub ")
+	# sudo("apt-key add ./linux_signing_key.pub")
+	# run("rm ./linux_signing_key.pub")
+	sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
 	sudo("apt-get update -y", pty=False)
 	sudo("apt-get install -y google-chrome-stable", pty=False)
 
