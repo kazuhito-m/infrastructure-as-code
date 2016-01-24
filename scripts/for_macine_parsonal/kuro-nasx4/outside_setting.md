@@ -16,6 +16,8 @@ CentOSのサーバにTFTPサーバを立てる。 ([参考](http://www.ne.jp/asa
 
 ```bash
 yum install tftp tftp-server
+# Ubuntu/Debianの場合なら以下。
+# sudo apt-get install tftp tftpd
 vi /etc/xinetd.d/tftp
 # disable = yes → no に変更。
 # xinetdの再起動
