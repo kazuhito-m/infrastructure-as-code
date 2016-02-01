@@ -17,6 +17,7 @@ def setup_all():
 	all_upgrade()
 	install_common_tools()
 	setup_network_settings()
+	setup_ntp_settings()
 
 # small tasks
 
