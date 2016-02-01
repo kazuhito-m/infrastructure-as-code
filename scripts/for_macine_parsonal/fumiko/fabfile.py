@@ -17,7 +17,4 @@ def all_upgrade():
 	sudo("apt-get dist-upgrade -y", pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y tree indicator-multiload clipit openssh-server", pty=False)
-
-
-	
+	sudo("apt-get install -f -y tree byobu", pty=False)
