@@ -63,5 +63,4 @@ def upload_file_with_backup(local_file_path):
 	backup_by_timestamp(local_file_path)
 	put("./resources" + local_file_path , TMP_PATH)
 	sudo("cp %s %s" % (TMP_PATH,local_file_path))
-	sudo("ifdown eth0 && ifup eth0")
 
