@@ -9,9 +9,14 @@ from fabric.api import local, run, sudo, put, env
 
 ETH_FILE="/etc/network/interfaces"
 
+# full execute func.
+
 def setup_all():
 	all_upgrade()
 	install_common_tools()
+	setup_network_settings():
+
+# small tasks
 
 def all_upgrade():
 	sudo("apt-get update", pty=False)
@@ -30,11 +35,15 @@ def setup_network_settings():
 	sudo("cp %s %s" % (TMP_PATH,ETH_FILE))
 	sudo("ifdown eth0 && ifup eth0")
 
+
+# TODO
+
+# CPUスピード
+
 # common function
 
 # ファイルを「末尾に年月日時分秒な名称」をつけてコピーする
 def backup_by_timestamp(filepath):
 	# おそらく設定ファイル系が多いと思うのでrootでやる。
 	sudo('cp ' + filepath + ' ' + filepath + '.`date +%Y%m%d%H%M%S`')	
-	
 
