@@ -30,3 +30,17 @@ apt-get install sudo git fabric
 ```
 
 ### sudo有効設定
+
+必要なユーザをsudoグループに入れる。
+
+```bash
+usermod -G sudo hogehoge
+```
+
+おそらく、suでrootになってると、戻っても有効になってないので、ログアウトか再起動後確認。
+
+### gitの設定
+
+通常ユーザの「その人に沿ったgitの設定」を行う。
+
+ユーザごとなので、ここには書かない。
