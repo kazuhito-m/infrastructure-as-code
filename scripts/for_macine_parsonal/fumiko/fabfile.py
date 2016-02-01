@@ -7,6 +7,7 @@ from fabric.api import local, run, sudo, put, env
 
 # constant
 
+TMP_PATH = '/tmp/somefile.tmp'
 ETH_FILE="/etc/network/interfaces"
 
 # full execute func.
@@ -14,7 +15,7 @@ ETH_FILE="/etc/network/interfaces"
 def setup_all():
 	all_upgrade()
 	install_common_tools()
-	setup_network_settings():
+	setup_network_settings()
 
 # small tasks
 
@@ -29,10 +30,9 @@ def install_common_tools():
 	sudo("apt-get install -f -y tree byobu", pty=False)
 
 def setup_network_settings():
-	TMP_PATH = '/tmp/interfaces'
-	backup_by_timestamp(ETH_FILE)
-	put("./resources/" + ETH_FILE , TMP_PATH)
-	sudo("cp %s %s" % (TMP_PATH,ETH_FILE))
+	# eth0を設定したinterfaceファイルをサーバに放り込む
+	upload_file_with_backup(ETH_FILE)
+	# 設定を終えたのでネットワーク再起動
 	sudo("ifdown eth0 && ifup eth0")
 
 
@@ -46,4 +46,12 @@ def setup_network_settings():
 def backup_by_timestamp(filepath):
 	# おそらく設定ファイル系が多いと思うのでrootでやる。
 	sudo('cp ' + filepath + ' ' + filepath + '.`date +%Y%m%d%H%M%S`')	
+
+# ./resources にあるディレクトリ構成のファイルを、サーバに送り込んだ上置き換える。
+# その際、バックアップとして日付ファイルを横に作る。
+def upload_file_with_backup(local_file_path):
+	backup_by_timestamp(local_file_path)
+	put("./resources" + local_file_path , TMP_PATH)
+	sudo("cp %s %s" % (TMP_PATH,local_file_path))
+	sudo("ifdown eth0 && ifup eth0")
 
