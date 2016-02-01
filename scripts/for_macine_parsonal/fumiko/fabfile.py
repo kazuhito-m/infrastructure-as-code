@@ -9,6 +9,7 @@ from fabric.api import local, run, sudo, put, env
 
 TMP_PATH = '/tmp/somefile.tmp'
 ETH_FILE="/etc/network/interfaces"
+NTP_FILE="/etc/ntp.conf"
 
 # full execute func.
 
@@ -35,6 +36,15 @@ def setup_network_settings():
 	# 設定を終えたのでネットワーク再起動
 	sudo("ifdown eth0 && ifup eth0")
 
+def setup_ntp_settings():
+	sudo("apt-get install -f -y ntp", pty=False)
+	# ntp.conf差し替え
+	upload_file_with_backup(NTP_FILE)
+	# 再起動＆登録
+	sudo("systemctl enable ntp")
+	sudo("systemctl restart ntp")
+	# 登録されてるか確認(参考)
+	run("ntpq -p")
 
 # TODO
 
