@@ -47,6 +47,9 @@ def setup_ntp_settings():
 	# 登録されてるか確認(参考)
 	run("ntpq -p")
 
+def setup_cpuspeed():
+	
+
 # TODO
 
 # CPUスピード
