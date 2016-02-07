@@ -10,6 +10,7 @@ from fabric.api import local, run, sudo, put, env
 TMP_PATH = '/tmp/somefile.tmp'
 ETH_FILE="/etc/network/interfaces"
 NTP_FILE="/etc/ntp.conf"
+CPUSPEED_FILE="/etc/sysconfig/cpuspeed"
 
 # full execute func.
 
@@ -48,11 +49,12 @@ def setup_ntp_settings():
 	run("ntpq -p")
 
 def setup_cpuspeed():
-	
+	sudo("apt-get install -f -y cpuspeed", pty=False)
+	upload_file_with_backup(CPUSPEED_FILE)
+	sudo("systemctl enable cpuspeed")
+	sudo("systemctl restart cpuspeed")
 
 # TODO
-
-# CPUスピード
 
 # common function
 
