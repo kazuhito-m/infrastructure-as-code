@@ -49,10 +49,13 @@ def setup_ntp_settings():
 	run("ntpq -p")
 
 def setup_cpuspeed():
-	sudo("apt-get install -f -y cpuspeed", pty=False)
-	upload_file_with_backup(CPUSPEED_FILE)
-	sudo("systemctl enable cpuspeed")
-	sudo("systemctl restart cpuspeed")
+	# sudo("apt-get install -f -y cpuspeed", pty=False)
+	# upload_file_with_backup(CPUSPEED_FILE)
+	# sudo("systemctl enable cpuspeed")
+	# sudo("systemctl restart cpuspeed")
+	# FIXME 勘違いをしていた。DebianにはCPUSpeedは存在しない。
+	# FIXME 改めて調べて作りなおす。
+	# FIXME ※初めからONになってるから問題ないという話しもあり、裏とり要
 
 # TODO
 
