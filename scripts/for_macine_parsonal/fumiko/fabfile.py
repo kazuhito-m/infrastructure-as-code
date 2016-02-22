@@ -19,6 +19,7 @@ def setup_all():
 	install_common_tools()
 	setup_network_settings()
 	setup_ntp_settings()
+	setup_md_raid0()
 
 # small tasks
 
@@ -56,6 +57,9 @@ def setup_cpuspeed():
 	# FIXME 勘違いをしていた。DebianにはCPUSpeedは存在しない。
 	# FIXME 改めて調べて作りなおす。
 	# FIXME ※初めからONになってるから問題ないという話しもあり、裏とり要
+
+def setup_md_raid0():
+	# TODO Raid0をドライブ決め打ちで設定するスクリプトを組もう
 
 # TODO
 
