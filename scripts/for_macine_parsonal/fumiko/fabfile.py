@@ -64,7 +64,7 @@ def setup_md_raid0():
 	# 先ずはURLのスクラップ
 	# http://www.obenri.com/_raid_create/create_mdadm.html
 	# http://nabe.blog.abk.nu/0301
-
+        # http://qiita.com/harukasan/items/cf4355965dccc2b39525
 
 # TODO
 
