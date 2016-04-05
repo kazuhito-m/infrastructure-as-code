@@ -61,11 +61,6 @@ def setup_cpuspeed():
 def setup_md_raid0():
 	# TODO Raid0をドライブ決め打ちで設定するスクリプトを組もう
 
-	# 先ずはURLのスクラップ
-	# http://www.obenri.com/_raid_create/create_mdadm.html
-	# http://nabe.blog.abk.nu/0301
-        # http://qiita.com/harukasan/items/cf4355965dccc2b39525
-
 # TODO
 
 # common function
