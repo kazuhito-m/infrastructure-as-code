@@ -57,10 +57,12 @@ def setup_cpuspeed():
 	# FIXME 勘違いをしていた。DebianにはCPUSpeedは存在しない。
 	# FIXME 改めて調べて作りなおす。
 	# FIXME ※初めからONになってるから問題ないという話しもあり、裏とり要
+	print("cpuspeedはdebianでは無い上に、同等機能がDebianでは標準装備みたい。")
 
 def setup_md_raid0():
 	# TODO Raid0をドライブ決め打ちで設定するスクリプトを組もう
-	sudo("apt-get install -y mdadm", pty=False)
+	sudo("apt-get install -y -f parted mdadm", pty=False)
+	# TODO 途中で入力が求められる…可能性があるので、次にやる機会があれば、対話型対応する。
 
 
 # TODO
