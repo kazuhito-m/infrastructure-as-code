@@ -60,6 +60,8 @@ def setup_cpuspeed():
 
 def setup_md_raid0():
 	# TODO Raid0をドライブ決め打ちで設定するスクリプトを組もう
+	sudo("apt-get install -y mdadm", pty=False)
+
 
 # TODO
 
