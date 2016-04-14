@@ -242,9 +242,14 @@ def install_scala_and_sbt():
  	run("cs n8han/giter8")
 
 def install_golang():
-	sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
-	sudo("apt-get update")
-	sudo("apt-get install -y golang")
+	# sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
+	# sudo("apt-get update")
+	# sudo("apt-get install -y golang")
+	# 上記APTラインは使えなくなった模様。手動で入れるやり方に切り替え。
+	run("wget -O /tmp/golang.tar.gz https://storage.googleapis.com/golang/go1.6rc2.linux-amd64.tar.gz")
+	sudo("tar -C /usr/local -xzf /tmp/golang.tar.gz")
+	run("echo 'export GOROOT=/usr/local/go' >> ~/.bashrc")
+	run("echo 'export PATH=$GOROOT/bin:$PATH' >> ~/.bashrc")
 	# GOPATH系の設定
 	run("echo 'export GO_WORKSPACE=current' >> ~/.bashrc")
 	run("echo 'export GOPATH=~/go/third:~/go/${GO_WORKSPACE}' >> ~/.bashrc")
