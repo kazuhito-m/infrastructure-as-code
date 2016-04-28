@@ -16,6 +16,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
+	install_asciidoc()
 	# install_network_tools()
 	install_modan_fonts()
 	# install_vncserver()
@@ -62,7 +63,10 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight byobu pandoc asciidoc ffmpeg", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight byobu pandoc ffmpeg", pty=False)
+
+def install_asciidoc():
+	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc", pty=False)
 
 def install_network_tools():
 	sudo("apt-get install -y wireshark", pty=False)
