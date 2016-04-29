@@ -66,7 +66,7 @@ def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight byobu pandoc ffmpeg", pty=False)
 
 def install_asciidoc():
-	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc", pty=False)
+	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
 
 def install_network_tools():
 	sudo("apt-get install -y wireshark", pty=False)
