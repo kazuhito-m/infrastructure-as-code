@@ -38,6 +38,7 @@ def setup_all():
 	# install_touchpad_controltool()
 	# install_docker_latest()
 	install_communication_tools()
+	insatll_sdkman_and_gradle()
 
 def japanize():
 	# change locale
@@ -281,6 +282,9 @@ def install_communication_tools():
 
 def insatll_virtualbox():
         sudo("apt-get install -y vertualbox")
+
+def insatll_sdkman_and_gradle():
+	run("curl -s get.sdkman.io | bash")
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
