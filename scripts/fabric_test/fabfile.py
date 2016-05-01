@@ -285,6 +285,7 @@ def insatll_virtualbox():
 
 def insatll_sdkman_and_gradle():
 	run("curl -s get.sdkman.io | bash")
+	run("sdk install gradle")
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
