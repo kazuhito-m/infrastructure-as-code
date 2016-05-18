@@ -184,7 +184,7 @@ def install_developers_tools():
 	# java8 installl
 	sudo("apt-get install -y openjdk-8-jdk galternatives", pty=False)
 	# Fablic install.
-	sudo("apt-get install -y fabric", pty=False)
+	sudo("apt-get install -y fabric ansible", pty=False)
 	# VCS visualize tools
 	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
 	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
