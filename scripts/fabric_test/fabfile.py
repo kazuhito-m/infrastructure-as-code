@@ -30,6 +30,7 @@ def setup_all():
 	install_dtm_tools()
 	install_system_maintenance()
 	install_developers_tools()
+	install_provisioning_tools()
 	install_msvsc()
 	install_nodejs()
 	install_plantuml()
@@ -184,12 +185,16 @@ def install_developers_tools():
 	# java8 installl
 	sudo("apt-get install -y openjdk-8-jdk galternatives", pty=False)
 	# Fablic install.
-	sudo("apt-get install -y fabric ansible", pty=False)
 	# VCS visualize tools
 	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
 	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
 	# datavese viewer
 	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
+
+def install_provisioning_tools():
+	sudo("apt-get install -y fabric ansible", pty=False)
+	sudo("apt-get install -y python-pip", pty=False)
+	sudo("pip install ansible", pty=False)
 
 def install_msvsc():
 	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
