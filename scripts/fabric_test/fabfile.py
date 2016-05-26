@@ -192,7 +192,7 @@ def install_developers_tools():
 	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
 
 def install_provisioning_tools():
-	sudo("apt-get install -y fabric ansible", pty=False)
+	sudo("apt-get install -y fabric", pty=False)
 	sudo("apt-get install -y python-pip", pty=False)
 	sudo("pip install ansible", pty=False)
 
