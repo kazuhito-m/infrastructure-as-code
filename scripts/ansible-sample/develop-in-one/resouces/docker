@@ -1,0 +1,2 @@
+export http_proxy=http://proxyjp5.sharp.co.jp:3080
+export https_proxy=http://proxyjp5.sharp.co.jp:3080

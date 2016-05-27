@@ -1,0 +1,35 @@
+- hosts: all
+  tasks:
+
+    - name: yum repoistory add EPEL
+      yum: name=epel-release state=installed
+
+    - name: upgrade all packages
+      yum: name=* state=latest
+
+    - name: install libselinux
+      yum: name=libselinux-python disable_gpg_check=no state=installed
+
+    - name: ignore se-linux
+      selinux: state=disabled
+
+    - name: install common tools
+      yum: name=byobu disable_gpg_check=no state=installed
+
+    - name: install docker
+      yum: name=docker-io disable_gpg_check=no state=installed
+
+    - name: set proxy for docker
+      copy: src=resouces/docker dest=/etc/sysconfig/docker
+
+    - name: start docker
+      service: name=docker enabled=yes state=started
+
+    - name: jenkins date directory make
+      file: path=/var/local/jenkins state=directory owner=root group=root mode=777
+
+    - name: docker-py install
+      yum: name=python-docker-py disable_gpg_check=no state=installed
+
+    - name: jenkins container start
+      docker: image=jenkins:2.3 name=jenkins ports=8080:8080,50000:50000 detach=yes tty=yes volumes=/var/local/jenkins:/var/jenkins_home state=running
