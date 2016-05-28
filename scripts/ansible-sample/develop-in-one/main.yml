@@ -1,4 +1,10 @@
 - hosts: all
+
+  handlers:
+
+    - name: restart iptables
+      service: name=iptables state=restarted
+
   tasks:
 
     - name: yum repoistory add EPEL
@@ -10,17 +16,21 @@
     - name: install libselinux
       yum: name=libselinux-python disable_gpg_check=no state=installed
 
-    - name: ignore se-linux
-      selinux: state=disabled
-
     - name: install common tools
       yum: name=byobu disable_gpg_check=no state=installed
 
+    - name: docker-py install
+      yum: name=python-docker-py disable_gpg_check=no state=installed
+
+    - name: iptables settingfile upload
+      copy:
+        src: ./resources/iptables
+        dest: /etc/sysconfig/iptables
+        backup: yes
+      notify: restart iptables
+
     - name: install docker
       yum: name=docker-io disable_gpg_check=no state=installed
-
-    - name: set proxy for docker
-      copy: src=resouces/docker dest=/etc/sysconfig/docker
 
     - name: start docker
       service: name=docker enabled=yes state=started
@@ -28,8 +38,33 @@
     - name: jenkins date directory make
       file: path=/var/local/jenkins state=directory owner=root group=root mode=777
 
-    - name: docker-py install
-      yum: name=python-docker-py disable_gpg_check=no state=installed
-
     - name: jenkins container start
       docker: image=jenkins:2.3 name=jenkins ports=8080:8080,50000:50000 detach=yes tty=yes volumes=/var/local/jenkins:/var/jenkins_home state=running
+    - name: include postgresql for sonarqube setup tasks
+      include: tasks/sonarqube_db.yml
+
+    - name: sonarqube container start
+      docker:
+        image: sonarqube
+        name: sonarqube
+        ports: 9000:9000,9092:9092
+        detach: yes
+        tty: yes
+        state: running
+        env:
+          SONARQUBE_JDBC_USERNAME: sonarqube
+          SONARQUBE_JDBC_PASSWORD: sonarqube
+          SONARQUBE_JDBC_URL: jdbc:postgresql://172.17.42.1:5432/sonarqube
+
+    - name: Nexus repository server data directory make
+      file: path=/var/local/nexus-data state=directory owner=root group=root mode=777
+
+    - name: nexus repository server container start
+      docker:
+        image: sonatype/nexus
+        name: nexus
+        ports: 8081:8081
+        volumes: /var/local/nexus-data:/sonatype-work
+        detach: yes
+        tty: yes
+        state: running

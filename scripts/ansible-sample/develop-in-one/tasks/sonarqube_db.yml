@@ -1,0 +1,71 @@
+# sonarqubeの「DBの設定」だけを行う。
+# ここだけ、Dockerでなく本体にセットアップ。
+- name: install sudo command
+  yum: name=sudo disable_gpg_check=no state=installed
+
+- name: install postgresql
+  yum: name={{ item }} state=latest
+  with_items:
+    - postgresql-server
+    - postgresql-devel
+    - postgresql-contrib
+    - python-psycopg2
+
+- name: postgresql initdb
+  shell: '[ -e /var/lib/pgsql/data/postgresql.conf ] || service postgresql initdb'
+
+- name: port setting on postgresql.conf
+  lineinfile: >
+    dest='/var/lib/pgsql/data/postgresql.conf'
+    state=present
+    backrefs=yes
+    regexp='^#listen_addresses.*localhost.*'
+    line="listen_addresses = '*'"
+
+- name: copy pg_hba.conf
+  copy: >
+    src=./resources/pg_hba.conf
+    dest=/var/lib/pgsql/data/pg_hba.conf
+    backup=yes
+
+- name: start postgresql
+  service: name=postgresql state=started  enabled=yes
+
+- name: create database
+  postgresql_db:
+    name: "sonarqube"
+    encoding: "UTF-8"
+    login_user: postgres
+  sudo_user: postgres
+  sudo: yes
+
+- name: create user
+  postgresql_user:
+    db: "sonarqube"
+    name: "sonarqube"
+    password: "sonarqube"
+    priv: ALL
+    state: present
+    login_user: postgres
+    role_attr_flags: CREATEDB
+  sudo_user: postgres
+  sudo: yes
+
+- name: grant user for sonarqube db
+  postgresql_privs:
+    type: database
+    database: sonarqube
+    privs: ALL
+    objs: sonarqube
+    login_user: postgres
+    roles: sonarqube
+  sudo_user: postgres
+  sudo: yes
+
+- name: set search path
+  command: psql -d sonarqube -c "ALTER USER sonarqube SET search_path to sonarqube;"
+  sudo: yes
+  sudo_user: postgres
+
+- name: postgresql restart
+  shell: service postgresql restart
