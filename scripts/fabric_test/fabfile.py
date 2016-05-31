@@ -2,7 +2,7 @@
 from fabric.api import local, run, sudo, put, env
 
 SELF_MAIL_ADDRESS = "test@gmail.com"
-USER_NAME = "kazuhito-m"
+USER_NAME = "kazuhito"
 GIT_PASS = "xxxx"
 
 # 実行前に、以下のじゅんびが　必要です
@@ -276,10 +276,23 @@ def install_touchpad_controltool():
 	sudo("apt-get install -y touchpad-indicator", pty=False)
 
 def install_docker_latest():
-	sudo("wget -qO- https://get.docker.com/ | sh")
-	sudo("usermod -aG docker " + env.user)
-	# インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
-	# 再起動後は軽快に動く。
+        # refalance https://docs.docker.com/engine/installation/linux/ubuntulinux/
+        sudo("apt-get update" , pty=False)
+        sudo("apt-get install -y apt-transport-https ca-certificates" , pty=False)
+        sudo("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
+        sudo("echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' > /etc/apt/sources.list.d/docker.list")
+        sudo("apt-get update" , pty=False)
+        sudo("apt-get purge -y lxc-docker" , pty=False)
+        sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
+        sudo("apt-get install -y docker-engine", pty=False)
+        sudo("service docker start")
+        # このままでは、一般ユーザでは叩け無いので、グループ設定
+        sudo("groupadd -f docker")
+        sudo("usermod -aG docker " + USER_NAME)
+        # 起動テスト
+        sudo("docker run hello-world")
+        # インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
+        # 再起動後は軽快に動く。
 
 def install_communication_tools():
 	run("wget -O /tmp/slack-desktop.deb https://slack-ssb-updates.global.ssl.fastly.net/linux_releases/slack-desktop-1.2.5-amd64.deb")
