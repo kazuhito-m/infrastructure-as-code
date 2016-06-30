@@ -3,7 +3,7 @@
 IMAGE_NAME='ubuntu:1404base'
 
 CONTAINER_NO='5'
-CONTAINER_NAME="ubuntu1510_${CONTAINER_NO}"
+CONTAINER_NAME="ubuntu1610_${CONTAINER_NO}"
 
 # image build
 docker build -t ${IMAGE_NAME} .
