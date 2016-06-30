@@ -40,6 +40,7 @@ def setup_all():
 	# install_docker_latest()
 	install_communication_tools()
 	insatll_sdkman_and_gradle()
+	install_intellij()
 
 def japanize():
 	# change locale
@@ -304,6 +305,11 @@ def insatll_virtualbox():
 def insatll_sdkman_and_gradle():
 	run("curl -s get.sdkman.io | bash")
 	run("sdk install gradle")
+
+def install_intellij():
+	sudo("apt-add-repository ppa:mmk2410/intellij-idea-community" , pty=False)
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y intellij-idea-community", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
