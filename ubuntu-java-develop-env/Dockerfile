@@ -6,7 +6,7 @@ MAINTAINER kazuhito_m
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y openssh-server xfce4 tightvncserver language-pack-ja fonts-vlgothic language-pack-ja ibus-mozc firefox openjdk-8-jdk 
+RUN apt-get install -y openssh-server xfce4 tightvncserver language-pack-ja fonts-vlgothic language-pack-ja ibus-mozc firefox git tig openjdk-8-jdk 
 
 # 日本語化
 RUN update-locale LANG=ja_JP.UTF-8 ; mv /etc/localtime{,.org} ; ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
