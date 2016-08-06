@@ -62,11 +62,10 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	# sudo("apt-get install -y curl nautilus-dropbox nautilus-open-terminal nautilus-actions ca-certificates openssl unity-tweak-tool" , pty=False)
-	sudo("apt-get install -y curl nautilus-dropbox nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
+	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit freemind xbacklight byobu pandoc ffmpeg", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit xbacklight byobu pandoc ffmpeg", pty=False)
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -82,7 +81,7 @@ def install_modan_fonts():
 	run("chmod +x /tmp/dropbox_uploader.sh")
 	# 設定ファイルをプット
 	put("./resources/.dropbox_uploader" , "/tmp/.dropbox_uploader")
-	run("/tmp/dropbox_uploader.sh -k -f/tmp/.dropbox_uploader download /fonts/ /tmp/fonts")
+	run("/tmp/dropbox_uploader.sh -k -f /tmp/.dropbox_uploader download /fonts/ /tmp/fonts")
 	# DropBox内にあったスクリプトで全量インストール
 	sudo("cd /tmp/fonts/ && for i in $(find ./ -type f | grep -i '^.*\..t.$') ; do cp ${i} /usr/local/share/fonts/ ; done")
 	sudo("chmod 644 /usr/local/share/fonts/*")
@@ -103,7 +102,7 @@ def install_web_tools():
 	# run("rm ./linux_signing_key.pub")
 	sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
 	sudo("apt-get update -y", pty=False)
-	sudo("apt-get install -y google-chrome-stable", pty=False)
+	sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
 
 def install_git_and_setting():
 	sudo("apt-get install -y git tig", pty=False)
@@ -219,6 +218,7 @@ def install_nodejs():
 	run("wget -O /tmp/setup_nodejs https://deb.nodesource.com/setup_0.12")
 	sudo("bash /tmp/setup_nodejs", pty=False)
 	sudo("apt-get install -y nodejs", pty=False)
+	sudo("ln -s /usr/bin/nodejs /usr/bin/node")
 	run("node -v")
 
 def install_plantuml():
@@ -244,7 +244,7 @@ def install_scala_and_sbt():
     	sudo("apt-get update" , pty=False)
    	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
    	sudo("apt-get update -y" , pty=False)
-   	sudo("apt-get install -y sbt", pty=False)
+   	sudo("apt-get install --allow-unauthenticated -y sbt", pty=False)
   	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
 	sudo("apt-get install -y curl", pty=False)
  	run("wget -O /tmp/sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
