@@ -41,6 +41,7 @@ def setup_all():
 	install_communication_tools()
 	insatll_sdkman_and_gradle()
 	install_intellij()
+	# install_game()
 
 def japanize():
 	# change locale
@@ -310,6 +311,11 @@ def install_intellij():
 	sudo("apt-add-repository ppa:mmk2410/intellij-idea-community" , pty=False)
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y intellij-idea-community", pty=False)
+
+def install_game():
+	sudo("apt-get install -y mame mame-tools gnome-video-arcade joystick jstest-gtk", pty=False)
+	run("mkdir -p ~/mame/{nvram,memcard,inp,comments,sta,snap,diff,roms}")
+	# TODO デフォルトの mame.ini と色々持ってくる
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
