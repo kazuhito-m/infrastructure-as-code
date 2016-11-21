@@ -42,6 +42,7 @@ def setup_all():
 	insatll_sdkman_and_gradle()
 	install_intellij()
 	# install_game()
+	install_android_env()
 
 def japanize():
 	# change locale
@@ -316,6 +317,15 @@ def install_game():
 	sudo("apt-get install -y mame mame-tools gnome-video-arcade joystick jstest-gtk", pty=False)
 	run("mkdir -p ~/mame/{nvram,memcard,inp,comments,sta,snap,diff,roms}")
 	# TODO デフォルトの mame.ini と色々持ってくる
+
+def install_android_env():
+	sudo("apt-add-repository ppa:webupd8team/java" , pty=False)
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y oracle-java8-installer oracle-java8-set-default", pty=False)
+	sudo("apt-add-repository ppa:paolorotolo/android-studio" , pty=False)
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y android-studio", pty=False)
+	
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
