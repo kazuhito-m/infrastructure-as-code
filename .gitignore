@@ -2,4 +2,4 @@
 *.swp
 test.yml
 test_hosts
-
+*.retry
