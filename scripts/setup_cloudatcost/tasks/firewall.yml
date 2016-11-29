@@ -1,0 +1,18 @@
+# coding:utf-8
+
+# Firewall(ufw) settings.
+# (only abaut ufw writing.)
+
+- name: clear and all deny
+  ufw: state=enabled policy=reject
+
+- name: Allow ssh
+  ufw: rule=allow port=ssh
+
+# TODO インストールされたら
+
+#- name: Allow http
+#  ufw: rule=allow port=http
+
+#- name: Allow https
+#  ufw: rule=allow port=https
