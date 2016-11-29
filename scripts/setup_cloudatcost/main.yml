@@ -1,0 +1,14 @@
+# coding:utf-8
+
+- hosts: all
+
+  tasks:
+
+    - name: upgrade all packages
+      apt: name={{item}} state=persent update_cache=yes
+      with_item:
+        - git
+        - language-pack-ja
+
+    - name: locale setting
+      shell: 'sudo update-locale LANG=ja_JP.UTF-8'

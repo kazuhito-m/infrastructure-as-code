@@ -325,7 +325,7 @@ def install_android_env():
 	sudo("apt-add-repository ppa:paolorotolo/android-studio" , pty=False)
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y android-studio", pty=False)
-	
+	# 現状、http://android.stackexchange.com/questions/145437/reinstall-avd-on-ubuntu-16-04 のようなエラーがあるが、一番最後の対策をすることにより回避している(16.10で治ると書いてあったりする)	
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
