@@ -29,8 +29,8 @@ if(!open(FILE,"$CURRENT_IP_FILE")) {
     close FILE;
 }
 
-$NEW_IP = '0.0.0.0';
-$NEW_IP = `curl http://169.254.169.254/latest/meta-data/public-ipv4`;
+# $NEW_IP = '0.0.0.0';
+$NEW_IP = '';
 
 if ($NEW_IP ne "0.0.0.0" and $CURRENT_IP ne $NEW_IP) {
 
