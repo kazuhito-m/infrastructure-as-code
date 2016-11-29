@@ -27,3 +27,14 @@
 
   - name: firewall(ufw) settings
     include: tasks/firewall.yml
+
+  # DDNS sync script install
+
+  - name: DDNS sync script upload
+    copy:
+      src: ./resources/ieserver-ddns.pl
+      dest: /etc/cron.hourly/ieserver-ddns.pl
+      backup: yes
+
+  - name: DDNS sync script chenge user and mode
+    shell: 'chown root:root /etc/cron.hourly/ieserver-ddns.pl && chmod 777 /etc/cron.hourly/ieserver-ddns.pl'
