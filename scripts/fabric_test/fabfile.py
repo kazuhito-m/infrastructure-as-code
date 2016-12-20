@@ -1,5 +1,5 @@
 #coding:utf-8
-from fabric.api import local, run, sudo, put, env
+from fabric.api import local, run, sudo, put, env, settings
 
 SELF_MAIL_ADDRESS = "test@gmail.com"
 USER_NAME = "kazuhito"
@@ -10,6 +10,10 @@ GIT_PASS = "xxxx"
 # 上部の定数を個人設定の本当の値に置き換える
 # ./resource/.dropbox_uploader に値をいれたものを配置する
 #
+# またローカルサーバに入れるときは、以下のインストールを予めする必要がある。
+# - git,fabricのインストール
+# - ssh で「自端末にログインできる」ようにしておく。
+
 def setup_all():
 	all_upgrade()
 	japanize()
@@ -32,7 +36,7 @@ def setup_all():
 	install_developers_tools()
 	install_provisioning_tools()
 	install_msvsc()
-	install_nodejs()
+	# install_nodejs()
 	install_plantuml()
 	install_scala_and_sbt()
 	install_golang()
@@ -83,7 +87,7 @@ def install_modan_fonts():
 	run("chmod +x /tmp/dropbox_uploader.sh")
 	# 設定ファイルをプット
 	put("./resources/.dropbox_uploader" , "/tmp/.dropbox_uploader")
-	run("/tmp/dropbox_uploader.sh -k -f /tmp/.dropbox_uploader download /fonts/ /tmp/fonts")
+	run("/tmp/dropbox_uploader.sh -k -f /tmp/.dropbox_uploader download fonts /tmp/fonts")
 	# DropBox内にあったスクリプトで全量インストール
 	sudo("cd /tmp/fonts/ && for i in $(find ./ -type f | grep -i '^.*\..t.$') ; do cp ${i} /usr/local/share/fonts/ ; done")
 	sudo("chmod 644 /usr/local/share/fonts/*")
@@ -102,9 +106,13 @@ def install_web_tools():
 	# run("wget -q --no-check-certificate -O ./linux_signing_key.pub https://dl-ssl.google.com/linux/linux_signing_key.pub ")
 	# sudo("apt-key add ./linux_signing_key.pub")
 	# run("rm ./linux_signing_key.pub")
-	sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
-	sudo("apt-get update -y", pty=False)
-	sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
+	# もう、あまりにもトラブルので、固定でDebパッケージを入れるように。
+	# sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
+	# sudo("apt-get update -y", pty=False)
+	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
+	sudo("apt-get install -y libappindicator1 adobe-flashplugin pepperflashplugin-nonfree", pty=False)
+	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
+	sudo("dpkg -i /tmp/chrome.deb")
 
 def install_git_and_setting():
 	sudo("apt-get install -y git tig", pty=False)
@@ -137,7 +145,7 @@ def install_text_editors():
 	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
 	sudo("dpkg -i /tmp/atom.deb")
 	# plugin設定
-	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-butify") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
+	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_vim_all():
@@ -200,24 +208,28 @@ def install_provisioning_tools():
 
 def install_msvsc():
 	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
-#	run("wget https://az764295.vo.msecnd.net/public/0.9.1/VSCode-linux64.zip", pty=False)
+	# と思ったけど、やっぱりサイトから落としてくるのが良さそうなので、落とさせる
+#	run("wget https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable", pty=False)
 #	run("unzip ./VSCode*.zip", pty=False)
 #	run("rm ./VSCode*.zip")
 #	sudo("mv ./VSCode* /usr/local/lib/")
 #	sudo("ln -s /usr/local/lib/VSCode*/Code /usr/local/bin/VSCode")
-	sudo("add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make")
-	sudo("apt-get update -y")
-	sudo("apt-get install -y ubuntu-make")
-	run("umake -v web visual-studio-code")
+#	sudo("add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make")
+#	sudo("apt-get update -y")
+#	sudo("apt-get install -y ubuntu-make")
+#	run("umake -v web visual-studio-code")
 	# ここだけは、対話型で打たねばならない(自動的にはこける)
 	# extends in .vscode/extensions/ , configfile in .config/Code/User
+	run("wget https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable", pty=False)
+	run("mv ./stable /tmp/vscode.deb")
+ 	sudo("dpkg -i /tmp/vscode.deb" , pty=False)
 
 def install_nodejs():
 	# 最初はPPAでやろうとおもったが…なくなってるみたいなので、しゃーなしでスクリプトでやることに
 	# sudo("add-apt-repository ppa:chris-lea/node.js", pty=False)
 	# sudo("sudo apt-get update -y", pty=False)
 	# sudo("sudo apt-get install -y nodejs npm", pty=False)
-	run("wget -O /tmp/setup_nodejs https://deb.nodesource.com/setup_0.12")
+        run("wget -O /tmp/setup_nodejs https://deb.nodesource.com/setup")
 	sudo("bash /tmp/setup_nodejs", pty=False)
 	sudo("apt-get install -y nodejs", pty=False)
 	sudo("ln -s /usr/bin/nodejs /usr/bin/node")
@@ -251,8 +263,8 @@ def install_scala_and_sbt():
 	sudo("apt-get install -y curl", pty=False)
  	run("wget -O /tmp/sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
  	run("chmod 755 /tmp/sc_setup.sh")
- 	run("/tmp/sc_setup.sh")
- 	run("cs n8han/giter8")
+ 	run("CONSCRIPT_HOME=~/.conscript /tmp/sc_setup.sh")
+ 	run("~/.conscript/bin/cs n8han/giter8")
 
 def install_golang():
 	# sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
