@@ -357,6 +357,8 @@ def install_dropbox_client():
 	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -o /tmp/dropbox.deb")
 	sudo("dpkg -i /tmp/dropbox.deb")
 	sudo("dropbox start -i")
+        nautilus-dropbox
+	sudo("apt-get install -y nautilus-dropbox", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
