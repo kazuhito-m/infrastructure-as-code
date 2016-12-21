@@ -22,6 +22,7 @@ def setup_all():
 	install_common_tools()
 	install_asciidoc()
 	# install_network_tools()
+	install_rescure_tools()
 	install_modan_fonts()
 	# install_vncserver()
 	install_web_tools()
@@ -31,7 +32,7 @@ def setup_all():
 	# install_multi_media()
 	install_drowing_tools()
 	# install_jenkins()
-	install_dtm_tools()
+	# install_dtm_tools()
 	install_system_maintenance()
 	install_developers_tools()
 	install_provisioning_tools()
@@ -43,10 +44,12 @@ def setup_all():
 	# install_touchpad_controltool()
 	# install_docker_latest()
 	install_communication_tools()
-	insatll_sdkman_and_gradle()
+        # bug , Ubuntu16.10にて「sdkmangでgradle入れたときに、Ubuntuにログインできなくなる(ログイン画面->パスワード入力&Enter->”トコトン音”とともに再びログイン画面)」となるため、コメントアウト。
+	# insatll_sdkman_and_gradle()
 	install_intellij()
 	# install_game()
-	install_android_env()
+        # 途中で対話型が入る＆特定端末でしか重くて動かせないので、第一次候補からははずす。
+	# install_android_env()
 
 def japanize():
 	# change locale
@@ -78,6 +81,9 @@ def install_asciidoc():
 
 def install_network_tools():
 	sudo("apt-get install -y wireshark", pty=False)
+
+def install_rescure_tools():
+	sudo("apt-get install -f -y testdisk foremost", pty=False)
 
 def install_modan_fonts():
 	sudo("apt-get install -y fonts-migmix" , pty=False)
@@ -112,8 +118,8 @@ def install_web_tools():
 	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
 
         run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
-        sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree") 
-        sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt") 
+        sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
+        sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
 
         sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
 	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
@@ -270,6 +276,7 @@ def install_scala_and_sbt():
  	run("chmod 755 /tmp/sc_setup.sh")
  	run("CONSCRIPT_HOME=~/.conscript /tmp/sc_setup.sh")
  	run("~/.conscript/bin/cs n8han/giter8")
+        # ここで「プロンプトが出て止まる」場合がある。その場合は"exit"打って続行させる。
 
 def install_golang():
 	# sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
@@ -338,11 +345,11 @@ def install_game():
 def install_android_env():
 	sudo("apt-add-repository ppa:webupd8team/java" , pty=False)
 	sudo("apt-get update" , pty=False)
-	sudo("apt-get install -y oracle-java8-installer oracle-java8-set-default", pty=False)
+	sudo("apt-get install -y --force-yes oracle-java8-installer oracle-java8-set-default", pty=False)
 	sudo("apt-add-repository ppa:paolorotolo/android-studio" , pty=False)
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y android-studio", pty=False)
-	# 現状、http://android.stackexchange.com/questions/145437/reinstall-avd-on-ubuntu-16-04 のようなエラーがあるが、一番最後の対策をすることにより回避している(16.10で治ると書いてあったりする)	
+	# 現状、http://android.stackexchange.com/questions/145437/reinstall-avd-on-ubuntu-16-04 のようなエラーがあるが、一番最後の対策をすることにより回避している(16.10で治ると書いてあったりする)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
