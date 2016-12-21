@@ -75,6 +75,8 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit xbacklight byobu pandoc ffmpeg", pty=False)
+        # Dropbox
+        install_dropbox_client()
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -350,6 +352,11 @@ def install_android_env():
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y android-studio", pty=False)
 	# 現状、http://android.stackexchange.com/questions/145437/reinstall-avd-on-ubuntu-16-04 のようなエラーがあるが、一番最後の対策をすることにより回避している(16.10で治ると書いてあったりする)
+
+def install_dropbox_client():
+	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -o /tmp/dropbox.deb")
+	sudo("dpkg -i /tmp/dropbox.deb")
+	sudo("dropbox start -i")
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
