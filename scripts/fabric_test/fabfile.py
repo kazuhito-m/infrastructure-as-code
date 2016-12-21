@@ -1,9 +1,9 @@
 #coding:utf-8
 from fabric.api import local, run, sudo, put, env, settings
 
-SELF_MAIL_ADDRESS = "test@gmail.com"
-USER_NAME = "kazuhito"
-GIT_PASS = "xxxx"
+SELF_MAIL_ADDRESS = "xxx@gmail.com"
+USER_NAME = "kazuhito-m"
+GIT_PASS = "xxx"
 
 # 実行前に、以下のじゅんびが　必要です
 #
@@ -110,6 +110,11 @@ def install_web_tools():
 	# sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
 	# sudo("apt-get update -y", pty=False)
 	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
+
+        run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
+        sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree") 
+        sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt") 
+
         sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
 	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
 	sudo("dpkg -i /tmp/chrome.deb")
