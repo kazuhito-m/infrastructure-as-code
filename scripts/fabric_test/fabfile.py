@@ -110,7 +110,7 @@ def install_web_tools():
 	# sudo("echo 'deb http://dl.google.com/linux/chrome/deb/ stable main' > /etc/apt/sources.list.d/google.list")
 	# sudo("apt-get update -y", pty=False)
 	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
-	sudo("apt-get install -y libappindicator1 adobe-flashplugin pepperflashplugin-nonfree", pty=False)
+        sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
 	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
 	sudo("dpkg -i /tmp/chrome.deb")
 
