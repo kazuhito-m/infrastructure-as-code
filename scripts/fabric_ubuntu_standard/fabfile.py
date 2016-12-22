@@ -317,7 +317,7 @@ def install_docker_latest():
         sudo("service docker start")
         # このままでは、一般ユーザでは叩け無いので、グループ設定
         sudo("groupadd -f docker")
-        sudo("usermod -aG docker " + USER_NAME)
+        sudo("gpasswd -a " + USER_NAME + "docker")
         # 起動テスト
         sudo("docker run hello-world")
         # インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
