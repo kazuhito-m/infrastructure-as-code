@@ -78,6 +78,7 @@ def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit xbacklight byobu pandoc ffmpeg comix", pty=False)
         # Dropbox
         install_dropbox_client()
+        install_googledrive_client()
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -360,6 +361,14 @@ def install_dropbox_client():
 	sudo("dropbox start -i")
         nautilus-dropbox
 	sudo("apt-get install -y nautilus-dropbox", pty=False)
+
+def install_googledrive_client():
+	sudo("add-apt-repository ppa:alessandro-strada/ppa" , pty=False)
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y google-drive-ocamlfuse", pty=False)
+	run("mkdir -p ~/GoogleDrive")
+	run("echo \"alias gdrive_m='google-drive-ocamlfuse ~/GoogleDrive'\" >> ~/.bashrc")
+	run("echo \"alias gdrive_u='fusermount -u ~/GoogleDrive'\" >> ~/.bashrc")
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
