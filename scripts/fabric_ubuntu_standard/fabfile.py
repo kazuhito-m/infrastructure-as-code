@@ -324,7 +324,7 @@ def install_docker_latest():
         # 再起動後は軽快に動く。
 
 def install_communication_tools():
-	run("wget -O /tmp/slack-desktop.deb https://slack-ssb-updates.global.ssl.fastly.net/linux_releases/slack-desktop-1.2.5-amd64.deb")
+	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.4-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
 
 def insatll_virtualbox():
