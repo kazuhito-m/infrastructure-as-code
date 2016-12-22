@@ -74,7 +74,7 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit xbacklight byobu pandoc ffmpeg", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit xbacklight byobu pandoc ffmpeg comix", pty=False)
         # Dropbox
         install_dropbox_client()
 
