@@ -379,6 +379,8 @@ def install_resiliosync():
 	sudo("echo 'deb http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free' > /etc/apt/sources.list.d/resilio-sync.list")
 	sudo("apt-get -y update", pty=False)
 	sudo("apt-get install -y resilio-sync", pty=False)
+	sudo("systemctl enable resilio-sync", pty=False)
+	sudo("gpasswd -a " + USER_NAME + " rslsync")
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
