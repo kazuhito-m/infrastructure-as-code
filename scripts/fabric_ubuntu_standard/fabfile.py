@@ -78,7 +78,10 @@ def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree indicator-multiload clipit xbacklight byobu pandoc ffmpeg comix", pty=False)
         # Dropbox
         install_dropbox_client()
+		# GoogleDrive
         install_googledrive_client()
+		# ResilioSync(BittorrentSync)
+		install_resiliosync()
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -369,6 +372,13 @@ def install_googledrive_client():
 	run("mkdir -p ~/GoogleDrive")
 	run("echo \"alias gdrive_m='google-drive-ocamlfuse ~/GoogleDrive'\" >> ~/.bashrc")
 	run("echo \"alias gdrive_u='fusermount -u ~/GoogleDrive'\" >> ~/.bashrc")
+
+def install_resiliosync():
+	run("wget -q -O /tmp/resilio-sync.key.asc https://linux-packages.resilio.com/resilio-sync/key.asc")
+	sudo("apt-key add /tmp/resilio-sync.key.asc", pty=False)
+	sudo("echo 'deb http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free' > /etc/apt/sources.list.d/resilio-sync.list")
+	sudo("apt-get -y update", pty=False)
+	sudo("apt-get install -y resilio-sync", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
