@@ -19,6 +19,8 @@ def set_static_ip():
 	# IP固定設定。
 	# FIXME いろいろと決め打ちで書いてある。特に接続は"有線接続 1"という名前に固定してあるので、抽象化していきたい。
 	sudo("nmcli connection modify '有線接続 1' ipv4.method manual ipv4.addresses 192.168.1.133/24 ipv4.gateway 192.168.1.1 ipv4.dns 192.168.1.5 ipv4.dns-search local.sumpic.orz.hm")
+        # DNS設定
+        sudo("echo 'nameserver 192.168.1.5' > /etc/resolvconf/resolv.conf.d/base")
 
 def install_display_driver():
 	run("curl http://us.download.nvidia.com/XFree86/Linux-x86_64/375.10/NVIDIA-Linux-x86_64-375.10.run > /tmp/NVIDIA.run")
