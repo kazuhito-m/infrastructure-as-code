@@ -243,14 +243,11 @@ def install_msvsc():
  	sudo("dpkg -i /tmp/vscode.deb" , pty=False)
 
 def install_nodejs():
-	# 最初はPPAでやろうとおもったが…なくなってるみたいなので、しゃーなしでスクリプトでやることに
-	# sudo("add-apt-repository ppa:chris-lea/node.js", pty=False)
-	# sudo("sudo apt-get update -y", pty=False)
-	# sudo("sudo apt-get install -y nodejs npm", pty=False)
-        run("wget -O /tmp/setup_nodejs https://deb.nodesource.com/setup")
-	sudo("bash /tmp/setup_nodejs", pty=False)
-	sudo("apt-get install -y nodejs", pty=False)
-	sudo("ln -s /usr/bin/nodejs /usr/bin/node")
+	sudo("apt-get install -y nodejs npm", pty=False)
+	sudo("npm cache clean", pty=False)
+	sudo("npm install n -g", pty=False)
+	sudo("n stable", pty=False)
+	sudo("ln -sf /usr/local/bin/node /usr/bin/node", pty=False)
 	run("node -v")
 
 def install_plantuml():
