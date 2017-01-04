@@ -51,6 +51,7 @@ def setup_all():
 	# install_game()
         # 途中で対話型が入る＆特定端末でしか重くて動かせないので、第一次候補からははずす。
 	# install_android_env()
+	# install_kvm()
 
 def japanize():
 	# change locale
@@ -378,6 +379,12 @@ def install_resiliosync():
 	sudo("apt-get install -y resilio-sync", pty=False)
 	sudo("systemctl enable resilio-sync", pty=False)
 	sudo("gpasswd -a " + USER_NAME + " rslsync")
+
+def install_kvm():
+	sudo("apt-get install -y qemu-kvm libvirt0 libvirt-bin virt-manager bridge-utils bridge-utils", pty=False)
+	sudo("systemctl enable libvirt-bin")
+	sudo("gpasswd libvirtd -a " + USER_NAME)
+	
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
