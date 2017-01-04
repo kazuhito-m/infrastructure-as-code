@@ -9,7 +9,7 @@ RUN apt-get install -y curl wget vim byobu task-japanese openssh-server
 
 # Timezone/locale 設定
 RUN echo 'LANG="ja_JP.UTF-8"' > /etc/default/locale
-RUN ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN cat /usr/share/zoneinfo/Asia/Tokyo > /etc/localtime
 
 # ssh サーバ 設定
 RUN echo 'root:root' | chpasswd
@@ -20,4 +20,4 @@ RUN useradd -m kazuhito
 RUN echo 'kazuhito:kazuhito' | chpasswd
 
 # デタッチ毎に実行するスクリプトを登録
-CMD ["tail -f /dev/null"]
+ENTRYPOINT service ssh restart && tail -f /dev/null

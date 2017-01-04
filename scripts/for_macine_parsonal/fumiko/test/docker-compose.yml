@@ -1,8 +1,18 @@
-web:
-  build: .
+debianbase:
+  build: "."
+  expose: 
+    - "88"
+    - "135"
+    - "137"
+    - "138"
+    - "139"
+    - "389"
+    - "445"
+    - "464"
+    - "636"
+    - "1024"
+    - "3268"
+    - "3269"
   ports:
-    - "5000:5000"
-  volumes:
-    - .:/code
-  links:
-    - redis
+    - "13022:22"
+  container_name: "debiantest01"
