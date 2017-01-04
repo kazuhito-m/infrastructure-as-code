@@ -44,3 +44,36 @@ usermod -G sudo hogehoge
 通常ユーザの「その人に沿ったgitの設定」を行う。
 
 ユーザごとなので、ここには書かない。
+
+## ディスク系の設定
+
+### ディスク状況を調べる
+
+```bash
+ls -l /devsd*
+brw-rw---- 1 root disk 8,  0  1月  4 08:39 /dev/sda
+brw-rw---- 1 root disk 8,  1  1月  4 08:39 /dev/sda1
+brw-rw---- 1 root disk 8,  2  1月  4 08:39 /dev/sda2
+brw-rw---- 1 root disk 8,  5  1月  4 08:39 /dev/sda5
+brw-rw---- 1 root disk 8, 16  1月  4 08:39 /dev/sdb
+brw-rw---- 1 root disk 8, 32  1月  4 08:39 /dev/sdc
+brw-rw---- 1 root disk 8, 48  1月  4 08:39 /dev/sdd
+```
+
+４台認識、うち一台はシステムなので、 b,c,dをpartedを使って初期化。(fdiskではGPTを扱えず２TB以上は設定できないため)
+
+```bash
+sudo parted /dev/sdc
+
+mktable
+New disk label type ? GPT
+mkpart primary 0% 100%
+```
+一応タイプ設定しとく。
+
+```bash
+sudo fdisk /dev/sdc
+:t
+Partition type (type L to list all types): 21
+:w
+```

@@ -60,9 +60,11 @@ def setup_cpuspeed():
 	print("cpuspeedはdebianでは無い上に、同等機能がDebianでは標準装備みたい。")
 
 def setup_md_raid0():
+        # 注意: /dev/sd{b|c} にドライブがあること、パーティションが切られていることを前提としている。
 	# TODO Raid0をドライブ決め打ちで設定するスクリプトを組もう
 	sudo("apt-get install -y -f parted mdadm", pty=False)
 	# TODO 途中で入力が求められる…可能性があるので、次にやる機会があれば、対話型対応する。
+        sudo('mdadm --create /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb /dev/sdc', pty=False)
 
 
 # TODO
