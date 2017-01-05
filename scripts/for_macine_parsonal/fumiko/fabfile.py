@@ -19,7 +19,7 @@ def setup_all():
 	install_common_tools()
 	setup_network_settings()
 	setup_ntp_settings()
-	setup_md_raid0()
+	# setup_md_raid0()
 
 # small tasks
 
@@ -31,7 +31,7 @@ def all_upgrade():
 	sudo("apt-get dist-upgrade -y", pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y tree byobu", pty=False)
+	sudo("apt-get install -f -y tree byobu vim", pty=False)
 
 def setup_network_settings():
 	# eth0を設定したinterfaceファイルをサーバに放り込む
