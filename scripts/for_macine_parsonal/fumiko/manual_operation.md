@@ -34,7 +34,7 @@ apt-get install sudo git fabric
 必要なユーザをsudoグループに入れる。
 
 ```bash
-usermod -G sudo hogehoge
+gpasswd -a kazuhito sudo
 ```
 
 おそらく、suでrootになってると、戻っても有効になってないので、ログアウトか再起動後確認。
@@ -77,3 +77,36 @@ sudo fdisk /dev/sdc
 Partition type (type L to list all types): 21
 :w
 ```
+
+### fabricでRAID0組む
+
+この後、fabricでタスクを実行
+
+```bash
+fab -H fumiko -u kazuhito --initial-password-prompt setup_md_raid0
+```
+
+サーバに入り、構築状況をwatchする。
+
+```bash
+watch -n 1 cat /proc/mdstat
+```
+
+この構築に8hくらいかかるので、この日の作業はここで一区切りだと思われる。
+
+## ファイルシステム構築
+
+### fs初期化
+
+```bash
+sudo mkfs.ext4 /dev/md0
+sudo mkdir /mnt/test
+sudo mount -t ext4 /dev/md0 /mnt/test
+sudo mv /home/* /mnt/test/
+# fstabにmount設定追加
+sudo vi /etc/fstab
+# 末尾に追加
+/dev/md0　/　ext4　errors=remount-ro 0 1
+```
+
+再起動して、mount状況を確認。
