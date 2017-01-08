@@ -381,9 +381,22 @@ def install_resiliosync():
 	sudo("gpasswd -a " + USER_NAME + " rslsync")
 
 def install_kvm():
-	sudo("apt-get install -y qemu-kvm libvirt0 libvirt-bin virt-manager bridge-utils bridge-utils", pty=False)
+	sudo("apt-get install -y qemu-kvm libvirt0 libvirt-bin virt-manager bridge-utils", pty=False)
+	sudo("apt-get install -y ubuntu-fan", pty=False)    # おそらくバグ。
 	sudo("systemctl enable libvirt-bin")
 	sudo("gpasswd libvirtd -a " + USER_NAME)
+        # ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
+	sudo("grep 'vhost_net' /etc/modules || echo 'vhost_net' >> /etc/modules")
+        # KVMインストール時に作られる仮想ネットワークを無効化する。
+        sudo("virsh net-destroy default") 
+        sudo("virsh net-autostart default --disable")
+        # TODO この後、手動にてブリッジ構成にする。
+        # ここに関しては各マシン違うと思うので、合わせて以下のサイトの通りにする。
+        # http://symfoware.blog68.fc2.com/blog-entry-1877.html
+        # おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
+	sudo("apt-get remove -y network-manager", pty=False)
+        # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。 
+
 	
 
 # TODOList
