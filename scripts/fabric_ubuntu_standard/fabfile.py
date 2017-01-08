@@ -331,7 +331,7 @@ def install_communication_tools():
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
 
 def insatll_virtualbox():
-        sudo("apt-get install -y vertualbox")
+        sudo("apt-get install -y virtualbox")
 
 def insatll_sdkman_and_gradle():
 	run("curl -s get.sdkman.io | bash")
