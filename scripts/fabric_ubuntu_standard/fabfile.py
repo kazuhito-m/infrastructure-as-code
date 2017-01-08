@@ -396,6 +396,7 @@ def install_kvm():
         # おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
 	sudo("apt-get remove -y network-manager", pty=False)
         # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。 
+        # brctl show で「ブリッジ状態の確認」ができる。
 
 	
 
