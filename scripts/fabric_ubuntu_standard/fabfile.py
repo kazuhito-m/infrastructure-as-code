@@ -253,6 +253,8 @@ def install_nodejs():
 	run("node -v")
 
 def install_plantuml():
+        # 前提条件として、使うパッケージ入れとく。
+	sudo("apt-get install -y graphviz", pty=False)
 	# 要るものは予め落としておく
 	run("wget -O /tmp/plantuml.jar http://downloads.sourceforge.net/project/plantuml/plantuml.jar")
 	# debパッケージ入れた後 最新Jarで上書き…とかしようと思ったがうまくいかなかったので、debのインストールと同じ構成を自力で作る。
