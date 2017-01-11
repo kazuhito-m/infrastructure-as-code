@@ -332,6 +332,9 @@ def install_docker_latest():
 def install_communication_tools():
 	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.4-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
+        # 自動起動設定。
+        put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
+        sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
 
 def insatll_virtualbox():
         sudo("apt-get install -y virtualbox")
