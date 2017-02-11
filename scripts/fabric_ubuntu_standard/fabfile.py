@@ -165,7 +165,7 @@ def install_text_editors():
 	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
 	sudo("dpkg -i /tmp/atom.deb")
 	# plugin設定
-	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
+	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify auto-encoding") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_vim_all():
