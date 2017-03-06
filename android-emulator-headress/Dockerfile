@@ -1,9 +1,5 @@
 FROM ubuntu:latest
 
-# Android Emurator をDocker内で動かすサンプル。
-# https://github.com/softsam/docker-android-emulator を参考にいろいろ合成。
-# AndroidのAPIバージョンを19に固定してあるのは、スピード対策。
-
 MAINTAINER kazuhito-m(Twitter:kazuhito_m)
 
 # Install all dependencies
@@ -20,8 +16,8 @@ ENV PATH $PATH:${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools
 
 # Set up insecure default key
 RUN mkdir -m 0750 /.android
-ADD resources/insecure_shared_adbkey /.android/adbkey
-ADD resources/insecure_shared_adbkey.pub /.android/adbkey.pub
+ADD files/insecure_shared_adbkey /.android/adbkey
+ADD files/insecure_shared_adbkey.pub /.android/adbkey.pub
 
 RUN wget -qO- "http://dl.google.com/android/android-sdk_r24.3.4-linux.tgz" | tar -zx -C /opt && \
     echo y | android update sdk --no-ui --all --filter platform-tools --force
@@ -44,7 +40,16 @@ RUN echo y | android update sdk --no-ui --all -t `android list sdk --all|grep "S
 
 RUN echo n | android create avd --force -n "arm" -t android-19 --abi default/armeabi-v7a -c 100M -s WVGA800
 
-# Add script
-ADD scripts/start.sh /start.sh
-RUN chmod +x /start.sh
-CMD /start.sh
+# Avoid emulator assumes HOME as '/'.
+ENV HOME /root
+ADD scripts/wait-for-emulator /usr/local/bin/
+ADD scripts/start-emulator /usr/local/bin/
+ADD scripts/init-emulator /usr/local/bin/
+
+# 暖機運転(anrdoidのJavaProjectを作り、ビルド、キャッシュを貯める)
+RUN mkdir -p /opt/tmp && android create project -g -v 0.9.+ -a MainActivity -k com.example.example -t android-19 -p /opt/tmp
+RUN cd /opt/tmp && ./gradlew tasks
+RUN rm -rf /opt/tmp
+
+VOLUME /workspace
+WORKDIR /workspace
