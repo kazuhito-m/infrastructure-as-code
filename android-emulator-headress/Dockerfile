@@ -16,8 +16,8 @@ ENV PATH $PATH:${ANDROID_HOME}/tools:$ANDROID_HOME/platform-tools
 
 # Set up insecure default key
 RUN mkdir -m 0750 /.android
-ADD files/insecure_shared_adbkey /.android/adbkey
-ADD files/insecure_shared_adbkey.pub /.android/adbkey.pub
+ADD resources/insecure_shared_adbkey /.android/adbkey
+ADD resources/insecure_shared_adbkey.pub /.android/adbkey.pub
 
 RUN wget -qO- "http://dl.google.com/android/android-sdk_r24.3.4-linux.tgz" | tar -zx -C /opt && \
     echo y | android update sdk --no-ui --all --filter platform-tools --force
@@ -47,8 +47,12 @@ ADD scripts/start-emulator /usr/local/bin/
 ADD scripts/init-emulator /usr/local/bin/
 
 # 暖機運転(anrdoidのJavaProjectを作り、ビルド、キャッシュを貯める)
-RUN mkdir -p /opt/tmp && android create project -g -v 0.9.+ -a MainActivity -k com.example.example -t android-19 -p /opt/tmp
-RUN cd /opt/tmp && ./gradlew tasks
+# RUN mkdir -p /opt/tmp && android create project -g -v 0.9.+ -a MainActivity -k com.example.example -t android-19 -p /opt/tmp
+# 上記をやりたかったが、android-sdkのバグでコケるため「完成品のgradleプロジェクトサンプル」を送り込んで実行。
+RUN mkdir /opt/tmp/
+ADD resources/sample-proj.tgz /opt/tmp/
+# ADDの効力で、tgzは展開されているはず
+RUN cd /opt/tmp/sample-proj && ./gradlew task clean test
 RUN rm -rf /opt/tmp
 
 VOLUME /workspace
