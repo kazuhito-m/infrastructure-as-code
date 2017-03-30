@@ -21,6 +21,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
+        # install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
 	install_rescure_tools()
@@ -77,6 +78,8 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar unix2dos nkf apt-file", pty=False)
+        # DVD movie play 
+
         sudo("apt-file update")
 	# Dropbox
 	install_dropbox_client()
@@ -84,6 +87,11 @@ def install_common_tools():
 	install_googledrive_client()
 	# ResilioSync
 	install_resiliosync()
+
+def install_movie_player():
+        sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
+        sudo("dpkg-reconfigure libdvd-pkg")
+        run("file /usr/lib/x86_64-linux-gnu/libdvdcss.so")
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
