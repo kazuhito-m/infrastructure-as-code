@@ -228,6 +228,8 @@ def install_developers_tools():
 	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
 	# datavese viewer
 	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
+        # Mono&MonoDevelop
+	sudo("apt-get install -y monodevelop", pty=False)
 
 def install_provisioning_tools():
 	sudo("apt-get install -y fabric", pty=False)
