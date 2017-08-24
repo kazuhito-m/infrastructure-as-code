@@ -189,7 +189,6 @@ def install_drowing_tools():
 	# アニメGIFを作るツールの動作方法は…
 	# xwininfo # ここでウィンドウを指定し、情報を取得する
 	# byzanz-record -d 180 -x 1379 -y 234 -w 1008 -h 722 test2.gif # その情報を元にキャプチャを始める。(終了したくなったらCtrl+c)
-	# TODO 上を上手いことやるscriptを作る
 
 def install_jenkins():
 	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
@@ -279,6 +278,11 @@ def install_plantuml():
 
 # Window/Screenキャプチャをアニメgifで取るコマンドのインストール。
 def install_screencapture_gif():
+	# 'peek' インストール
+	sudo("add-apt-repository ppa:peek-developers/stable", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install peek", pty=False)
+	# 'byzanz'（+ wrapper） インストール
 	sudo("apt-get install -y byzanz libx11-dev", pty=False)
 	sudo("mkdir -p /usr/local/lib/byzanz-record-wrapper", pty=False)
 	# 範囲指定に必要なライブラリをビルド
