@@ -41,6 +41,7 @@ def setup_all():
 	install_msvsc()
 	# install_nodejs()
 	install_plantuml()
+	install_screencapture_gif()
 	install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
@@ -78,7 +79,7 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar unix2dos nkf apt-file", pty=False)
-        # DVD movie play 
+        # DVD movie play
 
         sudo("apt-file update")
 	# Dropbox
@@ -184,7 +185,7 @@ def install_vim_all():
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
 def install_drowing_tools():
-	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick byzanz", pty=False)
+	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
 	# アニメGIFを作るツールの動作方法は…
 	# xwininfo # ここでウィンドウを指定し、情報を取得する
 	# byzanz-record -d 180 -x 1379 -y 234 -w 1008 -h 722 test2.gif # その情報を元にキャプチャを始める。(終了したくなったらCtrl+c)
@@ -274,7 +275,26 @@ def install_plantuml():
 	sudo("echo 'java -jar /usr/share/plantuml/plantuml.jar ${@}' > /usr/bin/plantuml")
 	sudo("chmod 755 /usr/bin/plantuml")
  	# atomがインストールされていた場合、atomのプラグインを入れる
- 	run("which atom && apm install  plantuml-viewer language-plantuml")
+ 	run("which atom && apm install plantuml-viewer language-plantuml")
+
+# Window/Screenキャプチャをアニメgifで取るコマンドのインストール。
+def install_screencapture_gif():
+	sudo("apt-get install -y byzanz libx11-dev", pty=False)
+	sudo("mkdir -p /usr/local/lib/byzanz-record-wrapper", pty=False)
+	# 範囲指定に必要なライブラリをビルド
+	run("git clone https://github.com/lolilolicon/xrectsel.git /tmp/xrectsel", pty=False)
+	run("cd /tmp/xrectsel && ./bootstrap")
+	run("cd /tmp/xrectsel && ./configure")
+	sudo("cd /tmp/xrectsel && make", pty=False)
+	sudo("cd /tmp/xrectsel && make install", pty=False)
+	# Windowのキャプチャコマンド
+	sudo("wget -O /usr/local/lib/byzanz-record-wrapper/byzanz-record-window https://gist.githubusercontent.com/toddhalfpenny/50700764071418daa2e446fe58b0cd96/raw/a5eebfa30f5b6546756d7f87dbc8ee08404208f7/byzanz-record-window", pty=False)
+	sudo("chmod 755 /usr/local/lib/byzanz-record-wrapper/byzanz-record-window", pty=False)
+	sudo("ln -s /usr/local/lib/byzanz-record-wrapper/byzanz-record-window /usr/local/bin/byzanz-record-window", pty=False)
+	# 範囲指定のキャプチャコマンド
+	sudo("wget -O /usr/local/lib/byzanz-record-wrapper/byzanz-record-region https://gist.githubusercontent.com/haya14busa/0dd3923d2a1b5ea07af2/raw/27a057e93d7336eb31ffed205a9c259ab7d3f489/byzanz-record-region", pty=False)
+	sudo("chmod 755 /usr/local/lib/byzanz-record-wrapper/byzanz-record-region", pty=False)
+	sudo("ln -s /usr/local/lib/byzanz-record-wrapper/byzanz-record-region /usr/local/bin/byzanz-record-region", pty=False)
 
 def install_scala_and_sbt():
  	# scala install
@@ -404,17 +424,17 @@ def install_kvm():
         # ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
 	sudo("grep 'vhost_net' /etc/modules || echo 'vhost_net' >> /etc/modules")
         # KVMインストール時に作られる仮想ネットワークを無効化する。
-        sudo("virsh net-destroy default") 
+        sudo("virsh net-destroy default")
         sudo("virsh net-autostart default --disable")
         # TODO この後、手動にてブリッジ構成にする。
         # ここに関しては各マシン違うと思うので、合わせて以下のサイトの通りにする。
         # http://symfoware.blog68.fc2.com/blog-entry-1877.html
         # おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
 	sudo("apt-get remove -y network-manager", pty=False)
-        # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。 
+        # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。
         # brctl show で「ブリッジ状態の確認」ができる。
 
-	
+
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
