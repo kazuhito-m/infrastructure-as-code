@@ -31,5 +31,6 @@
 
 - name: Install docker-ce.
   apt: name=docker-ce state=present update_cache=yes
-  notify:
-    - restart docker
+
+- name: Docker with SUID.
+  shell: chmod u+s /usr/bin/docker

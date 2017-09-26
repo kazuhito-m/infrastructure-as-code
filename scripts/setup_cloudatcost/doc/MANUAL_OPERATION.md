@@ -36,8 +36,12 @@ Ansibleを流す前に、以下作業を行った。
   - `sudo apt-get dist-upgrade`
   - `sudo do-release-upgrade`
   - CloudAtCostのサーバは古いので、とりあえず(壊れても良い)序盤にあげてしまう
+- Host名設定
+  - `sudo hostnamectl set-hostname [ホスト名]`
+  - 恐らく、AsCodeするには設定ファイルのようなものが要りそう…だからサボる
 
 ## setup.sh(ansible)を走らせる前にやること
 
 - `host_template` を `hosts` にコピーし、設定変更
 - `resources/ieserver-ddns_template.pl` を `resources/ieserver-ddns.pl` にコピーし、設定変更
+- `CAC_KEY_FILE01` という変数に、「秘密鍵ファイルの場所」を設定
