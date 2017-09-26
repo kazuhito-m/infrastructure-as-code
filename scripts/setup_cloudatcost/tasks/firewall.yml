@@ -9,6 +9,9 @@
 - name: Allow ssh
   ufw: rule=allow port=ssh
 
+- name: Allow Dotnet Core Application
+  ufw: rule=allow port=5000
+
 # TODO インストールされたら
 
 #- name: Allow http
