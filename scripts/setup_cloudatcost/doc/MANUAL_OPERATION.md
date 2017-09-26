@@ -32,3 +32,12 @@ Ansibleを流す前に、以下作業を行った。
   - root封じ : `PermitRootLogin` を `no` に
   - passwordログイン封じ : `#PasswordAuthentication yes` のコメント外して `no` に
   - 再起動: `sudo shutdown -r now` (何故かsshd再起動ではだめ)
+- Ubuntuのアップグレード
+  - `sudo apt-get dist-upgrade`
+  - `sudo do-release-upgrade`
+  - CloudAtCostのサーバは古いので、とりあえず(壊れても良い)序盤にあげてしまう
+
+## setup.sh(ansible)を走らせる前にやること
+
+- `host_template` を `hosts` にコピーし、設定変更
+- `resources/ieserver-ddns_template.pl` を `resources/ieserver-ddns.pl` にコピーし、設定変更

@@ -30,6 +30,5 @@
   - name: firewall(ufw) settings
     include: tasks/firewall.yml
 
-  # DDNSのスクリプトは「ドメインとパスワードとか、色々仕込まなければならない」ので、基本はペンディングにしとく。
-#  - name: DDNS settings
-#    include: tasks/ddns.yml
+  - name: DDNS settings
+    include: tasks/ddns.yml
