@@ -2,11 +2,19 @@
 
 コードに出来ない手動作業を記載していく。
 
+## 参考
+
+- https://qiita.com/nightyknite/items/e05390cfcea7f4a1b2a9
+
 ## 初期設定
 
 Ansibleを流す前に、以下作業を行った。
 
+- 「7日間未使用でシャットダウン」設定をOFFにする
+  - Cloudatcostの管理パネルのModify>Change Server Run Modeで Normal Mode(Leave Power On)にする。
 - 一般ユーザ作成
+  - `adduser user_name`
+  - Ubuntuでは、このコマンドが「ディレクトリ付きで」作ってくれる
 - sudo 設定
   - `gpasswd -a [username] sudo`
 - sshdの「鍵認証有効化」

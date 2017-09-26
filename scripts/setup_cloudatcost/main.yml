@@ -1,5 +1,7 @@
 # coding:utf-8
 
+# for Ubuntu 14.04.1 LTS  in cloudatcost
+
 - hosts: all
   sudo: yes
 
