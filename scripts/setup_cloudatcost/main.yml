@@ -32,3 +32,6 @@
 
   - name: DDNS settings
     include: tasks/ddns.yml
+
+  - name: Docker install
+    include: tasks/docker.yml
