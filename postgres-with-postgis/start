@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# kickしたディレクトリから、このスクリプトのあるディレクトリに移動。
+cd $(cd $(dirname $0);pwd)
+
+docker-compose up -d --build
+
+# composeが使えない場合
+# docker build -t postgres:original01 .
+# docker run -d -p 5432:5432 --name postgres-base postgres:original01
