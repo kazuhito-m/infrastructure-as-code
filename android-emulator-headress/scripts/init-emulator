@@ -13,5 +13,6 @@ emulator64-arm -avd arm -no-audio -no-window -gpu off -verbose -port $PORT -qemu
 
 # スリープとかかましたあとに、以下を実行。
 wait-for-emulator
-adb shell 'setprop persist.sys.locale ja; setprop persist.sys.timezone "Asia/Tokyo"; setprop persist.sys.country JP; setprop persist.sys.language ja; stop; start; sleep 5'
-wait-for-emulator
+# 下の日本語化がしたかったが 「Systemがエラー 」とかになるので、一旦殺す。
+# adb shell 'setprop persist.sys.locale ja; setprop persist.sys.timezone "Asia/Tokyo"; setprop persist.sys.country JP; setprop persist.sys.language ja; stop; start; sleep 5'
+# wait-for-emulator

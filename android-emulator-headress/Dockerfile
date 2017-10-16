@@ -46,7 +46,7 @@ ADD scripts/wait-for-emulator /usr/local/bin/
 ADD scripts/start-emulator /usr/local/bin/
 ADD scripts/init-emulator /usr/local/bin/
 
-# 暖機運転(anrdoidのJavaProjectを作り、ビルド、キャッシュを貯める)
+# 暖機運転(anrdoidのJavaProjectを作り、ビルド、gradle実行可能かテスト)
 # RUN mkdir -p /opt/tmp && android create project -g -v 0.9.+ -a MainActivity -k com.example.example -t android-19 -p /opt/tmp
 # 上記をやりたかったが、android-sdkのバグでコケるため「完成品のgradleプロジェクトサンプル」を送り込んで実行。
 RUN mkdir /opt/tmp/
