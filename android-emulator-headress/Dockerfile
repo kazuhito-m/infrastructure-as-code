@@ -23,7 +23,7 @@ RUN wget -qO- "http://dl.google.com/android/android-sdk_r24.3.4-linux.tgz" | tar
     echo y | android update sdk --no-ui --all --filter platform-tools --force
 
 RUN mkdir -m 0750 "$ANDROID_HOME/licenses/"
-RUN echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+RUN echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55\n\nd56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
 RUN echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 
 # Expose android port
