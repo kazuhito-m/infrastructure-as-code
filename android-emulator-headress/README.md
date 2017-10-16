@@ -13,16 +13,15 @@ Dockerコンテナ内でヘッドレスのAndroidエミュレータを立ち上�
 
 - Ubuntu latest
 - openjdk 8
-- Android SDK 24.3.4
-- Android API 19
+- Android SDK 24.4.1
+- Android API 21
 - ARM
-
-`API 19` に固定しているのは速度の考慮ため。
 
 ## Usage
 
 ```bash
-cd /path/to/project
-docker build . -t android-eh
-docker run -t -i -v `pwd`:/workspace android-eh start-emulator "./gradlew connectedAndroidTest"
+docker build . -t android-emulator-image
+
+cd /path/to/android-project
+docker run -t -i -v `pwd`:/workspace android-emulator-image start-emulator "./gradlew connectedAndroidTest"
 ```
