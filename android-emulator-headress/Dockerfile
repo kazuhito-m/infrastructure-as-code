@@ -35,10 +35,10 @@ EXPOSE 5900
 RUN mkdir ${ANDROID_HOME}/tools/keymaps && touch ${ANDROID_HOME}/tools/keymaps/en-us
 
 # Install dependencies for emulator
-RUN echo y | android update sdk --no-ui --all -t `android list sdk --all|grep "SDK Platform Android 4.4.2, API 19"|awk -F'[^0-9]*' '{print $2}'` && \
-    echo y | android update sdk --no-ui --all -t 98 --force
+RUN echo y | android update sdk --no-ui --all -t `android list sdk --all|grep "SDK Platform Android 5.0.1, API 21"|awk -F'[^0-9]*' '{print $2}'` && \
+    echo y | android update sdk --no-ui --all -t `android list sdk --all|grep "ARM EABI v7a System Image, Android API 21, revision 4"|awk -F'[^0-9]*' '{print $2}'` --force
 
-RUN echo n | android create avd --force -n "arm" -t android-19 --abi default/armeabi-v7a -c 100M -s WVGA800
+RUN echo n | android create avd --force -n "arm" -t android-21 --abi default/armeabi-v7a -c 100M -s WVGA800
 
 # Avoid emulator assumes HOME as '/'.
 ENV HOME /root
