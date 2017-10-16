@@ -19,7 +19,7 @@ RUN mkdir -m 0750 /.android
 ADD resources/insecure_shared_adbkey /.android/adbkey
 ADD resources/insecure_shared_adbkey.pub /.android/adbkey.pub
 
-RUN wget -qO- "http://dl.google.com/android/android-sdk_r24.3.4-linux.tgz" | tar -zx -C /opt && \
+RUN wget -qO- "http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz" | tar -zx -C /opt && \
     echo y | android update sdk --no-ui --all --filter platform-tools --force
 
 RUN mkdir -m 0750 "$ANDROID_HOME/licenses/"
