@@ -1,6 +1,6 @@
 # Official image "Postgres" + PostGIS implementation by dillon.
-# See "https://github.com/appropriate/docker-postgis/blob/master/9.5-2.3/Dockerfile" if you can not trust.
-FROM mdillon/postgis:9.5
+# See "https://github.com/appropriate/docker-postgis/blob/master/9.6-2.4/Dockerfile" if you can not trust.
+FROM mdillon/postgis:9.6
 
 MAINTAINER kazuhito_m
 
