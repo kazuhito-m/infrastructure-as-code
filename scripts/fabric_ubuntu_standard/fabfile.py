@@ -364,7 +364,7 @@ def install_docker_latest():
         # 再起動後は軽快に動く。
 
 def install_communication_tools():
-	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.4.2-amd64.deb")
+	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.9.0-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
         # 自動起動設定。
         put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
