@@ -17,7 +17,7 @@ GIT_PASS = "xxx"
 
 def setup_all():
 	all_upgrade()
-	japanize()
+	# japanize() # 日本語Limux”以外”を使う場合はonにする
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
@@ -77,7 +77,7 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar unix2dos nkf apt-file", pty=False)
-        sudo("apt-file update")
+    sudo("apt-file update")
 	# Dropbox
 	install_dropbox_client()
 	# GoogleDrive
@@ -126,11 +126,11 @@ def install_web_tools():
 	# sudo("apt-get update -y", pty=False)
 	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
 
-        run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
-        sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
-        sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
+    run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
+    sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
+    sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
 
-        sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
+    sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
 	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
 	sudo("dpkg -i /tmp/chrome.deb")
 
@@ -152,8 +152,7 @@ def install_multi_media():
 	# ffmpeg
 	# sudo("apt-add-repository -y ppa:samrog131/ppa", pty=False)
 	sudo("apt-get update", pty=False)
-	# sudo("apt-get install ffmpeg-real", pty=False)
-	# run("'export PATH=${PATH}:/opt/ffmpeg/bin' >> ~/.bashrc")
+	sudo("apt-get install ffmpeg", pty=False)
 
 def install_text_editors():
 	# editor系一式
@@ -220,6 +219,7 @@ def install_developers_tools():
 	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
 	# datavese viewer
 	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
+	sudo("apt-get install -y postgresql-client-common", pty=False)
 
 def install_provisioning_tools():
 	sudo("apt-get install -y fabric", pty=False)
@@ -227,22 +227,11 @@ def install_provisioning_tools():
 	sudo("pip install ansible", pty=False)
 
 def install_msvsc():
-	# サイトから落としてくるベースで考えたが、umakeとVSCパッケージ対応があったので、それで対応。
-	# と思ったけど、やっぱりサイトから落としてくるのが良さそうなので、落とさせる
-#	run("wget https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable", pty=False)
-#	run("unzip ./VSCode*.zip", pty=False)
-#	run("rm ./VSCode*.zip")
-#	sudo("mv ./VSCode* /usr/local/lib/")
-#	sudo("ln -s /usr/local/lib/VSCode*/Code /usr/local/bin/VSCode")
-#	sudo("add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make")
-#	sudo("apt-get update -y")
-#	sudo("apt-get install -y ubuntu-make")
-#	run("umake -v web visual-studio-code")
-	# ここだけは、対話型で打たねばならない(自動的にはこける)
-	# extends in .vscode/extensions/ , configfile in .config/Code/User
-	run("wget https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable", pty=False)
-	run("mv ./stable /tmp/vscode.deb")
- 	sudo("dpkg -i /tmp/vscode.deb" , pty=False)
+	run("curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg", pty=False)
+ 	sudo("mv /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg" , pty=False)
+	sudo("echo 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main' > /etc/apt/sources.list.d/vscode.list", pty=False)
+ 	sudo("apt-get update" , pty=False)
+ 	sudo("apt-get install -y code" , pty=False)
 
 def install_nodejs():
 	sudo("apt-get install -y nodejs npm", pty=False)
@@ -268,7 +257,7 @@ def install_plantuml():
 
 def install_scala_and_sbt():
  	# scala install
- 	SCALA_VER='2.12.0-M3'
+ 	SCALA_VER='2.11.12'
  	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
  	sudo("dpkg -i /tmp/scala.deb" , pty=False)
  	# sbt apt regist
@@ -291,7 +280,7 @@ def install_golang():
 	# sudo("apt-get update")
 	# sudo("apt-get install -y golang")
 	# 上記APTラインは使えなくなった模様。手動で入れるやり方に切り替え。
-	run("wget -O /tmp/golang.tar.gz https://storage.googleapis.com/golang/go1.6rc2.linux-amd64.tar.gz")
+	run("wget -O /tmp/golang.tar.gz https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz")
 	sudo("tar -C /usr/local -xzf /tmp/golang.tar.gz")
 	run("echo 'export GOROOT=/usr/local/go' >> ~/.bashrc")
 	run("echo 'export PATH=$GOROOT/bin:$PATH' >> ~/.bashrc")
@@ -311,30 +300,30 @@ def install_touchpad_controltool():
 	sudo("apt-get install -y touchpad-indicator", pty=False)
 
 def install_docker_latest():
-        # refalance https://docs.docker.com/engine/installation/linux/ubuntulinux/
-        sudo("apt-get update" , pty=False)
-        sudo("apt-get install -y apt-transport-https ca-certificates" , pty=False)
-        sudo("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
-        sudo("echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' > /etc/apt/sources.list.d/docker.list")
-        sudo("apt-get update" , pty=False)
-        sudo("apt-get purge -y lxc-docker" , pty=False)
-        sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
-        sudo("apt-get install -y docker-engine", pty=False)
-        sudo("service docker start")
-        # このままでは、一般ユーザでは叩け無いので、グループ設定
-        sudo("groupadd -f docker")
-        sudo("gpasswd -a " + USER_NAME + " docker")
-        # 起動テスト
-        sudo("docker run hello-world")
-        # インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
-        # 再起動後は軽快に動く。
+    # refalance https://docs.docker.com/engine/installation/linux/ubuntulinux/
+    sudo("apt-get update" , pty=False)
+    sudo("apt-get install -y apt-transport-https ca-certificates" , pty=False)
+    sudo("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
+    sudo("echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' > /etc/apt/sources.list.d/docker.list")
+    sudo("apt-get update" , pty=False)
+    sudo("apt-get purge -y lxc-docker" , pty=False)
+    sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
+    sudo("apt-get install -y docker-engine", pty=False)
+    sudo("service docker start")
+    # このままでは、一般ユーザでは叩け無いので、グループ設定
+    sudo("groupadd -f docker")
+    sudo("gpasswd -a " + USER_NAME + " docker")
+    # 起動テスト
+    sudo("docker run hello-world")
+    # インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
+    # 再起動後は軽快に動く。
 
 def install_communication_tools():
 	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.4-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
-        # 自動起動設定。
-        put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
-        sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
+    # 自動起動設定。
+    put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
+    sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
 
 def insatll_virtualbox():
         sudo("apt-get install -y virtualbox")
@@ -363,7 +352,7 @@ def install_android_env():
 	# 現状、http://android.stackexchange.com/questions/145437/reinstall-avd-on-ubuntu-16-04 のようなエラーがあるが、一番最後の対策をすることにより回避している(16.10で治ると書いてあったりする)
 
 def install_dropbox_client():
-	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -o /tmp/dropbox.deb")
+	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2.10.0_amd64.deb -o /tmp/dropbox.deb")
 	sudo("dpkg -i /tmp/dropbox.deb")
 	sudo("dropbox start -i")
         nautilus-dropbox
@@ -393,18 +382,17 @@ def install_kvm():
 	sudo("gpasswd libvirtd -a " + USER_NAME)
         # ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
 	sudo("grep 'vhost_net' /etc/modules || echo 'vhost_net' >> /etc/modules")
-        # KVMインストール時に作られる仮想ネットワークを無効化する。
-        sudo("virsh net-destroy default") 
-        sudo("virsh net-autostart default --disable")
-        # TODO この後、手動にてブリッジ構成にする。
-        # ここに関しては各マシン違うと思うので、合わせて以下のサイトの通りにする。
-        # http://symfoware.blog68.fc2.com/blog-entry-1877.html
-        # おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
+    # KVMインストール時に作られる仮想ネットワークを無効化する。
+    sudo("virsh net-destroy default")
+    sudo("virsh net-autostart default --disable")
+    # TODO この後、手動にてブリッジ構成にする。
+    # ここに関しては各マシン違うと思うので、合わせて以下のサイトの通りにする。
+    # http://symfoware.blog68.fc2.com/blog-entry-1877.html
+    # おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
 	sudo("apt-get remove -y network-manager", pty=False)
-        # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。 
-        # brctl show で「ブリッジ状態の確認」ができる。
+    # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。
+    # brctl show で「ブリッジ状態の確認」ができる。
 
-	
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
