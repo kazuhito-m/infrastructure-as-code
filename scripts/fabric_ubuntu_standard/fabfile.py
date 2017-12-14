@@ -296,7 +296,7 @@ def install_scala_and_sbt():
  	# sbt apt regist
    	sudo("mkdir -p /etc/apt/sources.list.d/")
    	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
-		sudo("apt-get update" , pty=False)
+	sudo("apt-get update" , pty=False)
    	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
    	sudo("apt-get update -y" , pty=False)
    	sudo("apt-get install --allow-unauthenticated -y sbt", pty=False)
