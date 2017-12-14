@@ -1,0 +1,6 @@
+postgis-sample:
+  build: "."
+  ports:
+    - "5432:5432"
+  container_name: "postgis-sample"
+  restart: "unless-stopped"

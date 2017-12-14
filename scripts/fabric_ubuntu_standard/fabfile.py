@@ -21,6 +21,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
+        # install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
 	install_rescure_tools()
@@ -40,6 +41,7 @@ def setup_all():
 	install_msvsc()
 	# install_nodejs()
 	install_plantuml()
+	install_screencapture_gif()
 	install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
@@ -77,6 +79,7 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar unix2dos nkf apt-file", pty=False)
+    # DVD movie play
     sudo("apt-file update")
 	# Dropbox
 	install_dropbox_client()
@@ -84,6 +87,11 @@ def install_common_tools():
 	install_googledrive_client()
 	# ResilioSync
 	install_resiliosync()
+
+def install_movie_player():
+    sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
+    sudo("dpkg-reconfigure libdvd-pkg")
+    run("file /usr/lib/x86_64-linux-gnu/libdvdcss.so")
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -164,7 +172,7 @@ def install_text_editors():
 	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
 	sudo("dpkg -i /tmp/atom.deb")
 	# plugin設定
-	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
+	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify auto-encoding document-outline") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO Reafpad,gedtの設定ファイル持ってくる。
 
 def install_vim_all():
@@ -175,11 +183,10 @@ def install_vim_all():
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
 def install_drowing_tools():
-	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick byzanz", pty=False)
+	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
 	# アニメGIFを作るツールの動作方法は…
 	# xwininfo # ここでウィンドウを指定し、情報を取得する
 	# byzanz-record -d 180 -x 1379 -y 234 -w 1008 -h 722 test2.gif # その情報を元にキャプチャを始める。(終了したくなったらCtrl+c)
-	# TODO 上を上手いことやるscriptを作る
 
 def install_jenkins():
 	run("wget -q -O /tmp/jenkins-ci.org.key https://jenkins-ci.org/debian/jenkins-ci.org.key")
@@ -220,6 +227,8 @@ def install_developers_tools():
 	# datavese viewer
 	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
 	sudo("apt-get install -y postgresql-client-common", pty=False)
+	# Mono&MonoDevelop
+	sudo("apt-get install -y monodevelop", pty=False)
 
 def install_provisioning_tools():
 	sudo("apt-get install -y fabric", pty=False)
@@ -253,7 +262,31 @@ def install_plantuml():
 	sudo("echo 'java -jar /usr/share/plantuml/plantuml.jar ${@}' > /usr/bin/plantuml")
 	sudo("chmod 755 /usr/bin/plantuml")
  	# atomがインストールされていた場合、atomのプラグインを入れる
- 	run("which atom && apm install  plantuml-viewer language-plantuml")
+ 	run("which atom && apm install plantuml-viewer language-plantuml")
+
+# Window/Screenキャプチャをアニメgifで取るコマンドのインストール。
+def install_screencapture_gif():
+	# 'peek' インストール
+	sudo("add-apt-repository ppa:peek-developers/stable", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install peek", pty=False)
+	# 'byzanz'（+ wrapper） インストール
+	sudo("apt-get install -y byzanz libx11-dev", pty=False)
+	sudo("mkdir -p /usr/local/lib/byzanz-record-wrapper", pty=False)
+	# 範囲指定に必要なライブラリをビルド
+	run("git clone https://github.com/lolilolicon/xrectsel.git /tmp/xrectsel", pty=False)
+	run("cd /tmp/xrectsel && ./bootstrap")
+	run("cd /tmp/xrectsel && ./configure")
+	sudo("cd /tmp/xrectsel && make", pty=False)
+	sudo("cd /tmp/xrectsel && make install", pty=False)
+	# Windowのキャプチャコマンド
+	sudo("wget -O /usr/local/lib/byzanz-record-wrapper/byzanz-record-window https://gist.githubusercontent.com/toddhalfpenny/50700764071418daa2e446fe58b0cd96/raw/a5eebfa30f5b6546756d7f87dbc8ee08404208f7/byzanz-record-window", pty=False)
+	sudo("chmod 755 /usr/local/lib/byzanz-record-wrapper/byzanz-record-window", pty=False)
+	sudo("ln -s /usr/local/lib/byzanz-record-wrapper/byzanz-record-window /usr/local/bin/byzanz-record-window", pty=False)
+	# 範囲指定のキャプチャコマンド
+	sudo("wget -O /usr/local/lib/byzanz-record-wrapper/byzanz-record-region https://gist.githubusercontent.com/haya14busa/0dd3923d2a1b5ea07af2/raw/27a057e93d7336eb31ffed205a9c259ab7d3f489/byzanz-record-region", pty=False)
+	sudo("chmod 755 /usr/local/lib/byzanz-record-wrapper/byzanz-record-region", pty=False)
+	sudo("ln -s /usr/local/lib/byzanz-record-wrapper/byzanz-record-region /usr/local/bin/byzanz-record-region", pty=False)
 
 def install_scala_and_sbt():
  	# scala install
@@ -319,7 +352,7 @@ def install_docker_latest():
     # 再起動後は軽快に動く。
 
 def install_communication_tools():
-	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.4-amd64.deb")
+	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.9.0-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
     # 自動起動設定。
     put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")

@@ -1,5 +1,7 @@
 # coding:utf-8
 
+# for Ubuntu 14.04.1 LTS (-> Ubuntu 16.04.3 upgrade)  in cloudatcost
+
 - hosts: all
   sudo: yes
 
@@ -28,6 +30,8 @@
   - name: firewall(ufw) settings
     include: tasks/firewall.yml
 
-  # DDNSのスクリプトは「ドメインとパスワードとか、色々仕込まなければならない」ので、基本はペンディングにしとく。
-#  - name: DDNS settings
-#    include: tasks/ddns.yml
+  - name: DDNS settings
+    include: tasks/ddns.yml
+
+  - name: Docker install
+    include: tasks/docker.yml

@@ -6,3 +6,5 @@
     dest: /etc/cron.hourly/ieserver-ddns.pl
     mode: 0755
     backup: yes
+- name: first ddns update
+  shell: '/etc/cron.hourly/ieserver-ddns.pl'

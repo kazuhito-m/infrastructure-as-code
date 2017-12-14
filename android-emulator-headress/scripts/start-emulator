@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ $# -gt 0 ]; then
+  CMD=$1
+  init-emulator
+  $CMD
+else
+  echo "No command is specified"
+fi
