@@ -360,7 +360,12 @@ def install_communication_tools():
 	sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
 
 def insatll_virtualbox():
-		sudo("apt-get install -y virtualbox")
+	sudo("apt-get install -y virtualbox")
+        # インストール手段はこれで良いのだが…Biosの設定によっては、virtualbox.serviceが起動できない。
+        # http://kuchitama.hateblo.jp/entry/ubuntu_secure_boot_probrem
+        # Biosにて「セキュアブートを無効化」しなければならない。
+        # https://freesoft.tvbok.com/tips/efi_installation/about_secure_boot.html
+        # ASUSのBiosでの「セキュアブート無効」は「OtherOS(もしくは日本語で、非UEFIモード)」を選択した状態を指すので、注意。
 
 def insatll_sdkman_and_gradle():
 	run("curl -s get.sdkman.io | bash")
