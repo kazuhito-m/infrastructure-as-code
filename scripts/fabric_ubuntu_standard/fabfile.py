@@ -45,15 +45,15 @@ def setup_all():
 	install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
-	# install_docker_latest()
+	install_docker_latest()
 	install_communication_tools()
 	# bug , Ubuntu16.10にて「sdkmangでgradle入れたときに、Ubuntuにログインできなくなる(ログイン画面->パスワード入力&Enter->”トコトン音”とともに再びログイン画面)」となるため、コメントアウト。
 	# insatll_sdkman_and_gradle()
 	install_intellij()
-	# install_game()
+	install_game()
 	# 途中で対話型が入る＆特定端末でしか重くて動かせないので、第一次候補からははずす。
 	# install_android_env()
-	# install_kvm()
+	# install_kvm() # ネットワークがおかしくなるリスク在る…ので、後付で設定
 
 def japanize():
 	# change locale
@@ -75,12 +75,14 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 
+	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar nkf apt-file", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu screen pandoc ffmpeg comix unrar nkf apt-file", pty=False)
 	# DVD movie play
 	sudo("apt-file update")
+	# UI Customize tools
+	sudo("apt-get install -y gnome-tweak-tool", pty=False)
 	# Dropbox
 	install_dropbox_client()
 	# GoogleDrive
@@ -269,9 +271,9 @@ def install_screencapture_gif():
 	# 'peek' インストール
 	sudo("add-apt-repository ppa:peek-developers/stable", pty=False)
 	sudo("apt-get update", pty=False)
-	sudo("apt-get install peek", pty=False)
+	sudo("apt-get install -y peek", pty=False)
 	# 'byzanz'（+ wrapper） インストール
-	sudo("apt-get install -y byzanz libx11-dev", pty=False)
+	sudo("apt-get install -y byzanz libx11-dev autoconf", pty=False)
 	sudo("mkdir -p /usr/local/lib/byzanz-record-wrapper", pty=False)
 	# 範囲指定に必要なライブラリをビルド
 	run("git clone https://github.com/lolilolicon/xrectsel.git /tmp/xrectsel", pty=False)
@@ -296,8 +298,7 @@ def install_scala_and_sbt():
  	# sbt apt regist
    	sudo("mkdir -p /etc/apt/sources.list.d/")
    	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
-	sudo("apt-get update" , pty=False)
-   	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
+	sudo("sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 99E82A75642AC823", pty=False)
    	sudo("apt-get update -y" , pty=False)
    	sudo("apt-get install --allow-unauthenticated -y sbt", pty=False)
   	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
@@ -366,8 +367,8 @@ def insatll_sdkman_and_gradle():
 	run("sdk install gradle")
 
 def install_intellij():
-	sudo("apt-add-repository ppa:mmk2410/intellij-idea-community" , pty=False)
-	sudo("apt-get update" , pty=False)
+	sudo("add-apt-repository ppa:ubuntuhandbook1/apps" , pty=False)
+	sudo("apt-get update -y" , pty=False)
 	sudo("apt-get install -y intellij-idea-community", pty=False)
 
 def install_game():
@@ -385,8 +386,10 @@ def install_android_env():
 	# 現状、http://android.stackexchange.com/questions/145437/reinstall-avd-on-ubuntu-16-04 のようなエラーがあるが、一番最後の対策をすることにより回避している(16.10で治ると書いてあったりする)
 
 def install_dropbox_client():
-	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2.10.0_amd64.deb -o /tmp/dropbox.deb")
-	sudo("dpkg -i /tmp/dropbox.deb")
+	# dropbox.deb が依存しているライブラリをインストール。
+	sudo("apt-get install -y libpango1.0-0 libpangox-1.0-0", pty=False)
+	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2.10.0_amd64.deb -O /tmp/dropbox.deb")
+	sudo("dpkg -i --force-conflicts	/tmp/dropbox.deb")
 	sudo("dropbox start -i")
 	sudo("apt-get install -y nautilus-dropbox", pty=False)
 
@@ -410,9 +413,9 @@ def install_resiliosync():
 def install_kvm():
 	sudo("apt-get install -y qemu-kvm libvirt0 libvirt-bin virt-manager bridge-utils", pty=False)
 	sudo("apt-get install -y ubuntu-fan", pty=False)	# おそらくバグ。
-	sudo("systemctl enable libvirt-bin")
-	sudo("gpasswd libvirtd -a " + USER_NAME)
-		# ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
+	sudo("update-rc.d libvirtd defaults")
+	sudo("gpasswd libvirt -a " + USER_NAME)
+	# ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
 	sudo("grep 'vhost_net' /etc/modules || echo 'vhost_net' >> /etc/modules")
 	# KVMインストール時に作られる仮想ネットワークを無効化する。
 	sudo("virsh net-destroy default")
