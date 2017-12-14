@@ -21,7 +21,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
-        # install_movie_player()
+	# install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
 	install_rescure_tools()
@@ -47,11 +47,11 @@ def setup_all():
 	# install_touchpad_controltool()
 	# install_docker_latest()
 	install_communication_tools()
-        # bug , Ubuntu16.10にて「sdkmangでgradle入れたときに、Ubuntuにログインできなくなる(ログイン画面->パスワード入力&Enter->”トコトン音”とともに再びログイン画面)」となるため、コメントアウト。
+	# bug , Ubuntu16.10にて「sdkmangでgradle入れたときに、Ubuntuにログインできなくなる(ログイン画面->パスワード入力&Enter->”トコトン音”とともに再びログイン画面)」となるため、コメントアウト。
 	# insatll_sdkman_and_gradle()
 	install_intellij()
 	# install_game()
-        # 途中で対話型が入る＆特定端末でしか重くて動かせないので、第一次候補からははずす。
+	# 途中で対話型が入る＆特定端末でしか重くて動かせないので、第一次候補からははずす。
 	# install_android_env()
 	# install_kvm()
 
@@ -79,8 +79,8 @@ def basic_tools_setup():
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar unix2dos nkf apt-file", pty=False)
-    # DVD movie play
-    sudo("apt-file update")
+	# DVD movie play
+	sudo("apt-file update")
 	# Dropbox
 	install_dropbox_client()
 	# GoogleDrive
@@ -89,9 +89,9 @@ def install_common_tools():
 	install_resiliosync()
 
 def install_movie_player():
-    sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
-    sudo("dpkg-reconfigure libdvd-pkg")
-    run("file /usr/lib/x86_64-linux-gnu/libdvdcss.so")
+	sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
+	sudo("dpkg-reconfigure libdvd-pkg")
+	run("file /usr/lib/x86_64-linux-gnu/libdvdcss.so")
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -134,11 +134,11 @@ def install_web_tools():
 	# sudo("apt-get update -y", pty=False)
 	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
 
-    run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
-    sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
-    sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
+	run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
+	sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
+	sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
 
-    sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
+	sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
 	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
 	sudo("dpkg -i /tmp/chrome.deb")
 
@@ -251,7 +251,7 @@ def install_nodejs():
 	run("node -v")
 
 def install_plantuml():
-        # 前提条件として、使うパッケージ入れとく。
+		# 前提条件として、使うパッケージ入れとく。
 	sudo("apt-get install -y graphviz", pty=False)
 	# 要るものは予め落としておく
 	run("wget -O /tmp/plantuml.jar http://downloads.sourceforge.net/project/plantuml/plantuml.jar")
@@ -296,7 +296,7 @@ def install_scala_and_sbt():
  	# sbt apt regist
    	sudo("mkdir -p /etc/apt/sources.list.d/")
    	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
-    	sudo("apt-get update" , pty=False)
+		sudo("apt-get update" , pty=False)
    	sudo("apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823", pty=False)
    	sudo("apt-get update -y" , pty=False)
    	sudo("apt-get install --allow-unauthenticated -y sbt", pty=False)
@@ -306,7 +306,7 @@ def install_scala_and_sbt():
  	run("chmod 755 /tmp/sc_setup.sh")
  	run("CONSCRIPT_HOME=~/.conscript /tmp/sc_setup.sh")
  	run("~/.conscript/bin/cs n8han/giter8")
-        # ここで「プロンプトが出て止まる」場合がある。その場合は"exit"打って続行させる。
+		# ここで「プロンプトが出て止まる」場合がある。その場合は"exit"打って続行させる。
 
 def install_golang():
 	# sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
@@ -333,33 +333,33 @@ def install_touchpad_controltool():
 	sudo("apt-get install -y touchpad-indicator", pty=False)
 
 def install_docker_latest():
-    # refalance https://docs.docker.com/engine/installation/linux/ubuntulinux/
-    sudo("apt-get update" , pty=False)
-    sudo("apt-get install -y apt-transport-https ca-certificates" , pty=False)
-    sudo("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
-    sudo("echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' > /etc/apt/sources.list.d/docker.list")
-    sudo("apt-get update" , pty=False)
-    sudo("apt-get purge -y lxc-docker" , pty=False)
-    sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
-    sudo("apt-get install -y docker-engine", pty=False)
-    sudo("service docker start")
-    # このままでは、一般ユーザでは叩け無いので、グループ設定
-    sudo("groupadd -f docker")
-    sudo("gpasswd -a " + USER_NAME + " docker")
-    # 起動テスト
-    sudo("docker run hello-world")
-    # インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
-    # 再起動後は軽快に動く。
+	# refalance https://docs.docker.com/engine/installation/linux/ubuntulinux/
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y apt-transport-https ca-certificates" , pty=False)
+	sudo("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
+	sudo("echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' > /etc/apt/sources.list.d/docker.list")
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get purge -y lxc-docker" , pty=False)
+	sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
+	sudo("apt-get install -y docker-engine", pty=False)
+	sudo("service docker start")
+	# このままでは、一般ユーザでは叩け無いので、グループ設定
+	sudo("groupadd -f docker")
+	sudo("gpasswd -a " + USER_NAME + " docker")
+	# 起動テスト
+	sudo("docker run hello-world")
+	# インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
+	# 再起動後は軽快に動く。
 
 def install_communication_tools():
 	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.9.0-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
-    # 自動起動設定。
-    put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
-    sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
+	# 自動起動設定。
+	put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
+	sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
 
 def insatll_virtualbox():
-        sudo("apt-get install -y virtualbox")
+		sudo("apt-get install -y virtualbox")
 
 def insatll_sdkman_and_gradle():
 	run("curl -s get.sdkman.io | bash")
@@ -388,7 +388,7 @@ def install_dropbox_client():
 	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2.10.0_amd64.deb -o /tmp/dropbox.deb")
 	sudo("dpkg -i /tmp/dropbox.deb")
 	sudo("dropbox start -i")
-        nautilus-dropbox
+		nautilus-dropbox
 	sudo("apt-get install -y nautilus-dropbox", pty=False)
 
 def install_googledrive_client():
@@ -410,21 +410,21 @@ def install_resiliosync():
 
 def install_kvm():
 	sudo("apt-get install -y qemu-kvm libvirt0 libvirt-bin virt-manager bridge-utils", pty=False)
-	sudo("apt-get install -y ubuntu-fan", pty=False)    # おそらくバグ。
+	sudo("apt-get install -y ubuntu-fan", pty=False)	# おそらくバグ。
 	sudo("systemctl enable libvirt-bin")
 	sudo("gpasswd libvirtd -a " + USER_NAME)
-        # ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
+		# ネットワーク仮想化のオーバーヘッドを減らすことができるvhost-net を有効に
 	sudo("grep 'vhost_net' /etc/modules || echo 'vhost_net' >> /etc/modules")
-    # KVMインストール時に作られる仮想ネットワークを無効化する。
-    sudo("virsh net-destroy default")
-    sudo("virsh net-autostart default --disable")
-    # TODO この後、手動にてブリッジ構成にする。
-    # ここに関しては各マシン違うと思うので、合わせて以下のサイトの通りにする。
-    # http://symfoware.blog68.fc2.com/blog-entry-1877.html
-    # おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
+	# KVMインストール時に作られる仮想ネットワークを無効化する。
+	sudo("virsh net-destroy default")
+	sudo("virsh net-autostart default --disable")
+	# TODO この後、手動にてブリッジ構成にする。
+	# ここに関しては各マシン違うと思うので、合わせて以下のサイトの通りにする。
+	# http://symfoware.blog68.fc2.com/blog-entry-1877.html
+	# おそらく、UbuntuではNetworkManagerとかち合うので、止めるなりなんとかするなりする。
 	sudo("apt-get remove -y network-manager", pty=False)
-    # TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。
-    # brctl show で「ブリッジ状態の確認」ができる。
+	# TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。
+	# brctl show で「ブリッジ状態の確認」ができる。
 
 
 # TODOList
