@@ -78,7 +78,7 @@ def basic_tools_setup():
 	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar unix2dos nkf apt-file", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu pandoc ffmpeg comix unrar nkf apt-file", pty=False)
 	# DVD movie play
 	sudo("apt-file update")
 	# Dropbox
