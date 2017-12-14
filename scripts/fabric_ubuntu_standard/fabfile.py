@@ -388,7 +388,6 @@ def install_dropbox_client():
 	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2.10.0_amd64.deb -o /tmp/dropbox.deb")
 	sudo("dpkg -i /tmp/dropbox.deb")
 	sudo("dropbox start -i")
-		nautilus-dropbox
 	sudo("apt-get install -y nautilus-dropbox", pty=False)
 
 def install_googledrive_client():
