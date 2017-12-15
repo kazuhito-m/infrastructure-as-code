@@ -342,7 +342,7 @@ def install_docker_latest():
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get purge -y lxc-docker" , pty=False)
 	sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
-	sudo("apt-get install -y docker-engine", pty=False)
+	sudo("apt-get install -y docker-engine docker-compose", pty=False)
 	sudo("service docker start")
 	# このままでは、一般ユーザでは叩け無いので、グループ設定
 	sudo("groupadd -f docker")
