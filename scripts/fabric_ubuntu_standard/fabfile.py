@@ -39,7 +39,7 @@ def setup_all():
 	install_developers_tools()
 	install_provisioning_tools()
 	install_msvsc()
-	# install_nodejs()
+	install_nodejs()
 	install_plantuml()
 	install_screencapture_gif()
 	install_scala_and_sbt()
