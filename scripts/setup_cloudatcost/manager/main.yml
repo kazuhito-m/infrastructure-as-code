@@ -10,7 +10,6 @@
   - name: update tzdata
     command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
 
-
   tasks:
 
   - name: install and upgrade all packages
@@ -29,9 +28,6 @@
 
   - name: firewall(ufw) settings
     include: tasks/firewall.yml
-
-  - name: DDNS settings
-    include: tasks/ddns.yml
 
   - name: Docker install
     include: tasks/docker.yml

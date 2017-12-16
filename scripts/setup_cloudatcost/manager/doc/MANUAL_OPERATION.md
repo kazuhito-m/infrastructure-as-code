@@ -45,5 +45,4 @@ Ansibleを流す前に、以下作業を行った。
 ## setup.sh(ansible)を走らせる前にやること
 
 - `host_template` を `hosts` にコピーし、設定変更
-- `resources/ieserver-ddns_template.pl` を `resources/ieserver-ddns.pl` にコピーし、設定変更
 - `CAC_KEY_FILE01` という変数に、「秘密鍵ファイルの場所」を設定
