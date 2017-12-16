@@ -17,7 +17,7 @@
   ignore_errors: True
   changed_when: False
 
-- name: Add Docker’s official GPG key
+- name: Add Docker official GPG key
   shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   when: docker_gpg | failed
 
