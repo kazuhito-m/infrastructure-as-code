@@ -1,0 +1,33 @@
+# coding:utf-8
+
+# for Ubuntu 14.04.1 LTS (-> Ubuntu 16.04.3 upgrade)  in cloudatcost
+
+- hosts: all
+  sudo: yes
+
+  handlers:
+
+  - name: update tzdata
+    command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
+
+  tasks:
+
+  - name: install and upgrade all packages
+    apt: name={{ item }} state=present update_cache=yes
+    with_items:
+        - git
+        - language-pack-ja
+        - byobu
+
+  - name: locale setting
+    shell: 'update-locale LANG=ja_JP.UTF-8'
+
+  - name: Set timezone variables
+    copy: content='Asia/Tokyo\n' dest=/etc/timezone backup=yes
+    notify: update tzdata
+
+  - name: firewall(ufw) settings
+    include: tasks/firewall.yml
+
+  - name: Docker install
+    include: tasks/docker.yml
