@@ -16,3 +16,12 @@
 - デスクトップ起動をやめる
   - 外側からSSHで入る
   - `raspi-config` で「起動時に起動しない」設定に
+- byobuインストール
+  - `apt-get install byobu`
+- デスクトップ系の削除
+  - `apt-get install deborphan`
+  - `apt-get remove libcairo2 libgdk-pixbuf2.0-0 libpango1.0-0 libpulse0 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxft2 libxft2 libxinerama1 libxrandr2 libxrender1 libxtst6 libxxf86vm1 openjdk-7-jre`
+  - `apt-get autoremove --purge libx11-.* lxde-.* raspberrypi-artwork xkb-data omxplayer penguinspuzzle sgml-base xml-core alsa-.* cifs-.* samba-.* fonts-.* desktop-* gnome-.*`
+- Packageアップグレード
+  - `apt-get update && apt-get dist-upgrade`
+  - `apt-get autoremove`
