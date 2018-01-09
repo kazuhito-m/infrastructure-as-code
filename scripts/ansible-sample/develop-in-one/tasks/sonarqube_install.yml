@@ -1,0 +1,20 @@
+# coding:utf-8
+
+# sonarqubeの「yumを使ったインストール」だけを行う。
+# ここだけ、Dockerでなく本体にセットアップ。
+- name: Sonarqube seetting directory make
+  file: path=/var/local/sonarqube/ state=directory owner=root group=root mode=777
+
+- name: sonar yum repository add
+  get_url: url="http://downloads.sourceforge.net/project/sonar-pkg/rpm/sonar.repo" dest="/etc/yum.repos.d/sonar.repo"
+
+- name: install sonar
+  yum: name=sonar disable_gpg_check=no state=installed
+
+- name: Sonarqube setting file copy
+  copy:
+    src: ./resources/sonarqube/sonar.properties
+    dest: /opt/sonar/conf/sonar.properties
+
+- name: sonarqube restart
+  shell: service sonar restart

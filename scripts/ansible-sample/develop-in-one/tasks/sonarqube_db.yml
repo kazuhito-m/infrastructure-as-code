@@ -1,3 +1,5 @@
+# coding:utf-8
+
 # sonarqubeの「DBの設定」だけを行う。
 # ここだけ、Dockerでなく本体にセットアップ。
 - name: install sudo command
@@ -61,6 +63,12 @@
     roles: sonarqube
   sudo_user: postgres
   sudo: yes
+
+- name: create schema
+  command: psql -d sonarqube -c "CREATE SCHEMA sonarqube AUTHORIZATION sonarqube;"
+  sudo: yes
+  sudo_user: postgres
+  ignore_errors: True # versionが古すぎて…"CREATE SCHEMA IF NOT EXISTS"が使えないので、しょうがなく無視
 
 - name: set search path
   command: psql -d sonarqube -c "ALTER USER sonarqube SET search_path to sonarqube;"

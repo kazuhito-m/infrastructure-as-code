@@ -1,0 +1,22 @@
+# coding:utf-8
+
+# yum用のRPM repositoryサーバの設定を行う。
+
+# httpで公開するのは、のちのNginx設定にて行うため、ここでは行わない。
+
+- name: install createrepo command
+  yum: name=createrepo disable_gpg_check=no state=installed
+
+- name: check exists Repo Directory
+  stat: path=/var/local/yum_repo
+  register: fm
+
+- name: make Repo Directory
+  become: True
+  file: path=/var/local/yum_repo state=directory owner=root group=root mode=0777
+  when: not fm.stat.exists
+
+- name: make Repo Directory
+  become: True
+  shell: createrepo /var/local/yum_repo
+  when: not fm.stat.exists

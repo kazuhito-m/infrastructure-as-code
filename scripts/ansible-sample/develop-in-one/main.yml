@@ -1,3 +1,5 @@
+# coding:utf-8
+
 - hosts: all
 
   handlers:
@@ -6,6 +8,9 @@
       service: name=iptables state=restarted
 
   tasks:
+
+    - name: locale setting
+      shell: 'sudo cp -p  /usr/share/zoneinfo/Japan /etc/localtime'
 
     - name: yum repoistory add EPEL
       yum: name=epel-release state=installed
@@ -18,6 +23,9 @@
 
     - name: install common tools
       yum: name=byobu disable_gpg_check=no state=installed
+
+    - name: install common tools2
+      yum: name=wget disable_gpg_check=no state=installed
 
     - name: docker-py install
       yum: name=python-docker-py disable_gpg_check=no state=installed
@@ -38,23 +46,52 @@
     - name: jenkins date directory make
       file: path=/var/local/jenkins state=directory owner=root group=root mode=777
 
-    - name: jenkins container start
-      docker: image=jenkins:2.3 name=jenkins ports=8080:8080,50000:50000 detach=yes tty=yes volumes=/var/local/jenkins:/var/jenkins_home state=running
+    # Jeknins install
+
+    - name: yum jdk install for jenkins
+      yum: name=java-1.8.0-openjdk-devel state=installed
+
+    - name: jenkins repository instalkl
+      shell: 'curl http://pkg.jenkins-ci.org/redhat/jenkins.repo > /etc/yum.repos.d/jenkins.repo'
+
+    - name: jenkins key install
+      shell: 'rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key'
+
+    - name: jenkins install
+      yum: name=jenkins state=installed
+
+    - name: jenkins settingfile change data path
+      lineinfile:
+        dest: '/etc/sysconfig/jenkins'
+        state: present
+        backrefs: yes
+        regexp: '^JENKINS_HOME=.*'
+        line: 'JENKINS_HOME="/var/local/jenkins"'
+
+    - name: jenkins settingfile change uri path
+      lineinfile:
+        dest: '/etc/sysconfig/jenkins'
+        state: present
+        backrefs: yes
+        regexp: '^JENKINS_ARGS=.*'
+        line: 'JENKINS_ARGS="--prefix=/ci"'
+
+    - name: add docker group
+      group: name=docker state=present
+
+    - name: jenkins user add for docker
+      user: name=jenkins groups=docker append=yes
+
+    - name: jenkins service set
+      service: name=jenkins enabled=yes state=started
+
+    # sonarqube insstall
+
     - name: include postgresql for sonarqube setup tasks
       include: tasks/sonarqube_db.yml
 
-    - name: sonarqube container start
-      docker:
-        image: sonarqube
-        name: sonarqube
-        ports: 9000:9000,9092:9092
-        detach: yes
-        tty: yes
-        state: running
-        env:
-          SONARQUBE_JDBC_USERNAME: sonarqube
-          SONARQUBE_JDBC_PASSWORD: sonarqube
-          SONARQUBE_JDBC_URL: jdbc:postgresql://172.17.42.1:5432/sonarqube
+    - name: sonarqube install by yum tasks
+      include: tasks/sonarqube_install.yml
 
     - name: Nexus repository server data directory make
       file: path=/var/local/nexus-data state=directory owner=root group=root mode=777
@@ -67,4 +104,39 @@
         volumes: /var/local/nexus-data:/sonatype-work
         detach: yes
         tty: yes
+        restart_policy: unless-stopped
         state: running
+
+    - name: yum server install & settings
+      include: tasks/yum-repository.yml
+
+    - name: nginx setgins
+      include: tasks/nginx-setting.yml
+
+    # 苦肉の策。
+    # なぜかsonarqubeが初回起動に失敗する、DockerがIptables絡みでrun不能になる、など
+    # 色々問題あるので、docker再起動した上で、コンテナ復元する。
+
+    - name: restart docker
+      service: name=docker state=restarted
+
+    - name: respown docker container
+      shell: 'docker ps -aq | xargs docker restart'
+
+    # Startup scripts when restarted.
+
+    - name: add line on /etc/rc.local
+      lineinfile: >
+        dest=/etc/rc.d/rc.local
+        line='/var/local/startup/startup.sh >> /var/log/startup_scripts.log 2>&1'
+
+    - name: make directory for startup
+      file: path=/var/local/startup/ state=directory owner=root group=root mode=777
+
+    - name: deploy startup script
+      copy:
+        src: ./resources/startup.sh
+        dest: /var/local/startup/startup.sh
+        owner: root
+        group: root
+        mode: 0755

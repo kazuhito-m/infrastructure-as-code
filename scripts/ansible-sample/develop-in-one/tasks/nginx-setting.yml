@@ -1,0 +1,43 @@
+# coding:utf-8
+
+# sonarqubeの「DBの設定」だけを行う。
+
+# sonarqube だけは「何も見せないような未ログイン」が無い。
+# 一時的な対策として「Nginxを入り口にしてbasic認証かけとく」とする
+# TODO 見直し、(Jenkins,Nexusも含めた)統合的なセキュリティ対策
+# TODO 見直し、上記を含め「代表的なURL」を仕込み直し
+#
+#  docker run --name nginx -v /var/local/nginx_conf.d:/etc/nginx/conf.d -v /var/local/yum_repo:/var/local/yum_repo -v /etc/letsencrypt:/etc/nginx/letsencrypt -p 80:80 -p 443:443 --restart=always -d  nginx
+
+- name: Nginx settingfile upload
+  copy:
+    src: ./resources/nginx_conf.d/
+    dest: /var/local/nginx_conf.d/
+
+- name: Lets Encript Auto ssl update tools install
+  copy:
+    src: ./resources/letsencrypt/
+    dest: /var/local/letsencrypt/
+
+- name: Chmod command shell script
+  file: path=/var/local/letsencrypt/certbot-auto-monthry.sh owner=root group=root mode=755
+
+- name: Tool certbot init directory
+  shell: 'rm -rf /var/local/letsencrypt/certbot/'
+
+- name: Tool certbot download
+  shell: 'cd /var/local/letsencrypt/ && git clone --depth 1 https://github.com/certbot/certbot'
+
+- name: certbot dependency tools install
+  shell: 'cd /var/local/letsencrypt/certbot/ && ./certbot-auto -n'
+
+- name: run Nginx on docker container
+  docker:
+    image: nginx
+    name: nginx
+    ports: 80:80,443:443
+    volumes: /var/local/nginx_conf.d:/etc/nginx/conf.d,/var/local/yum_repo:/var/local/yum_repo,/etc/letsencrypt:/etc/nginx/letsencrypt
+    detach: yes
+    tty: yes
+    restart_policy: unless-stopped
+    state: running
