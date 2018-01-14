@@ -7,7 +7,7 @@
 
 ## 行った手動作業
 
-- <https://github.com/weseek/crowi-plus-docker-compose> に書いてあるやつ
-  - ポートの書き換えは、サンプルどおり
+-  <https://github.com/weseek/crowi-plus-docker-compose> を落としてくる
+- 直下 `./crowi-plus-docker-compose` の `docker-compose.yml` で、おとしたgitリポジトリを上書き
 - 起動
   - `docker-compose up`
