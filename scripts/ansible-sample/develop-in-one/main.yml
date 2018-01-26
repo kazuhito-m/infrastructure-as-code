@@ -4,63 +4,63 @@
 
   handlers:
 
-    - name: restart iptables
+    - name: iptablesの再起動
       service: name=iptables state=restarted
 
   tasks:
 
-    - name: locale setting
+    - name: ロケール設定
       shell: 'sudo cp -p  /usr/share/zoneinfo/Japan /etc/localtime'
 
-    - name: yum repoistory add EPEL
+    - name: yumリポジトリにEPELを加える
       yum: name=epel-release state=installed
 
-    - name: upgrade all packages
+    - name: すべてのyumパッケージアップデート
       yum: name=* state=latest
 
-    - name: install libselinux
+    - name: libselinuxインストール
       yum: name=libselinux-python disable_gpg_check=no state=installed
 
-    - name: install common tools
+    - name: byobuインストール
       yum: name=byobu disable_gpg_check=no state=installed
 
-    - name: install common tools2
+    - name: wgetインストール
       yum: name=wget disable_gpg_check=no state=installed
 
-    - name: docker-py install
+    - name: pythonでDockerを扱うためのdocker-pyインストール
       yum: name=python-docker-py disable_gpg_check=no state=installed
 
-    - name: iptables settingfile upload
+    - name: ファイアーウォールiptablesを設定
       copy:
         src: ./resources/iptables
         dest: /etc/sysconfig/iptables
         backup: yes
       notify: restart iptables
 
-    - name: install docker
+    - name: dockerインストール
       yum: name=docker-io disable_gpg_check=no state=installed
 
-    - name: start docker
+    - name: dockerサーバ起動
       service: name=docker enabled=yes state=started
 
-    - name: jenkins date directory make
+    - name: Jenkinsのデータディレクトリ作成
       file: path=/var/local/jenkins state=directory owner=root group=root mode=777
 
     # Jeknins install
 
-    - name: yum jdk install for jenkins
+    - name: Jenkins用JDK1.8インストール
       yum: name=java-1.8.0-openjdk-devel state=installed
 
-    - name: jenkins repository instalkl
+    - name: Jenkins用yumリポジトリ追加
       shell: 'curl http://pkg.jenkins-ci.org/redhat/jenkins.repo > /etc/yum.repos.d/jenkins.repo'
 
-    - name: jenkins key install
+    - name: Jenkins用yumリポジトリのキーファイルインストール
       shell: 'rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key'
 
-    - name: jenkins install
+    - name: Jenkinsインストール
       yum: name=jenkins state=installed
 
-    - name: jenkins settingfile change data path
+    - name: Jenkins起動設定ファイルのデータディレクトリ部分を変更
       lineinfile:
         dest: '/etc/sysconfig/jenkins'
         state: present
@@ -68,7 +68,7 @@
         regexp: '^JENKINS_HOME=.*'
         line: 'JENKINS_HOME="/var/local/jenkins"'
 
-    - name: jenkins settingfile change uri path
+    - name: Jenkins起動設定ファイルのURI部分を変更
       lineinfile:
         dest: '/etc/sysconfig/jenkins'
         state: present
@@ -76,27 +76,27 @@
         regexp: '^JENKINS_ARGS=.*'
         line: 'JENKINS_ARGS="--prefix=/ci"'
 
-    - name: add docker group
+    - name: ユーザのグループdocker作成
       group: name=docker state=present
 
-    - name: jenkins user add for docker
+    - name: ユーザjenkinsをグループdockerに加える
       user: name=jenkins groups=docker append=yes
 
-    - name: jenkins service set
+    - name: Jenkinsをサービスに登録＆起動
       service: name=jenkins enabled=yes state=started
 
     # sonarqube insstall
 
-    - name: include postgresql for sonarqube setup tasks
+    - name: PostgreSQLのセットアップするタスクを実行
       include: tasks/sonarqube_db.yml
 
-    - name: sonarqube install by yum tasks
+    - name: SonarQubeのセットアップするタスクを実行
       include: tasks/sonarqube_install.yml
 
-    - name: Nexus repository server data directory make
+    - name: Nexusリポジトリサーバのデータ用ディレクトリを作成
       file: path=/var/local/nexus-data state=directory owner=root group=root mode=777
 
-    - name: nexus repository server container start
+    - name: NexusリポジトリサーバのDockerコンテナを起動
       docker:
         image: sonatype/nexus
         name: nexus
@@ -107,33 +107,33 @@
         restart_policy: unless-stopped
         state: running
 
-    - name: yum server install & settings
+    - name: 自らが配信元になるyumサーバのセットアップタスクを実行
       include: tasks/yum-repository.yml
 
-    - name: nginx setgins
+    - name: nginxのセットアップ用タスクを実行
       include: tasks/nginx-setting.yml
 
     # 苦肉の策。
     # なぜかsonarqubeが初回起動に失敗する、DockerがIptables絡みでrun不能になる、など
     # 色々問題あるので、docker再起動した上で、コンテナ復元する。
 
-    - name: restart docker
+    - name: dockerサーバ再起動
       service: name=docker state=restarted
 
-    - name: respown docker container
+    - name: 再起動時に残っているすべてのDockerコンテナを再起動
       shell: 'docker ps -aq | xargs docker restart'
 
     # Startup scripts when restarted.
 
-    - name: add line on /etc/rc.local
+    - name: ファイル /etc/rc.local に再起動時のスタートアップスクリプト設定を追加
       lineinfile: >
         dest=/etc/rc.d/rc.local
         line='/var/local/startup/startup.sh >> /var/log/startup_scripts.log 2>&1'
 
-    - name: make directory for startup
+    - name: スタートアップ時に使用するディレクトリを作成
       file: path=/var/local/startup/ state=directory owner=root group=root mode=777
 
-    - name: deploy startup script
+    - name: スタートアップ時用スクリプトを配置
       copy:
         src: ./resources/startup.sh
         dest: /var/local/startup/startup.sh
