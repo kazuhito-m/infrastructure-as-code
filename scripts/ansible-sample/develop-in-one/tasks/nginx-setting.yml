@@ -9,29 +9,29 @@
 #
 #  docker run --name nginx -v /var/local/nginx_conf.d:/etc/nginx/conf.d -v /var/local/yum_repo:/var/local/yum_repo -v /etc/letsencrypt:/etc/nginx/letsencrypt -p 80:80 -p 443:443 --restart=always -d  nginx
 
-- name: Nginx settingfile upload
+- name: nginxの設定ファイルを一式を配置
   copy:
     src: ./resources/nginx_conf.d/
     dest: /var/local/nginx_conf.d/
 
-- name: Lets Encript Auto ssl update tools install
+- name: LetsEncriptの自動SSL更新ツールをインストール
   copy:
     src: ./resources/letsencrypt/
     dest: /var/local/letsencrypt/
 
-- name: Chmod command shell script
+- name: 自動更新ツールに実行権限を付与
   file: path=/var/local/letsencrypt/certbot-auto-monthry.sh owner=root group=root mode=755
 
-- name: Tool certbot init directory
+- name: 自動更新ツールcertbotのディレクトリを予め削除
   shell: 'rm -rf /var/local/letsencrypt/certbot/'
 
-- name: Tool certbot download
+- name: githubから自動更新ツールceartbot一式をダウンロード
   shell: 'cd /var/local/letsencrypt/ && git clone --depth 1 https://github.com/certbot/certbot'
 
-- name: certbot dependency tools install
+- name: certbotが依存するツール群を収集
   shell: 'cd /var/local/letsencrypt/certbot/ && ./certbot-auto -n'
 
-- name: run Nginx on docker container
+- name: nginxのDockerコンテナを起動
   docker:
     image: nginx
     name: nginx

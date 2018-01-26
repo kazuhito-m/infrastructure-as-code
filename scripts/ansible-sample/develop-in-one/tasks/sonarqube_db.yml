@@ -2,10 +2,11 @@
 
 # sonarqubeの「DBの設定」だけを行う。
 # ここだけ、Dockerでなく本体にセットアップ。
-- name: install sudo command
+
+- name: sudoコマンドのインストール
   yum: name=sudo disable_gpg_check=no state=installed
 
-- name: install postgresql
+- name: PostgreSQLサーバのインストール
   yum: name={{ item }} state=latest
   with_items:
     - postgresql-server
@@ -13,10 +14,10 @@
     - postgresql-contrib
     - python-psycopg2
 
-- name: postgresql initdb
+- name: PostgreSQLサーバの初期化
   shell: '[ -e /var/lib/pgsql/data/postgresql.conf ] || service postgresql initdb'
 
-- name: port setting on postgresql.conf
+- name: postgresql.confの外部からの接続を許可する
   lineinfile: >
     dest='/var/lib/pgsql/data/postgresql.conf'
     state=present
@@ -24,16 +25,16 @@
     regexp='^#listen_addresses.*localhost.*'
     line="listen_addresses = '*'"
 
-- name: copy pg_hba.conf
+- name: PostgreSQLの設定ファイルpg_hba.confのコピー
   copy: >
     src=./resources/pg_hba.conf
     dest=/var/lib/pgsql/data/pg_hba.conf
     backup=yes
 
-- name: start postgresql
+- name: PostgreSQLサーバの起動
   service: name=postgresql state=started  enabled=yes
 
-- name: create database
+- name: database作成
   postgresql_db:
     name: "sonarqube"
     encoding: "UTF-8"
@@ -41,7 +42,7 @@
   sudo_user: postgres
   sudo: yes
 
-- name: create user
+- name: databaae内のuser作成
   postgresql_user:
     db: "sonarqube"
     name: "sonarqube"
@@ -53,7 +54,7 @@
   sudo_user: postgres
   sudo: yes
 
-- name: grant user for sonarqube db
+- name: database内のsonarqubeユーザに権限を付与する
   postgresql_privs:
     type: database
     database: sonarqube
@@ -64,16 +65,16 @@
   sudo_user: postgres
   sudo: yes
 
-- name: create schema
+- name: database内にschemaを作成するｓ
   command: psql -d sonarqube -c "CREATE SCHEMA sonarqube AUTHORIZATION sonarqube;"
   sudo: yes
   sudo_user: postgres
   ignore_errors: True # versionが古すぎて…"CREATE SCHEMA IF NOT EXISTS"が使えないので、しょうがなく無視
 
-- name: set search path
+- name: どのスキーマを優先して検索するかのsearch_pathの設定を行う
   command: psql -d sonarqube -c "ALTER USER sonarqube SET search_path to sonarqube;"
   sudo: yes
   sudo_user: postgres
 
-- name: postgresql restart
+- name: PostgreSQLサーバの再起動
   shell: service postgresql restart

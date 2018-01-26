@@ -4,19 +4,19 @@
 
 # httpで公開するのは、のちのNginx設定にて行うため、ここでは行わない。
 
-- name: install createrepo command
+- name: createrepoコマンドをインストール
   yum: name=createrepo disable_gpg_check=no state=installed
 
-- name: check exists Repo Directory
+- name: rpm配布用デイレクトリyum_repoが存在するか確認
   stat: path=/var/local/yum_repo
   register: fm
 
-- name: make Repo Directory
+- name: rpm配布用デイレクトリyum_repoを作成
   become: True
   file: path=/var/local/yum_repo state=directory owner=root group=root mode=0777
   when: not fm.stat.exists
 
-- name: make Repo Directory
+- name: yum_repoにyumのリポジトリを作成
   become: True
   shell: createrepo /var/local/yum_repo
   when: not fm.stat.exists
