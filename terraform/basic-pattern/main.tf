@@ -16,6 +16,6 @@ resource "aws_vpc" "vpc-develop" {
     enable_dns_support = "true"
     enable_dns_hostnames = "false"
     tags {
-      Name = "vpc-peels-develop"
+      Name = "vpc-develop"
     }
 }
