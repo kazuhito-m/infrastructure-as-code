@@ -3,7 +3,7 @@ variable "aws_secret_key" {}
 variable "region" {
     default = "ap-northeast-1"
 }
- 
+
 provider "aws" {
     access_key = "${var.aws_access_key}"
     secret_key = "${var.aws_secret_key}"
@@ -60,4 +60,19 @@ resource "aws_subnet" "SbnMaintenanceAza" {
   availability_zone = "ap-northeast-1a"
   cidr_block = "10.0.91.0/24"
   tags { Name = "sbn-maintenance-aza" }
+}
+
+resource "aws_internet_gateway" "IgwRouter01" {
+    vpc_id = "${aws_vpc.VpcDevelop.id}"
+    tags { Name = "igw-router01" }
+}
+
+resource "aws_eip" "EipNat" {
+  vpc = true
+}
+
+resource "aws_nat_gateway" "NgwPublic01" {
+  allocation_id = "${aws_eip.EipNat.id}"
+  subnet_id     = "${aws_subnet.SbnNatAza.id}"
+  tags { Name = "ngw-public01" }
 }
