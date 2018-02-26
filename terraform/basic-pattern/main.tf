@@ -192,3 +192,10 @@ resource "aws_security_group" "ScgMaintenance" {
   }
   tags { Name = "scg-maintenance" }
 }
+
+resource "aws_db_subnet_group" "DbSbnGpAza" {
+  name       = "db-sbn-gp-aza"
+  description = "DB Subnet Group AZ A"
+  subnet_ids = ["${aws_subnet.SbnDbAza.id}", "${aws_subnet.SbnDbAzc.id}"]
+  tags { Name = "db-sbn-gp-aza" }
+}
