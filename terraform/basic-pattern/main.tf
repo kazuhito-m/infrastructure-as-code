@@ -76,3 +76,37 @@ resource "aws_nat_gateway" "NgwPublic01" {
   subnet_id     = "${aws_subnet.SbnNatAza.id}"
   tags { Name = "ngw-public01" }
 }
+
+resource "aws_route_table" "RtbPublic01" {
+  vpc_id     = "${aws_vpc.VpcDevelop.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.IgwRouter01.id}"
+  }
+  tags { Name = "rtb-public01" }
+}
+resource "aws_route_table_association" "RtbPublic01Rta01" {
+  subnet_id      = "${aws_subnet.SbnApAza.id}"
+  route_table_id = "${aws_route_table.RtbPublic01.id}"
+}
+resource "aws_route_table_association" "RtbPublic01Rta02" {
+  subnet_id      = "${aws_subnet.SbnApAzc.id}"
+  route_table_id = "${aws_route_table.RtbPublic01.id}"
+}
+resource "aws_route_table_association" "RtbPublic01Rta03" {
+  subnet_id      = "${aws_subnet.SbnMaintenanceAza.id}"
+  route_table_id = "${aws_route_table.RtbPublic01.id}"
+}
+
+resource "aws_route_table" "RtbNat01" {
+  vpc_id     = "${aws_vpc.VpcDevelop.id}"
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.IgwRouter01.id}"
+  }
+  tags { Name = "rtb-nat01" }
+}
+resource "aws_route_table_association" "RtbNat01Rta01" {
+  subnet_id      = "${aws_subnet.SbnNatAza.id}"
+  route_table_id = "${aws_route_table.RtbNat01.id}"
+}
