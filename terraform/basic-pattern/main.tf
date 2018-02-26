@@ -163,7 +163,13 @@ resource "aws_security_group" "ScgAlb" {
     from_port   = 443
     to_port     = 443
     protocol    = "6"
-    cidr_blocks = ["0.0.0.0/0", "::/0"]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "6"
+    ipv6_cidr_blocks = ["::/0"]
   }
   egress {
     from_port       = 0
@@ -175,7 +181,7 @@ resource "aws_security_group" "ScgAlb" {
 }
 
 resource "aws_security_group" "ScgMaintenance" {
-  name        = "scg-alb"
+  name        = "scg-maintenance"
   description = "Security Group for maintenance."
   vpc_id      = "${aws_vpc.VpcDevelop.id}"
   egress {
