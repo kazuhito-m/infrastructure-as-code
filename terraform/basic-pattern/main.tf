@@ -154,3 +154,35 @@ resource "aws_security_group" "ScgDb" {
   }
   tags { Name = "scg-db" }
 }
+
+resource "aws_security_group" "ScgAlb" {
+  name        = "scg-alb"
+  description = "Security Group for Application Load Barancer."
+  vpc_id      = "${aws_vpc.VpcDevelop.id}"
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "6"
+    cidr_blocks = ["0.0.0.0/0", "::/0"]
+  }
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+  tags { Name = "scg-alb" }
+}
+
+resource "aws_security_group" "ScgMaintenance" {
+  name        = "scg-alb"
+  description = "Security Group for maintenance."
+  vpc_id      = "${aws_vpc.VpcDevelop.id}"
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+  tags { Name = "scg-maintenance" }
+}
