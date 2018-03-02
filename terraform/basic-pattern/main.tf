@@ -199,3 +199,20 @@ resource "aws_db_subnet_group" "DbSbnGpAza" {
   subnet_ids = ["${aws_subnet.SbnDbAza.id}", "${aws_subnet.SbnDbAzc.id}"]
   tags { Name = "db-sbn-gp-aza" }
 }
+
+resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  storage_type         = "gp2" # standard, gp2, io1
+  engine               = "postgres"
+  engine_version       = "10.1-R1"
+  instance_class       = "db.t1.micro"
+  multi_az             = true
+  publicly_accessible  = false
+  name                 = "rds-develop"
+  username             = "user"
+  password             = "password"
+  db_subnet_group_name = "db-dbn-gp-aza"
+  parameter_group_name = "default.mysql5.6"
+  vpc_security_group_ids =["${aws_security_group.ScgDb.id}"]
+  tags { Name = "rds-peels-staging" }
+}
