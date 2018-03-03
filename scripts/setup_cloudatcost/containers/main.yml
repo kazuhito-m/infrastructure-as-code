@@ -23,8 +23,7 @@
     shell: 'update-locale LANG=ja_JP.UTF-8'
 
   - name: Set timezone variables
-    copy: content='Asia/Tokyo\n' dest=/etc/timezone backup=yes
-    notify: update tzdata
+    shell: 'timedatectl set-timezone Asia/Tokyo'
 
   - name: firewall(ufw) settings
     include: tasks/firewall.yml
