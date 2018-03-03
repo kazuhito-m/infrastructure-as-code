@@ -12,11 +12,14 @@ Ansibleを流す前に、以下作業を行った。
 
 - 「7日間未使用でシャットダウン」設定をOFFにする
   - Cloudatcostの管理パネルのModify>Change Server Run Modeで Normal Mode(Leave Power On)にする。
+- ログインする
+  - userは `root` 、パスワードはパネルの `i` のトコに表示されている
 - 一般ユーザ作成
   - `adduser user_name`
   - Ubuntuでは、このコマンドが「ディレクトリ付きで」作ってくれる
 - sudo 設定
   - `gpasswd -a [username] sudo`
+  - ここで一旦リブート後、sshかつ一般ユーザで入ってみる
 - sshdの「鍵認証有効化」
   - `sudo vi /etc/ssh/sshd_config`
   - `#AuthorizedKeysFile %h/.ssh/authorized_keys` のコメントを外す
@@ -32,6 +35,7 @@ Ansibleを流す前に、以下作業を行った。
   - passwordログイン封じ : `#PasswordAuthentication yes` のコメント外して `no` に
   - 再起動: `sudo shutdown -r now` (何故かsshd再起動ではだめ)
 - Ubuntuのアップグレード
+  - 以下は `byobu` 上でやる(最初から入っている模様)
   - `sudo apt-get update -y`
   - `sudo apt-get dist-upgrade -y`
   - `sudo do-release-upgrade`
