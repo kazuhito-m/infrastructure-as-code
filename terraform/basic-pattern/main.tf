@@ -283,3 +283,44 @@ resource "aws_instance" "Ec2Ap02Azc" {
   }
   key_name = "${var.key_pair_name}"
 }
+
+resource "aws_lb" "AlbPublic01" {
+  name            = "alb-public01"
+  load_balancer_type = "application"
+  ip_address_type = "ipv4"
+  internal        = false
+  security_groups = ["${aws_security_group.ScgAlb.id}"]
+  subnets         = ["${aws_subnet.SbnApAza.id}", "${aws_subnet.SbnApAzc.id}"]
+}
+
+resource "aws_lb_target_group" "TrgPublic01" {
+  name     = "trg-public01"
+  port     = 8080
+  protocol = "HTTP"
+  vpc_id   = "${aws_vpc.VpcDevelop.id}"
+  stickiness {
+    type = "lb_cookie"
+    cookie_duration = 172800 # 2dais
+  }
+}
+resource "aws_lb_target_group_attachment" "TrgAtt01" {
+  target_group_arn = "${aws_lb_target_group.TrgPublic01.arn}"
+  target_id        = "${aws_instance.Ec2Ap01Aza.id}"
+  port             = 8080
+}
+resource "aws_lb_target_group_attachment" "TrgAtt02" {
+  target_group_arn = "${aws_lb_target_group.TrgPublic01.arn}"
+  target_id        = "${aws_instance.Ec2Ap02Azc.id}"
+  port             = 8080
+}
+resource "aws_lb_listener" "AlbListner01" {
+  load_balancer_arn = "${aws_lb.AlbPublic01.arn}"
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "${var.certificate_arn}"
+  default_action {
+    target_group_arn = "${aws_lb_target_group.TrgPublic01.arn}"
+    type             = "forward"
+  }
+}
