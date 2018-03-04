@@ -1,8 +1,13 @@
+# 予め（手動で作成して）必要なもの
+# - ACLで証明書
+# - EC2インスタンス用のキーペア
+
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
 variable "region" {
     default = "ap-northeast-1"
 }
+variable "key_pair_name" {}
 
 provider "aws" {
     access_key = "${var.aws_access_key}"
@@ -184,6 +189,12 @@ resource "aws_security_group" "ScgMaintenance" {
   name        = "scg-maintenance"
   description = "Security Group for maintenance."
   vpc_id      = "${aws_vpc.VpcDevelop.id}"
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "6"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port       = 0
     to_port         = 0
@@ -200,19 +211,75 @@ resource "aws_db_subnet_group" "DbSbnGpAza" {
   tags { Name = "db-sbn-gp-aza" }
 }
 
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "RdsPeelsDevelop" {
   allocated_storage    = 10
   storage_type         = "gp2" # standard, gp2, io1
   engine               = "postgres"
-  engine_version       = "10.1-R1"
-  instance_class       = "db.t1.micro"
+  engine_version       = "10.1"
+  instance_class       = "db.t2.micro"
   multi_az             = true
   publicly_accessible  = false
-  name                 = "rds-develop"
-  username             = "user"
-  password             = "password"
-  db_subnet_group_name = "db-dbn-gp-aza"
-  parameter_group_name = "default.mysql5.6"
+  identifier           = "rds-peels-develop"
+  name                 = "peels_develop"
+  username             = "peels_user"
+  password             = "eFHni4qTUPLUQM2wepK7yawTFuvVfnmd"
+  db_subnet_group_name = "db-sbn-gp-aza"
+  parameter_group_name = "default.postgres10"
   vpc_security_group_ids =["${aws_security_group.ScgDb.id}"]
   tags { Name = "rds-peels-staging" }
+}
+
+resource "aws_instance" "Ec2Maintenance01Aza" {
+  ami           = "ami-c2680fa4"
+  instance_type = "t2.micro"
+  availability_zone = "ap-northeast-1a"
+  subnet_id     = "${aws_subnet.SbnMaintenanceAza.id}"
+  vpc_security_group_ids = ["${aws_security_group.ScgMaintenance.id}"]
+  associate_public_ip_address = true
+  ebs_block_device {
+    device_name = "/dev/xvda"
+    volume_size = 8
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
+  tags {
+    Name = "ec2-maintenance01-aza"
+  }
+  key_name = "${var.key_pair_name}"
+}
+
+resource "aws_instance" "Ec2Ap01Aza" {
+  ami           = "ami-c2680fa4"
+  instance_type = "t2.micro"
+  availability_zone = "ap-northeast-1a"
+  subnet_id     = "${aws_subnet.SbnApAza.id}"
+  vpc_security_group_ids = ["${aws_security_group.ScgAp.id}"]
+  ebs_block_device {
+    device_name = "/dev/xvda"
+    volume_size = 8
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
+  tags {
+    Name = "ec2-ap01-aza"
+  }
+  key_name = "${var.key_pair_name}"
+}
+
+resource "aws_instance" "Ec2Ap02Azc" {
+  ami           = "ami-c2680fa4"
+  instance_type = "t2.micro"
+  availability_zone = "ap-northeast-1c"
+  subnet_id     = "${aws_subnet.SbnApAzc.id}"
+  vpc_security_group_ids = ["${aws_security_group.ScgAp.id}"]
+  ebs_block_device {
+    device_name = "/dev/xvda"
+    volume_size = 8
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
+  tags {
+    Name = "ec2-ap02-azc"
+  }
+  key_name = "${var.key_pair_name}"
 }
