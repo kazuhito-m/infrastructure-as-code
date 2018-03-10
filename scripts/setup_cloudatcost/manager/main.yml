@@ -18,6 +18,8 @@
         - git
         - language-pack-ja
         - byobu
+        - mongo-tools
+        - jq
 
   - name: locale setting
     shell: 'update-locale LANG=ja_JP.UTF-8'
