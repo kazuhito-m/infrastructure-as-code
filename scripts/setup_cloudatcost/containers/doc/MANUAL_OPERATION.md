@@ -54,10 +54,6 @@ Ansibleを流す前に、以下作業を行った。
   - CloudAtCostのサーバは古いので、とりあえず(壊れても良い)序盤にあげてしまう
   - 最後再起動されるので、ログインし直し
   - `dpkg --get-selections` で２つ以上 `install` ならば、アンインストール/autoremoveする
-- Host名設定
-  - `sudo hostnamectl set-hostname [ホスト名]`
-  - `/etc/resoleve.conf` を修正
-  - 恐らく、AsCodeするには設定ファイルのようなものが要りそう…だからサボる
 
 ## setup.sh(ansible)を走らせる前にやること
 
