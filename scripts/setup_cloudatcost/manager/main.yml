@@ -12,6 +12,9 @@
 
   tasks:
 
+  - name: change hostname per server
+    hostname: name="{{ inventory_hostname }}"
+
   - name: install and upgrade all packages
     apt: name={{ item }} state=present update_cache=yes
     with_items:
@@ -25,8 +28,11 @@
     shell: 'update-locale LANG=ja_JP.UTF-8'
 
   - name: Set timezone variables
-    copy: content='Asia/Tokyo\n' dest=/etc/timezone backup=yes
-    notify: update tzdata
+    timezone:
+      name: Asia/Tokyo
+
+  - name: Setting swap file
+    include: tasks/swap.yml
 
   - name: firewall(ufw) settings
     include: tasks/firewall.yml

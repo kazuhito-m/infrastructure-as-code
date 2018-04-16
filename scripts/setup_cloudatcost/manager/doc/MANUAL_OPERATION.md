@@ -37,10 +37,6 @@ Ansibleを流す前に、以下作業を行った。
   - `sudo do-release-upgrade`
     - なんか、コマンドで `sudo iptables -I INPUT -p tcp --dport 1022 -j ACCEPT` しろって言うてくるのでそうする
   - CloudAtCostのサーバは古いので、とりあえず(壊れても良い)序盤にあげてしまう
-- Host名設定
-  - `sudo hostnamectl set-hostname [ホスト名]`
-  - `/etc/resoleve.conf` を修正
-  - 恐らく、AsCodeするには設定ファイルのようなものが要りそう…だからサボる
 
 ## setup.sh(ansible)を走らせる前にやること
 
