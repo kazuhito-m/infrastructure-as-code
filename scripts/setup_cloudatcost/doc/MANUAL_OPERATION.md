@@ -19,7 +19,9 @@ Ansibleを流す前に、以下作業を行った。
   - `swapoff -a` でswap機能を殺す
   - `vi /etc/fstab` で「Swapパーティションのマウント部分」を削除
   - `parted` を起動し、以下のコマンドを打つ
-    - `rm 1 2`
+    - `print list` で確認
+    - `rm 1`
+    - `rm 2`
     - `mkpart primary ext4 1049kB 1150MB`
     - `set 1 boot on`
   - `resize2fs /dev/sda1` で/bootの認識サイズを更新する

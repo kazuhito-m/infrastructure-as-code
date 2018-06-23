@@ -7,33 +7,19 @@
 
   handlers:
 
-  - name: change hostname per server
-    hostname: name="{{ inventory_hostname }}"
-
   - name: update tzdata
     command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
 
   tasks:
 
-  - name: install and upgrade all packages
-    apt: name={{ item }} state=present update_cache=yes
-    with_items:
-        - git
-        - language-pack-ja
-        - byobu
-
-  - name: locale setting
-    shell: 'update-locale LANG=ja_JP.UTF-8'
-
-  - name: Set timezone variables
-    timezone:
-      name: Asia/Tokyo
+  - name: common settings
+    include: ../tasks/common_settings.yml
 
   - name: Setting swap file
-    include: tasks/swap.yml
+    include: ../tasks/swap.yml
 
   - name: firewall(ufw) settings
-    include: tasks/firewall.yml
+    include: ../tasks/firewall.yml
 
   - name: Docker install
-    include: tasks/docker.yml
+    include: ../tasks/docker.yml
