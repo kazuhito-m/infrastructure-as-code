@@ -31,6 +31,7 @@ def setup_all():
 	install_git_and_setting()
 	install_text_editors()
 	install_vim_all()
+	install_gcp_sdk()
 	# install_multi_media()
 	install_drowing_tools()
 	# install_jenkins()
@@ -183,6 +184,14 @@ def install_vim_all():
 	run("mkdir -p ~/.vim/bundle")
 	run("rm -rf ~/.vim/bundle/neobundle.vim")  # 二回目以降の冪当性確保(手動設定を全てご破算にしてしまうのはいかがなものか)
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+
+def install_gcp_sdk():
+	sudo("echo 'deb https://packages.cloud.google.com/apt cloud-sdk-'$(lsb_release -c -s)' main' | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list", pty=False)
+	sudo("curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -", pty=False)
+	sudo("apt-get update && apt-get install google-cloud-sdk")
+	# kubectl install
+	sudo("apt-get --only-upgrade install kubectl google-cloud-sdk google-cloud-sdk-app-engine-grpc google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-datastore-emulator google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-app-engine-python-extras google-cloud-sdk-datalab google-cloud-sdk-app-engine-java")
+	sudo("apt-get install kubectl")
 
 def install_drowing_tools():
 	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
