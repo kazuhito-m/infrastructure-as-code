@@ -453,7 +453,7 @@ def install_kvm():
 def install_ngrok():
 	put("./resources/ngrok/ngrok-stable-linux-amd64.zip", "/tmp/ngrok.zip")
 	run("cd /tmp && unzip /tmp/ngrok.zip")
-	sudo("mv /tmp/ngrok/ngrok /usr/local/bin", pty=False)
+	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
