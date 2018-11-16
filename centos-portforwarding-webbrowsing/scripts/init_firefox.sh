@@ -29,3 +29,15 @@ user_pref("browser.startup.homepage", "${BROWSER_DEFAULT_URL}");
 user_pref("browser.startup.homepage_override.buildID", "20181116154524");
 user_pref("browser.startup.homepage_override.mstone", "63.0.3");
 EOS
+
+# firefoxのスタートアップ設定。
+
+# lxde & vnc & novncが連携したこのDockerイメージ(docker-ubuntu-vnc-desktop)では、
+# 「普通のLXDEの自動起動設定を行なっても動かない」ため、
+# openbox の引数に「startupでfirefoxを起動」という設定を追加する。
+#
+# さらに、openboxの起動は supervisord(pythonのプロダクト)で行われているため、
+# supervisordの設定ファイルを書き換える。
+SUPERVISORD_CONF=/etc/supervisor/conf.d/supervisord.conf
+cat ${SUPERVISORD_CONF} | sed -e 's/openbox/openbox --startup firefox/g' > ${SUPERVISORD_CONF}.tmp
+mv ${SUPERVISORD_CONF}.tmp ${SUPERVISORD_CONF}
