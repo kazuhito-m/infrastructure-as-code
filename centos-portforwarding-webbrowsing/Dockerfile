@@ -9,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # タイムゾーン＆ロケール設定。
-RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
   && locale-gen ja_JP.UTF-8
 ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:en
