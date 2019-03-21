@@ -21,6 +21,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
+        setting_current_user()
 	# install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
@@ -91,6 +92,10 @@ def install_common_tools():
 	install_googledrive_client()
 	# ResilioSync
 	install_resiliosync()
+
+def setting_current_user():
+        put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
+
 
 def install_movie_player():
 	sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
