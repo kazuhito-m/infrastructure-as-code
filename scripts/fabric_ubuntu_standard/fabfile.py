@@ -1,4 +1,4 @@
-#coding:utf-8
+ｆ#coding:utf-8
 from fabric.api import local, run, sudo, put, env, settings
 
 SELF_MAIL_ADDRESS = "xxx@gmail.com"
@@ -21,7 +21,7 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
-        setting_current_user()
+    config_current_user()
 	# install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
@@ -93,9 +93,18 @@ def install_common_tools():
 	# ResilioSync
 	install_resiliosync()
 
-def setting_current_user():
-        put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
-
+def config_current_user():
+	# bashrc のカスタマイズ（冪等のため、特定の文字列の行以降を置き換える）
+	bashrc_file = '/home/' + USER_NAME + '/.bashrc'
+	bashrc_addition_file = '/home/' + USER_NAME + '/.bashrc_addition'
+	original_bachrc_cut_command = 'cat ' + bashrc_file + ' | while IFS= read LINE; do [[ "${LINE}" = "# from here addition." ]] && exit 0 ; echo "${LINE}" >>' + bashrc_file + '.modify ; done'
+	put('resources/user_home/.bashrc_addition', bashrc_addition_file)
+	run(original_bachrc_cut_command)
+	run('cat ' + bashrc_addition_file + ' >> ' + bashrc_file + '.modify')
+	run('mv ' + bashrc_file + '.modify ' + bashrc_file)
+	run('rm ' + bashrc_addition_file)
+	# alias ファイルの設置
+	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
 
 def install_movie_player():
 	sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
