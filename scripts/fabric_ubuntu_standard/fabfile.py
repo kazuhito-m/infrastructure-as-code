@@ -467,6 +467,8 @@ def config_current_user():
 	run('rm ' + bashrc_addition_file)
 	# alias ファイルの設置
 	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
+        # ssh設定をシンボリックリンク
+        run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.ssh/config  /home/' + USER_NAME  + '/.ssh/config')
 
 
 # TODOList
