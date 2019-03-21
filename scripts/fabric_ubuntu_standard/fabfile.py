@@ -21,7 +21,6 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
-    config_current_user()
 	# install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
@@ -57,6 +56,7 @@ def setup_all():
 	# install_android_env()
 	# install_kvm() # ネットワークがおかしくなるリスク在る…ので、後付で設定
 	install_ngrok()
+        config_current_user()
 
 def japanize():
 	# change locale
@@ -92,19 +92,6 @@ def install_common_tools():
 	install_googledrive_client()
 	# ResilioSync
 	install_resiliosync()
-
-def config_current_user():
-	# bashrc のカスタマイズ（冪等のため、特定の文字列の行以降を置き換える）
-	bashrc_file = '/home/' + USER_NAME + '/.bashrc'
-	bashrc_addition_file = '/home/' + USER_NAME + '/.bashrc_addition'
-	original_bachrc_cut_command = 'cat ' + bashrc_file + ' | while IFS= read LINE; do [[ "${LINE}" = "# from here addition." ]] && exit 0 ; echo "${LINE}" >>' + bashrc_file + '.modify ; done'
-	put('resources/user_home/.bashrc_addition', bashrc_addition_file)
-	run(original_bachrc_cut_command)
-	run('cat ' + bashrc_addition_file + ' >> ' + bashrc_file + '.modify')
-	run('mv ' + bashrc_file + '.modify ' + bashrc_file)
-	run('rm ' + bashrc_addition_file)
-	# alias ファイルの設置
-	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
 
 def install_movie_player():
 	sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
@@ -201,7 +188,6 @@ def install_vim_all():
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
 # Google Could SDKをインストール(golang用)
-def install_gcp_sdk():
 	sudo("echo 'deb https://packages.cloud.google.com/apt cloud-sdk-'$(lsb_release -c -s)' main' | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list", pty=False)
 	sudo("curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -", pty=False)
 	sudo("apt-get update && apt-get install google-cloud-sdk")
@@ -468,6 +454,20 @@ def install_ngrok():
 	put("./resources/ngrok/ngrok-stable-linux-amd64.zip", "/tmp/ngrok.zip")
 	run("cd /tmp && unzip /tmp/ngrok.zip")
 	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
+
+def config_current_user():
+	# bashrc のカスタマイズ（冪等のため、特定の文字列の行以降を置き換える）
+	bashrc_file = '/home/' + USER_NAME + '/.bashrc'
+	bashrc_addition_file = '/home/' + USER_NAME + '/.bashrc_addition'
+	original_bachrc_cut_command = 'cat ' + bashrc_file + ' | while IFS= read LINE; do [[ "${LINE}" = "# from here addition." ]] && exit 0 ; echo "${LINE}" >>' + bashrc_file + '.modify ; done'
+	put('resources/user_home/.bashrc_addition', bashrc_addition_file)
+	run(original_bachrc_cut_command)
+	run('cat ' + bashrc_addition_file + ' >> ' + bashrc_file + '.modify')
+	run('mv ' + bashrc_file + '.modify ' + bashrc_file)
+	run('rm ' + bashrc_addition_file)
+	# alias ファイルの設置
+	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
+
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
