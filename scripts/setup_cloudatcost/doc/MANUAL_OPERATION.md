@@ -10,6 +10,8 @@
 
 Ansibleを流す前に、以下作業を行った。
 
+### ディストリビューションのアップグレード(メジャーバージョンごと)
+
 - 「7日間未使用でシャットダウン」設定をOFFにする
   - Cloudatcostの管理パネルのModify>Change Server Run Modeで Normal Mode(Leave Power On)にする。
 - ログインする
@@ -26,9 +28,14 @@ Ansibleを流す前に、以下作業を行った。
   - `dpkg -l linux-{image,headers}-"[0-9]*" | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e '[0-9]' | xargs sudo apt-get -y purge && apt-get autoremove -y`
   - 最後再起動されるので、ログインし直し
   - `dpkg --get-selections` で２つ以上 `install` ならば、アンインストール/autoremoveする
+
+
+### ユーザー＆接続系
+
 - 一般ユーザ作成
-  - `adduser user_name`
+  - `adduser [username]`
   - Ubuntuでは、このコマンドが「ディレクトリ付きで」作ってくれる
+- `vi .bashrc` # HISTSZEに00加える
 - sudo 設定
   - `gpasswd -a [username] sudo`
   - ここで一旦リブート後、sshかつ一般ユーザで入ってみる
@@ -46,6 +53,17 @@ Ansibleを流す前に、以下作業を行った。
   - root封じ : `PermitRootLogin` を `no` に
   - passwordログイン封じ : `#PasswordAuthentication yes` のコメント外して `no` に
   - 再起動: `sudo shutdown -r now` (何故かsshd再起動ではだめ)
+
+### ディスク関連
+
+いつからか、仕様が変わって「LVM前提」「swapがパーティション(LV)でされる」ようになっている。それを是正する。
+
+- swapパーテイションの削除
+  - `sudo swapoff /dev/dm-1`
+  - `sudo lvdisplay`
+  - `sudo lvremove /dev/localhost-vg/swap_1`
+  - `sudo lvextend -l +100%FREE /dev/localhost-vg/root`
+
 
 ## setup.sh(ansible)を走らせる前にやること
 
