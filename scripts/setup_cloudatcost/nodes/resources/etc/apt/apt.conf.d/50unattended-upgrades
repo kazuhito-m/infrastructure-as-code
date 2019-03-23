@@ -11,5 +11,5 @@ Unattended-Upgrade::Package-Blacklist {
 Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
 Unattended-Upgrade::Automatic-Reboot "true";
-Unattended-Upgrade::Automatic-Reboot-Time "03:00";
+Unattended-Upgrade::Automatic-Reboot-Time "04:00";
 Unattended-Upgrade::SyslogEnable "true";

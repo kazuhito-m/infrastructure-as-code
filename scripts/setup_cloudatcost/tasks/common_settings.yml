@@ -1,7 +1,7 @@
 # Common settings.
 
 - name: change hostname per server
-  hostname: name="{{ inventory_hostname }}"
+  hostname: name="{{ inventory_hostname_short }}"
 
 - name: apt upgrade
   shell: 'apt update && apt dist-upgrade -y && apt autoremove -y'
@@ -26,3 +26,9 @@
     dest: /etc/apt/apt.conf.d/
   with_fileglob:
       - "resources/etc/apt/apt.conf.d/*"
+
+- name: set cleanup & reboot script.
+  copy:
+    src: "resources/etc/cron.daily/cleanup_and_reboot"
+    dest: "/etc/cron.daily/cleanup_and_reboot"
+    mode: "755"
