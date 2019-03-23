@@ -19,3 +19,10 @@
 - name: Set timezone variables
   timezone:
     name: Asia/Tokyo
+
+- name: apt auto update settngs.
+  copy:
+    src: "{{ item }}"
+    dest: /etc/apt/apt.conf.d/
+  with_fileglob:
+      - "resources/etc/apt/apt.conf.d/*"
