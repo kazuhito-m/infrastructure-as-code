@@ -7,8 +7,6 @@
     - apt-transport-https
     - ca-certificates
     - curl
-    - linux-image-extra-virtual
-    - linux-image-extra-{{ ansible_kernel }}
     - software-properties-common
 
 - name: Check docker gpg key.
