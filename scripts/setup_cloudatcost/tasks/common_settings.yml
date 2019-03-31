@@ -1,17 +1,29 @@
 # Common settings.
 
 - name: change hostname per server
-  hostname: name="{{ inventory_hostname_short }}"
+  hostname:
+    name: "{{ inventory_hostname_short }}"
+
+- name: add hostname to  hosts file
+  lineinfile:
+    dest: '/etc/hosts'
+    state: present
+    backrefs: yes
+    regexp: '^127\.0\.0\.1.*'
+    line: '127.0.0.1 localhost {{ inventory_hostname_short }}'
 
 - name: apt upgrade
   shell: 'apt update && apt dist-upgrade -y && apt autoremove -y'
 
 - name: install and upgrade all packages
-  apt: name={{ item }} state=present update_cache=yes
+  apt:
+    name: {{ item }}
+    state: present
+    update_cache: yes
   with_items:
-      - git
-      - language-pack-ja
-      - byobu
+    - git
+    - language-pack-ja
+    - byobu
 
 - name: locale setting
   shell: 'update-locale LANG=ja_JP.UTF-8'
@@ -22,13 +34,13 @@
 
 - name: apt auto update settngs.
   copy:
-    src: "{{ item }}"
+    src: '{{ item }}'
     dest: /etc/apt/apt.conf.d/
   with_fileglob:
-      - "resources/etc/apt/apt.conf.d/*"
+    - 'resources/etc/apt/apt.conf.d/*'
 
 - name: set cleanup & reboot script.
   copy:
-    src: "resources/etc/cron.daily/cleanup_and_reboot"
-    dest: "/etc/cron.daily/cleanup_and_reboot"
-    mode: "755"
+    src: 'resources/etc/cron.daily/cleanup_and_reboot'
+    dest: '/etc/cron.daily/cleanup_and_reboot'
+    mode: '755'
