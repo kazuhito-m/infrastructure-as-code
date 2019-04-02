@@ -2,7 +2,10 @@
 # Refer to https://qiita.com/NANAFUSHI/items/cfb74c857447a43f9396
 
 - name: apt-get install packages
-  apt: pkg={{ item }} state=present update_cache=yes
+  apt:
+    pkg: '{{item}}'
+    state: present
+    update_cache: yes
   with_items:
     - apt-transport-https
     - ca-certificates
@@ -16,7 +19,8 @@
   changed_when: False
 
 - name: Add Docker official GPG key
-  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
   when: docker_gpg | failed
 
 - name: define lsb_release -cs
@@ -28,7 +32,12 @@
   shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable"
 
 - name: Install docker-ce.
-  apt: name=docker-ce state=present update_cache=yes
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
 
 - name: Docker with SUID.
-  shell: chmod u+s /usr/bin/docker
+  file:
+    path: /usr/bin/docker
+    mode: 'u+s'

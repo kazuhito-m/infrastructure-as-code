@@ -4,7 +4,7 @@
   hostname:
     name: "{{ inventory_hostname_short }}"
 
-- name: add hostname to  hosts file
+- name: add hostname to hosts file
   lineinfile:
     dest: '/etc/hosts'
     state: present
