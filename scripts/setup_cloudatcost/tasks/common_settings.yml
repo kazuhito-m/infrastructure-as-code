@@ -13,7 +13,7 @@
     line: '127.0.0.1 localhost {{ inventory_hostname_short }}'
 
 - name: apt upgrade
-  shell: 'apt update && apt dist-upgrade -y && apt autoremove -y'
+  shell: 'apt-get update && apt-get dist-upgrade -y -f && apt-get autoremove -y'
 
 - name: install and upgrade all packages
   apt:
