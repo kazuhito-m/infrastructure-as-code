@@ -1,0 +1,22 @@
+# Kubernetes basic tools install.
+
+- name: Add google apt key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Set apt repository file
+  copy:
+    src: 'resources/etc/apt/sources.list.d/kubernetes.list'
+    dest: '/etc/apt/sources.list.d/kubernetes.list'
+    mode: '644'
+
+- name: Install basic tools
+  apt:
+    name: '{{ item }}'
+    state: present
+    update_cache: yes
+  with_items:
+    - kubelet
+    - kubeadm
+    - kubectl

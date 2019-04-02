@@ -24,6 +24,7 @@
     - git
     - language-pack-ja
     - byobu
+    - apt-transport-https
 
 - name: locale setting
   shell: 'update-locale LANG=ja_JP.UTF-8'

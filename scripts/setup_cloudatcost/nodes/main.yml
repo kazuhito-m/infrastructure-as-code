@@ -23,3 +23,6 @@
 
   - name: Docker install
     include: ../tasks/docker.yml
+
+  - name: Kubernetes basic tools install
+    include: ../tasks/kubernetes.yml
