@@ -1,0 +1,23 @@
+# k8s を始めるののメモ
+
+## インストール
+
+- https://hakengineer.xyz/2018/07/14/post-1447/
+  - メインオペはこれを真似る
+  - flannel を使う
+- https://qiita.com/rk05231977/items/2c67ad47aecfd48c53ca
+  - こちらは Callico をつかうようなので参考程度
+- https://hakengineer.xyz/2018/05/28/post-1270/
+  - dashboard のインストール はこちらを　真似る
+- https://qiita.com/sheepland/items/0ee17b80fcfb10227a41
+  - 上記の Dashbord の情報は古いみたいなので、URL などはこちらから
+- https://kubernetes.io/docs/setup/independent/install-kubeadm/
+
+## あかん状況になって「デストローイ！」ってしたくなったら…
+
+- `sudo kubeadm reset` というコマンドがある
+  - https://hakengineer.xyz/2018/05/24/post-1242/
+
+## 構成の理解
+
+- https://qiita.com/tkusumi/items/c2a92cd52bfdb9edd613
