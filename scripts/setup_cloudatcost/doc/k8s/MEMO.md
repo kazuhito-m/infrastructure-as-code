@@ -2,9 +2,10 @@
 
 ## インストール
 
-- https://hakengineer.xyz/2018/07/14/post-1447/
+- https://raaaimund.github.io/tech/2018/10/23/create-single-node-k8s-cluster/
   - メインオペはこれを真似る
   - flannel を使う
+- https://hakengineer.xyz/2018/07/14/post-1447/
 - https://qiita.com/rk05231977/items/2c67ad47aecfd48c53ca
   - こちらは Callico をつかうようなので参考程度
 - https://hakengineer.xyz/2018/05/28/post-1270/
