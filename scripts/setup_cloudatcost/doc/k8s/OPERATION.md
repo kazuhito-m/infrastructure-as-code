@@ -15,7 +15,7 @@
 manage 側で操作。
 
 - docker info | grep -i cgroup
-- sudo kubeadm init --pod-network-cidr=10.0.0.0/16
+- sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 - 一般ユーザのために、最後に表示されたものをコピペ
 
 ```bash
@@ -56,6 +56,21 @@ cd $HOME/dashboard
 
 wget https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/alternative/kubernetes-dashboard.yaml
 vim kubernetes-dashboard.yaml
+
+  388  kubectl apply -f /home/kazuhito/dashboard/kubernetes-dashboard.yaml
+  425  kubectl apply -f /home/kazuhito/dashboard/role_binding_dashboard.yaml
+
 ```
 
-- 17〜23 行目をコメントアウト
+- vi kubernetes-dashboard.yaml で編集
+  - https://qiita.com/sugimount/items/689b7cd172c7eaf1235f#dashboard-service-account%E3%81%AB%E7%AE%A1%E7%90%86%E6%A8%A9%E9%99%90%E3%82%92%E4%B8%8E%E3%81%88%E3%82%8B
+
+
+## ネットワークが繋がらない問題
+
+Unable to update cni config: No networks found in /etc/cni/net.d
+
+というのが起きる。
+
+- https://yunkt.hatenablog.com/entry/2018/08/13/200123 読んでやってみる
+- Caicoにしてみる
