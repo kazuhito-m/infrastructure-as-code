@@ -15,7 +15,7 @@
 manage 側で操作。
 
 ```
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=[サーバのIP]
+sudo kubeadm init --pod-network-cidr=10.32.0.0/12 --apiserver-advertise-address=[サーバのIP]
 
 mkdir $HOME/.k8s
 sudo cp /etc/kubernetes/admin.conf $HOME/.k8s/

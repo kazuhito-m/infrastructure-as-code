@@ -14,6 +14,11 @@
   - 上記の Dashbord の情報は古いみたいなので、URL などはこちらから
 - https://kubernetes.io/docs/setup/independent/install-kubeadm/
 
+## weave met 関係
+
+- https://www.kaitoy.xyz/2018/05/04/kubernetes-with-weave-net/
+  - 日本語インストール記事
+
 ## あかん状況になって「デストローイ！」ってしたくなったら…
 
 - `sudo kubeadm reset` というコマンドがある
