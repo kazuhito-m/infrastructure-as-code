@@ -455,6 +455,14 @@ def install_ngrok():
 	run("cd /tmp && unzip /tmp/ngrok.zip")
 	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
 
+def install_dotnet_core():
+	sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb", pty=False)
+    sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
+    sudo("add-apt-repository universe", pty=False)
+    sudo("apt install apt-transport-https", pty=False)
+    sudo("apt update", pty=False)
+    sudo("apt install dotnet-sdk-2.2", pty=False)
+
 def config_current_user():
 	# bashrc のカスタマイズ（冪等のため、特定の文字列の行以降を置き換える）
 	bashrc_file = '/home/' + USER_NAME + '/.bashrc'
@@ -469,6 +477,8 @@ def config_current_user():
 	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
         # ssh設定をシンボリックリンク
         run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.ssh/config  /home/' + USER_NAME  + '/.ssh/config')
+
+
 
 
 # TODOList
