@@ -1,0 +1,7 @@
+portforwarding-webbrowsing:
+  container_name: portforwarding-webbrowsing
+  build: "."
+  ports:
+    - "6080:80"
+    - "5900:5900"
+  restart: "unless-stopped"

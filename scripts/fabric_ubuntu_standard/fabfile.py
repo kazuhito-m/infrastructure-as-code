@@ -55,6 +55,8 @@ def setup_all():
 	# 途中で対話型が入る＆特定端末でしか重くて動かせないので、第一次候補からははずす。
 	# install_android_env()
 	# install_kvm() # ネットワークがおかしくなるリスク在る…ので、後付で設定
+	install_ngrok()
+        config_current_user()
 
 def japanize():
 	# change locale
@@ -185,13 +187,12 @@ def install_vim_all():
 	run("rm -rf ~/.vim/bundle/neobundle.vim")  # 二回目以降の冪当性確保(手動設定を全てご破算にしてしまうのはいかがなものか)
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
-def install_gcp_sdk():
+# Google Could SDKをインストール(golang用)
 	sudo("echo 'deb https://packages.cloud.google.com/apt cloud-sdk-'$(lsb_release -c -s)' main' | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list", pty=False)
 	sudo("curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -", pty=False)
 	sudo("apt-get update && apt-get install google-cloud-sdk")
 	# kubectl install
-	sudo("apt-get --only-upgrade install kubectl google-cloud-sdk google-cloud-sdk-app-engine-grpc google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-datastore-emulator google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-app-engine-python-extras google-cloud-sdk-datalab google-cloud-sdk-app-engine-java")
-	sudo("apt-get install kubectl")
+	sudo("apt-get install kubectl google-cloud-sdk google-cloud-sdk-app-engine-grpc google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-datastore-emulator google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-app-engine-python-extras google-cloud-sdk-datalab google-cloud-sdk-app-engine-java")
 
 def install_drowing_tools():
 	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
@@ -322,11 +323,18 @@ def install_golang():
 	# sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
 	# sudo("apt-get update")
 	# sudo("apt-get install -y golang")
+
 	# 上記APTラインは使えなくなった模様。手動で入れるやり方に切り替え。
-	run("wget -O /tmp/golang.tar.gz https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz")
-	sudo("tar -C /usr/local -xzf /tmp/golang.tar.gz")
-	run("echo 'export GOROOT=/usr/local/go' >> ~/.bashrc")
-	run("echo 'export PATH=$GOROOT/bin:$PATH' >> ~/.bashrc")
+	# run("wget -O /tmp/golang.tar.gz https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz")
+	# sudo("tar -C /usr/local -xzf /tmp/golang.tar.gz")
+	# run("echo 'export GOROOT=/usr/local/go' >> ~/.bashrc")
+	# run("echo 'export PATH=$GOROOT/bin:$PATH' >> ~/.bashrc")
+
+	# 上記のやり方も「Versionを固定」しすぎるため、gvmのやり方に変更。
+	sudo("apt-get install -y bison", pty=False)
+	run("bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)")
+	# この後、`gvm listall` で最新を確認、`gvm install [最新] && gvm use [最新] --default` で「使うgoのインストールと選択」を行う。
+
 	# GOPATH系の設定
 	run("echo 'export GO_WORKSPACE=current' >> ~/.bashrc")
 	run("echo 'export GOPATH=~/go/third:~/go/${GO_WORKSPACE}' >> ~/.bashrc")
@@ -441,6 +449,34 @@ def install_kvm():
 	sudo("apt-get remove -y network-manager", pty=False)
 	# TODO ./resoures/apend-interfaces-for-kvm というファイルがあるので、/etc/network/interface に編集・追加する。
 	# brctl show で「ブリッジ状態の確認」ができる。
+
+def install_ngrok():
+	put("./resources/ngrok/ngrok-stable-linux-amd64.zip", "/tmp/ngrok.zip")
+	run("cd /tmp && unzip /tmp/ngrok.zip")
+	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
+
+def install_dotnet_core():
+	sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb", pty=False)
+	sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
+	sudo("add-apt-repository universe", pty=False)
+	sudo("apt-get install -y apt-transport-https", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install -y dotnet-sdk-2.2", pty=False)
+
+def config_current_user():
+	# bashrc のカスタマイズ（冪等のため、特定の文字列の行以降を置き換える）
+	bashrc_file = '/home/' + USER_NAME + '/.bashrc'
+	bashrc_addition_file = '/home/' + USER_NAME + '/.bashrc_addition'
+	original_bachrc_cut_command = 'cat ' + bashrc_file + ' | while IFS= read LINE; do [[ "${LINE}" = "# from here addition." ]] && exit 0 ; echo "${LINE}" >>' + bashrc_file + '.modify ; done'
+	put('resources/user_home/.bashrc_addition', bashrc_addition_file)
+	run(original_bachrc_cut_command)
+	run('cat ' + bashrc_addition_file + ' >> ' + bashrc_file + '.modify')
+	run('mv ' + bashrc_file + '.modify ' + bashrc_file)
+	run('rm ' + bashrc_addition_file)
+	# alias ファイルの設置
+	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
+        # ssh設定をシンボリックリンク
+        run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.ssh/config  /home/' + USER_NAME  + '/.ssh/config')
 
 
 # TODOList

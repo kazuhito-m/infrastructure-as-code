@@ -1,0 +1,27 @@
+# from here addition.
+
+# ヒストリの上限上げ
+HISTSIZE=100000
+HISTFILESIZE=200000
+
+PATH="$PATH:/home/kazuhito/.conscript/bin"
+
+[[ -s "/home/kazuhito/.gvm/scripts/gvm" ]] && source "/home/kazuhito/.gvm/scripts/gvm"
+
+# export GOROOT=/usr/local/go
+# export PATH=$GOROOT/bin:$PATH
+export GO_WORKSPACE=current
+export GOPATH=~/go/third:~/go/${GO_WORKSPACE}
+export PATH=${PATH}:~/go/third/bin:~/go/${GO_WORKSPACE}/bin
+
+export PATH="$PATH:~/.config/composer/vendor/bin"
+
+# ssh-agent の常時起動
+
+SSH_KEY_LIFE_TIME_SEC=3600   # 有効時間（好きな秒数に設定)
+SSH_AGENT_FILE=$HOME/.ssh-agent
+test -f $SSH_AGENT_FILE && source $SSH_AGENT_FILE > /dev/null 2>&1
+if [ $( ps -ef | grep ssh-agent | grep -v grep | wc -l ) -eq 0 ]; then
+    ssh-agent -t $SSH_KEY_LIFE_TIME_SEC > $SSH_AGENT_FILE
+    source $SSH_AGENT_FILE > /dev/null 2>&1
+fi

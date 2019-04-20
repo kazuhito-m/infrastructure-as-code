@@ -1,0 +1,7 @@
+#cloud-config
+
+chpasswd:
+  list: |
+    ec2-user:secret
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbf24paiq/VmLSqz0Z0tG8z8LPRY7HY9Cp95lvFj7BA8O+nkWp0Tk/f9EZtgiDYZO7F+hqC+RbJabYirno71waZiuzg1i3Bb/xLbvXoIduCY9F0/q0yWLyaQ1PjrMFfldEw4wp3P6pH8TdsjJhUXk7lkVLv+AF5nDbNXbjOVLrhTKtTz49gVdH3b2Fg1HOvxEQJ1dIF/3BmPJA3zjyRdriAoAm8R4MixciR/DaR0QL471P5UYRyYWr/dHCWiVSUt/HyX9lLd8S8OMIyQ76cdpFGiwJvFcq2Tv6xPd3d6haVYWQmn3yftyingZ6k/wneyMpP2zADxyML3q9oE/JW025 kazuhito@kazuhito-d4
