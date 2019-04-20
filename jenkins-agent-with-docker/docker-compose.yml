@@ -1,0 +1,8 @@
+jenkins-agent-with-docker:
+  build: .
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    JNLP_URL: "no specific"
+    SECRET: "no specific"
+  restart: "unless-stopped"
