@@ -8,8 +8,6 @@ PATH="$PATH:/home/kazuhito/.conscript/bin"
 
 [[ -s "/home/kazuhito/.gvm/scripts/gvm" ]] && source "/home/kazuhito/.gvm/scripts/gvm"
 
-# export GOROOT=/usr/local/go
-# export PATH=$GOROOT/bin:$PATH
 export GO_WORKSPACE=current
 export GOPATH=~/go/third:~/go/${GO_WORKSPACE}
 export PATH=${PATH}:~/go/third/bin:~/go/${GO_WORKSPACE}/bin
