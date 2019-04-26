@@ -32,10 +32,10 @@ def setup_all():
 	install_text_editors()
 	install_vim_all()
 	install_gcp_sdk()
-	# install_multi_media()
+	install_multi_media()
 	install_drowing_tools()
 	# install_jenkins()
-	# install_dtm_tools()
+	# 途中で対話型が止まる、単体で動かすべし install_dtm_tools()
 	install_system_maintenance()
 	install_developers_tools()
 	install_provisioning_tools()
@@ -56,7 +56,7 @@ def setup_all():
 	# install_android_env()
 	# install_kvm() # ネットワークがおかしくなるリスク在る…ので、後付で設定
 	install_ngrok()
-        config_current_user()
+	config_current_user()
 
 def japanize():
 	# change locale
@@ -81,13 +81,13 @@ def basic_tools_setup():
 
 	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool" , pty=False)
 def install_common_tools():
-	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu screen pandoc ffmpeg comix unrar nkf apt-file", pty=False)
+	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu screen pandoc ffmpeg unrar nkf apt-file", pty=False)
 	# DVD movie play
 	sudo("apt-file update")
 	# UI Customize tools
 	sudo("apt-get install -y gnome-tweak-tool", pty=False)
 	# Dropbox
-	install_dropbox_client()
+	# install_dropbox_client()
 	# GoogleDrive
 	install_googledrive_client()
 	# ResilioSync
@@ -139,11 +139,11 @@ def install_web_tools():
 	# sudo("apt-get update -y", pty=False)
 	# sudo("apt-get install --allow-unauthenticated -y google-chrome-stable", pty=False)
 
-	run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
-	sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
-	sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
+	# run("curl https://dl.google.com/linux/linux_signing_key.pub > /tmp/linux_signing_key.pub")
+	# sudo("mkdir -p /usr/lib/pepperflashplugin-nonfree")
+	# sudo("mv /tmp/linux_signing_key.pub /usr/lib/pepperflashplugin-nonfree/pubkey-google.txt")
 
-	sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
+	# sudo("apt-get install -y libappindicator1 pepperflashplugin-nonfree", pty=False)
 	put("./resources/chrome/google-chrome-stable_current_amd64.deb" , "/tmp/chrome.deb")
 	sudo("dpkg -i /tmp/chrome.deb")
 
@@ -169,16 +169,15 @@ def install_multi_media():
 
 def install_text_editors():
 	# editor系一式
-	sudo("apt-get install -y leafpad", pty=False)
 	# Atom Editor
 	# sudo("add-apt-repository -y ppa:webupd8team/atom", pty=False)
 	# sudo("apt-get update", pty=False)
-	# sudo("apt-get install atom", pty=False)
+	sudo("apt-get install atom", pty=False)
 	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
 	sudo("dpkg -i /tmp/atom.deb")
 	# plugin設定
 	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify auto-encoding document-outline") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
-	# TODO Reafpad,gedtの設定ファイル持ってくる。
+	# TODO gedtの設定ファイル持ってくる。
 
 def install_vim_all():
 	sudo("apt-get install -y vim", pty=False)
@@ -187,12 +186,14 @@ def install_vim_all():
 	run("rm -rf ~/.vim/bundle/neobundle.vim")  # 二回目以降の冪当性確保(手動設定を全てご破算にしてしまうのはいかがなものか)
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
-# Google Could SDKをインストール(golang用)
+# Google Could SDKをインストール(golang,gke                用)
+def install_gcp_sdk():
 	sudo("echo 'deb https://packages.cloud.google.com/apt cloud-sdk-'$(lsb_release -c -s)' main' | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list", pty=False)
 	sudo("curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -", pty=False)
-	sudo("apt-get update && apt-get install google-cloud-sdk")
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install -y google-cloud-sdk", pty=False)
 	# kubectl install
-	sudo("apt-get install kubectl google-cloud-sdk google-cloud-sdk-app-engine-grpc google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-datastore-emulator google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-app-engine-python-extras google-cloud-sdk-datalab google-cloud-sdk-app-engine-java")
+	sudo("apt-get install -y kubectl google-cloud-sdk-app-engine-grpc google-cloud-sdk-pubsub-emulator google-cloud-sdk-app-engine-go google-cloud-sdk-datastore-emulator google-cloud-sdk-app-engine-python google-cloud-sdk-cbt google-cloud-sdk-bigtable-emulator google-cloud-sdk-app-engine-python-extras google-cloud-sdk-datalab google-cloud-sdk-app-engine-java")
 
 def install_drowing_tools():
 	sudo("apt-get install -y gimp pinta imagemagick graphicsmagick", pty=False)
@@ -227,11 +228,11 @@ def install_dtm_tools():
 	sudo("apt-get install -y qsynth fluid-soundfont-gm cmt calf-plugins caps tap-plugins invada-studio-plugins-lv2 swh-lv2 mda-lv2", pty=False)
 
 def install_system_maintenance():
-	sudo("apt-get install -y gparted gpart unetbootin tree", pty=False)
+	sudo("apt-get install -y gparted gpart tree", pty=False)
 
 def install_developers_tools():
 	# java8 installl
-	sudo("apt-get install -y openjdk-8-jdk galternatives", pty=False)
+	sudo("apt-get install -y openjdk-13-jdk openjdk-11-jdk openjdk-8-jdk galternatives", pty=False)
 	# Fablic install.
 	# VCS visualize tools
 	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
@@ -239,8 +240,6 @@ def install_developers_tools():
 	# datavese viewer
 	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
 	sudo("apt-get install -y postgresql-client-common", pty=False)
-	# Mono&MonoDevelop
-	sudo("apt-get install -y monodevelop", pty=False)
 
 def install_provisioning_tools():
 	sudo("apt-get install -y fabric", pty=False)
@@ -256,14 +255,14 @@ def install_msvsc():
 
 def install_nodejs():
 	sudo("apt-get install -y nodejs npm", pty=False)
-	sudo("npm cache clean", pty=False)
+	sudo("npm cache verify", pty=False)
 	sudo("npm install n -g", pty=False)
 	sudo("n stable", pty=False)
 	sudo("ln -sf /usr/local/bin/node /usr/bin/node", pty=False)
 	run("node -v")
 
 def install_plantuml():
-		# 前提条件として、使うパッケージ入れとく。
+	# 前提条件として、使うパッケージ入れとく。
 	sudo("apt-get install -y graphviz", pty=False)
 	# 要るものは予め落としておく
 	run("wget -O /tmp/plantuml.jar http://downloads.sourceforge.net/project/plantuml/plantuml.jar")
@@ -302,7 +301,7 @@ def install_screencapture_gif():
 
 def install_scala_and_sbt():
  	# scala install
- 	SCALA_VER='2.11.12'
+ 	SCALA_VER='2.13.0'
  	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
  	sudo("dpkg -i /tmp/scala.deb" , pty=False)
  	# sbt apt regist
@@ -327,8 +326,6 @@ def install_golang():
 	# 上記APTラインは使えなくなった模様。手動で入れるやり方に切り替え。
 	# run("wget -O /tmp/golang.tar.gz https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz")
 	# sudo("tar -C /usr/local -xzf /tmp/golang.tar.gz")
-	# run("echo 'export GOROOT=/usr/local/go' >> ~/.bashrc")
-	# run("echo 'export PATH=$GOROOT/bin:$PATH' >> ~/.bashrc")
 
 	# 上記のやり方も「Versionを固定」しすぎるため、gvmのやり方に変更。
 	sudo("apt-get install -y bison", pty=False)
@@ -336,9 +333,6 @@ def install_golang():
 	# この後、`gvm listall` で最新を確認、`gvm install [最新] && gvm use [最新] --default` で「使うgoのインストールと選択」を行う。
 
 	# GOPATH系の設定
-	run("echo 'export GO_WORKSPACE=current' >> ~/.bashrc")
-	run("echo 'export GOPATH=~/go/third:~/go/${GO_WORKSPACE}' >> ~/.bashrc")
-	run("echo 'export PATH=${PATH}:~/go/third/bin:~/go/${GO_WORKSPACE}/bin' >> ~/.bashrc")
 	run("mkdir -p ~/go/{third,${GO_WORKSPACE}}")
 	run("mkdir -p ~/go/${GO_WORKSPACE}/{src,bin,pkg}")
 	# InteliJ Ideaにgo-langの開発環境を設定
@@ -351,15 +345,16 @@ def install_touchpad_controltool():
 	sudo("apt-get install -y touchpad-indicator", pty=False)
 
 def install_docker_latest():
-	# refalance https://docs.docker.com/engine/installation/linux/ubuntulinux/
-	sudo("apt-get update" , pty=False)
-	sudo("apt-get install -y apt-transport-https ca-certificates" , pty=False)
-	sudo("apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D")
-	sudo("echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' > /etc/apt/sources.list.d/docker.list")
-	sudo("apt-get update" , pty=False)
-	sudo("apt-get purge -y lxc-docker" , pty=False)
-	sudo("apt-get install -y linux-image-extra-$(uname -r)" , pty=False)
-	sudo("apt-get install -y docker-engine docker-compose", pty=False)
+	# refalance https://qiita.com/yutayama/items/1d768f5b09cb5d6a0d07
+
+	sudo("apt-get install -y apt-transport-https ca-certificates curl software-properties-common", pty=False)
+	sudo("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -", pty=False)
+	sudo("apt-key fingerprint 0EBFCD88", pty=False)
+	# sudo('add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"' , pty=False)
+	# discoのリポジトリはないので、cosmicで代用
+	sudo('add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable"' , pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install -y docker-ce docker-ce-cli containerd.io", pty=False)
 	sudo("service docker start")
 	# このままでは、一般ユーザでは叩け無いので、グループ設定
 	sudo("groupadd -f docker")
@@ -369,12 +364,20 @@ def install_docker_latest():
 	# インストール直後は、"Cannot connect to the Docker daemon. Is the docker daemon running on this host?" と表示されるものの
 	# 再起動後は軽快に動く。
 
+	# docker-compose install
+	sudo("curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose", pty=False)
+	sudo("chmod +x /usr/local/bin/docker-compose", pty=False)
+
+
 def install_communication_tools():
-	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-2.9.0-amd64.deb")
+	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-3.4.2-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
 	# 自動起動設定。
 	put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
 	sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
+
+	# discrod
+	sudo("snap install --classic discord", pty=False)
 
 def insatll_virtualbox():
 	sudo("apt-get install -y virtualbox")
@@ -389,9 +392,7 @@ def insatll_sdkman_and_gradle():
 	run("sdk install gradle")
 
 def install_intellij():
-	sudo("add-apt-repository ppa:ubuntuhandbook1/apps" , pty=False)
-	sudo("apt-get update -y" , pty=False)
-	sudo("apt-get install -y intellij-idea-community", pty=False)
+	sudo("snap install --classic intellij-idea-community", pty=False)
 
 def install_game():
 	sudo("apt-get install -y mame mame-tools gnome-video-arcade joystick jstest-gtk", pty=False)
@@ -410,7 +411,7 @@ def install_android_env():
 def install_dropbox_client():
 	# dropbox.deb が依存しているライブラリをインストール。
 	sudo("apt-get install -y libpango1.0-0 libpangox-1.0-0", pty=False)
-	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2.10.0_amd64.deb -O /tmp/dropbox.deb")
+	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb -O /tmp/dropbox.deb")
 	sudo("dpkg -i --force-conflicts	/tmp/dropbox.deb")
 	sudo("dropbox start -i")
 	sudo("apt-get install -y nautilus-dropbox", pty=False)
@@ -420,8 +421,6 @@ def install_googledrive_client():
 	sudo("apt-get update" , pty=False)
 	sudo("apt-get install -y google-drive-ocamlfuse", pty=False)
 	run("mkdir -p ~/GoogleDrive")
-	run("echo \"alias gdrive_m='google-drive-ocamlfuse ~/GoogleDrive'\" >> ~/.bashrc")
-	run("echo \"alias gdrive_u='fusermount -u ~/GoogleDrive'\" >> ~/.bashrc")
 
 def install_resiliosync():
 	run("wget -q -O /tmp/resilio-sync.key.asc https://linux-packages.resilio.com/resilio-sync/key.asc")
@@ -456,7 +455,7 @@ def install_ngrok():
 	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
 
 def install_dotnet_core():
-	sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb", pty=False)
+	sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb", pty=False)
 	sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
 	sudo("add-apt-repository universe", pty=False)
 	sudo("apt-get install -y apt-transport-https", pty=False)
@@ -469,13 +468,15 @@ def config_current_user():
 	bashrc_addition_file = '/home/' + USER_NAME + '/.bashrc_addition'
 	original_bachrc_cut_command = 'cat ' + bashrc_file + ' | while IFS= read LINE; do [[ "${LINE}" = "# from here addition." ]] && exit 0 ; echo "${LINE}" >>' + bashrc_file + '.modify ; done'
 	put('resources/user_home/.bashrc_addition', bashrc_addition_file)
+	timetext = "{0:%Y%m%d%H%M%S}".format(datetime.datetime.now())
+	run('cp -a ~/.bashrc ./.bashrc_backup' + timetext)
 	run(original_bachrc_cut_command)
 	run('cat ' + bashrc_addition_file + ' >> ' + bashrc_file + '.modify')
 	run('mv ' + bashrc_file + '.modify ' + bashrc_file)
 	run('rm ' + bashrc_addition_file)
 	# alias ファイルの設置
 	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
-        # ssh設定をシンボリックリンク
+    # ssh設定をシンボリックリンク
         run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.ssh/config  /home/' + USER_NAME  + '/.ssh/config')
 
 
