@@ -4,7 +4,6 @@ from fabric.api import local, run, sudo, put, env, settings
 SELF_MAIL_ADDRESS = "xxx@gmail.com"
 USER_NAME = "kazuhito"
 GIT_USER = "kazuhito-m"
-GIT_PASS = "xxx"
 
 # 実行前に、以下のじゅんびが　必要です
 #
@@ -151,10 +150,6 @@ def install_git_and_setting():
 	sudo("apt-get install -y git tig", pty=False)
 	run("git config --global user.email \"" + SELF_MAIL_ADDRESS + "\"")
 	run("git config --global user.name \"" + GIT_USER  + "\"")
-	netrc = """machine github.com
-login """ + GIT_USER + """
-password """ + GIT_PASS
-	run("echo '" + netrc + "' > ~/.netrc")
 
 def install_multi_media():
 	# なぜか、14以降のUbuntuではパッケージなくなってるきがする…環境依存？
