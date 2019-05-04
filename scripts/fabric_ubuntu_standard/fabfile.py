@@ -86,7 +86,7 @@ def install_common_tools():
 	# UI Customize tools
 	sudo("apt-get install -y gnome-tweak-tool", pty=False)
 	# Dropbox
-	# install_dropbox_client()
+	install_dropbox_client()
 	# GoogleDrive
 	install_googledrive_client()
 	# ResilioSync
