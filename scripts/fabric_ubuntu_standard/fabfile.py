@@ -1,5 +1,6 @@
 #coding:utf-8
 from fabric.api import local, run, sudo, put, env, settings
+import datetime
 
 SELF_MAIL_ADDRESS = "xxx@gmail.com"
 USER_NAME = "kazuhito"
@@ -165,11 +166,8 @@ def install_multi_media():
 def install_text_editors():
 	# editor系一式
 	# Atom Editor
-	# sudo("add-apt-repository -y ppa:webupd8team/atom", pty=False)
-	# sudo("apt-get update", pty=False)
-	sudo("apt-get install atom", pty=False)
-	run("wget --no-check-certificate -O /tmp/atom.deb https://atom.io/download/deb")
-	sudo("dpkg -i /tmp/atom.deb")
+	sudo("snap install --classic atom")
+
 	# plugin設定
 	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify auto-encoding document-outline") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO gedtの設定ファイル持ってくる。
@@ -181,9 +179,9 @@ def install_vim_all():
 	run("rm -rf ~/.vim/bundle/neobundle.vim")  # 二回目以降の冪当性確保(手動設定を全てご破算にしてしまうのはいかがなものか)
 	run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
-# Google Could SDKをインストール(golang,gke                用)
+# Google Could SDKをインストール(golang,gke用)
 def install_gcp_sdk():
-	sudo("echo 'deb https://packages.cloud.google.com/apt cloud-sdk-'$(lsb_release -c -s)' main' | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list", pty=False)
+	sudo("echo 'deb https://packages.cloud.google.com/apt cloud-sdk-'$(lsb_release -c -s)' main' > /etc/apt/sources.list.d/google-cloud-sdk.list", pty=False)
 	sudo("curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -", pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install -y google-cloud-sdk", pty=False)
@@ -366,7 +364,7 @@ def install_docker_latest():
 
 def install_communication_tools():
 	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-3.4.2-amd64.deb")
-	sudo("dpkg -i /tmp/slack-desktop.deb ", pty=False)
+	sudo("dpkg -i /tmp/slack-desktop.deb", pty=False)
 	# 自動起動設定。
 	put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
 	sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
