@@ -155,3 +155,5 @@ Unable to update cni config: No networks found in /etc/cni/net.d
 https://github.com/kubernetes/kubeadm/issues/228
 
 なので、「Ubuntuのdocker.ioを使う」と上手く行くことは検証。（Flannel,weaveで確認）
+
+### しかし…CloudAtCost側のサーバなら、依然として解決しない！！
