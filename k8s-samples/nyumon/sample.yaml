@@ -9,8 +9,8 @@ spec:
     env:
     - name: BACKEND_HOST
       value: localhost:8080
-    posts:
-    - containerProt: 80
+    ports:
+    - containerPort: 80
   - name: echo
     image: gihyodocker/echo:latest
     ports:
