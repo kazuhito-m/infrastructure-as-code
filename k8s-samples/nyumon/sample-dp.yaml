@@ -23,7 +23,7 @@ spec:
         ports:
         - containerPort: 80
       - name: echo
-        image: gihyodocker/echo:latest
+        image: gihyodocker/echo:pached
         ports:
         - containerPort: 8080
 
