@@ -67,6 +67,7 @@ kind: Service
 metadata:
   name: echo
 spec:
+  type: NodePort
   selector:
     app: echo
     release: summer
