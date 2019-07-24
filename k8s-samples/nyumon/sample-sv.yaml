@@ -67,11 +67,24 @@ kind: Service
 metadata:
   name: echo
 spec:
-  type: NodePort
   selector:
     app: echo
-    release: summer
   ports:
     - name: http
       port: 80
+---
+# ingress
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo
+spec:
+  rules:
+  - host: ch05.gihyo.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: echo
+          servicePort: 80
 
