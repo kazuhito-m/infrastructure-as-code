@@ -42,6 +42,11 @@ gcloud sql instances create ${DB_INSTANCE_NAME} \
     --memory=${DB_MEMORY} \
     --storage-size=${DB_STORAGE_SIZE} \
     --storage-type=${DB_STORAGE_TYPE}
+# インスタンスの(GUIコンソールからの)設定
+# - プライベートIPをOnにし、作成したVPN名を指定する
+# - gke内にテスト用のPodを作り、DBに接続できるかテスト
+# - パブリックIPをOffにする
+# - 必要であればユーザを作成しておく
 
 # Create GKE Clusters
 gcloud container clusters create ${CLUSTER_NAME} \
