@@ -21,7 +21,6 @@ def setup_all():
 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
-	# install_movie_player()
 	install_asciidoc()
 	# install_network_tools()
 	install_rescure_tools()
@@ -92,11 +91,6 @@ def install_common_tools():
 	install_googledrive_client()
 	# ResilioSync
 	install_resiliosync()
-
-def install_movie_player():
-	sudo("apt-get install -y ubuntu-restricted-extras  vlc libdvd-pkg")
-	sudo("dpkg-reconfigure libdvd-pkg")
-	run("file /usr/lib/x86_64-linux-gnu/libdvdcss.so")
 
 def install_asciidoc():
 	sudo("apt-get install -f -y asciidoc asciidoctor asciidoctor-doc fop fop-doc", pty=False)
@@ -231,7 +225,6 @@ def install_developers_tools():
 	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
 	sudo("apt-get install -y rabbitvcs-nautilus rabbitvcs-gedit rabbitvcs-cli", pty=False)
 	# datavese viewer
-	sudo("apt-get install -y libqt4-sql-mysql libqt4-sql-psql libqt4-sql-sqlite libqt4-sql-odbc libqt4-sql-tds tora", pty=False)
 	sudo("apt-get install -y postgresql-client-common", pty=False)
 
 def install_provisioning_tools():
