@@ -340,12 +340,11 @@ def install_docker_latest():
 	# 再起動後は軽快に動く。
 
 	# docker-compose install
-	sudo("curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose", pty=False)
+	sudo("curl -L https://github.com/docker/compose/releases/download/$(curl https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose", pty=False)
 	sudo("chmod +x /usr/local/bin/docker-compose", pty=False)
 
-
 def install_communication_tools():
-	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-3.4.2-amd64.deb")
+	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-4.2.0-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb", pty=False)
 	# 自動起動設定。
 	put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
