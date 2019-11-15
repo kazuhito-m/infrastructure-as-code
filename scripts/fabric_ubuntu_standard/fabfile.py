@@ -42,7 +42,7 @@ def setup_all():
 	install_nodejs()
 	install_plantuml()
 	install_screencapture_gif()
-	install_scala_and_sbt()
+	# install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
 	install_docker_latest()
@@ -305,15 +305,6 @@ def install_scala_and_sbt():
 		# ここで「プロンプトが出て止まる」場合がある。その場合は"exit"打って続行させる。
 
 def install_golang():
-	# sudo("add-apt-repository -y ppa:evarlast/golang1.5", pty=False)
-	# sudo("apt-get update")
-	# sudo("apt-get install -y golang")
-
-	# 上記APTラインは使えなくなった模様。手動で入れるやり方に切り替え。
-	# run("wget -O /tmp/golang.tar.gz https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz")
-	# sudo("tar -C /usr/local -xzf /tmp/golang.tar.gz")
-
-	# 上記のやり方も「Versionを固定」しすぎるため、gvmのやり方に変更。
 	sudo("apt-get install -y bison", pty=False)
 	run("bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)")
 	# この後、`gvm listall` で最新を確認、`gvm install [最新] && gvm use [最新] --default` で「使うgoのインストールと選択」を行う。
@@ -321,8 +312,6 @@ def install_golang():
 	# GOPATH系の設定
 	run("mkdir -p ~/go/{third,${GO_WORKSPACE}}")
 	run("mkdir -p ~/go/${GO_WORKSPACE}/{src,bin,pkg}")
-	# InteliJ Ideaにgo-langの開発環境を設定
-	# 基本的には、[ここ](http://stormcat.hatenablog.com/entry/2015/04/13/123000)をトレースする。
 
 # touchpadを無効化するツールをインストール
 def install_touchpad_controltool():
