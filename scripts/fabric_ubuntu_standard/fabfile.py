@@ -344,6 +344,7 @@ def install_docker_latest():
 	sudo("chmod +x /usr/local/bin/docker-compose", pty=False)
 
 def install_communication_tools():
+	sudo("apt-get install -y gconf2", pty=False)
 	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-4.2.0-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb", pty=False)
 	# 自動起動設定。
