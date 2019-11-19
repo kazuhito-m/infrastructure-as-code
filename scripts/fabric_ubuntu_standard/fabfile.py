@@ -160,8 +160,10 @@ def install_multi_media():
 def install_text_editors():
 	# editor系一式
 	# Atom Editor
-	sudo("snap install --classic atom")
-
+	sudo("wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -")
+	sudo("echo 'deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main' > /etc/apt/sources.list.d/atom.list")
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install -y atom", pty=False)
 	# plugin設定
 	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify auto-encoding document-outline") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
 	# TODO gedtの設定ファイル持ってくる。
