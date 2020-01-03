@@ -24,5 +24,5 @@ gcloud sql instances delete ${DB_INSTANCE_NAME}
 
 gcloud compute firewall-rules delete ${NETWORK_NAME}-rule01
 gcloud compute networks subnets delete ${SUBNNET_NAME} --region ${REGION}
-# コンソールから「VPCピアリングネットワーク」で属しているものをすべて削除してからでしか、以下を実行できない
+# コンソールから「ルート」「VPCピアリングネットワーク」「プライベートサービス接続」で属しているものをすべて削除してからでしか、以下を実行できない
 # gcloud compute networks delete ${NETWORK_NAME}
