@@ -5,6 +5,16 @@ SCRIPT_DIR=$(cd $(dirname $(readlink -f $0 || echo $0));pwd -P)
 cd ${SCRIPT_DIR}
 
 pushd ./test/vagrant
+
+# VagrantのNoPassログイン用鍵を作成する
+if [ ! -d .tmp/ ]; then
+    mkdir .tmp
+fi
+if [ ! -f .tmp/id_rsa ]; then
+    ssh-keygen -t rsa -b 4096 -C "kazuhito@example.com" -N '' -f .tmp/id_rsa
+    chmod 400 .tmp/id_rsa*
+fi
+
 vagrant up
 
 popd
