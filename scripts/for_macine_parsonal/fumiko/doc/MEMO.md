@@ -12,6 +12,7 @@
 ### Vagrantfile入門
 
 - https://qiita.com/daichi87gi/items/d5da33c76295ee32a735
+- https://kitsune.blog/linux-environment
 
 ### Vagrant復数Disk追加
 
