@@ -15,7 +15,10 @@ if [ ! -f .tmp/id_rsa ]; then
     chmod 400 .tmp/id_rsa*
 fi
 
+# Vagrant box 起動
 vagrant up
 
 popd
 
+# Ansbile実行
+ansible-playbook -i ./test/vagrant/vagrant_hosts main.yml -u vagrant --private-key=./test/vagrant/.tmp/id_rsa

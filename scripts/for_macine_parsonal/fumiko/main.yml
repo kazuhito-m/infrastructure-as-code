@@ -1,0 +1,10 @@
+# coding:utf-8
+# for Debian 10
+
+- hosts: all
+  become: yes
+
+  tasks:
+
+  - name: テスト表示
+    shell: 'whoami'
