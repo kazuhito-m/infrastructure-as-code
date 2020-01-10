@@ -21,4 +21,10 @@ vagrant up
 popd
 
 # Ansbile実行
-ansible-playbook -i ./test/vagrant/vagrant_hosts main.yml -u vagrant --private-key=./test/vagrant/.tmp/id_rsa
+export ANSIBLE_HOST_KEY_CHECKING=False  # known_hosts の判定を回避
+
+ansible-playbook \
+    --timeout=180 \
+    -i ./test/vagrant/vagrant_hosts main.yml \
+    -u vagrant \
+    --private-key=./test/vagrant/.tmp/id_rsa
