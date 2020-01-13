@@ -5,6 +5,13 @@
   become: yes
   become_user: root
 
+  vars:
+    raid_dev: /dev/md0
+    raid_level: 1
+    raid_name: RAID
+    raid_mount: /home
+    bench_file: /root/output.html
+
   tasks:
 
   - block:
@@ -50,3 +57,44 @@
         state: restarted
         daemon_reload: yes
         enabled: yes
+
+  - block:
+    
+    - name: すでにRAIDが構築されているかを確認。
+      shell: ls {{ raid_dev }}
+      register: sh_ls_raid_dev
+      failed_when: no
+
+    - name: RAIDデバイス作成。
+      shell: yes | mdadm --create --verbose "{{ raid_dev }}" --level="{{ raid_level }}" --name="{{ raid_name }}" --raid-devices=2 /dev/sdb /dev/sdc
+      when: sh_ls_raid_dev.stdout_lines.count("{{ raid_dev }}") == 0
+
+    - name: ファイルシステムの確認 {{ raid_dev }}
+      shell: parted -l | grep "{{ raid_dev }}"
+      register: sh_parted_l
+      failed_when: no
+
+    - name: RAID1のデバイスにEXT4のファイルシステムを作成。
+      shell: mkfs.ext4 -L "{{ raid_name }}" "{{ raid_dev }}"
+      when: sh_parted_l.stdout_lines.count("unrecognised disk label") != 0
+
+    - name: 元のHomeを退避する
+      shell: df | grep '/dev/md0' | grep '/home' || cp -ar /home /home_taihi
+
+    - name: マウント用のディレクトリを作成する。
+      file:
+        state: directory
+        path: "{{ raid_mount }}"
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: RAID1デバイスをマウント。
+      mount:
+        name: "{{ raid_mount }}"
+        src: "{{ raid_dev }}"
+        fstype: ext4
+        state: mounted
+
+    - name: 退避しているディレクトリが在る場合は中身を移動し削除。
+      shell:  '[ ! -d /home_taihi ] || ( cp -ar /home_taihi/* /home/ && rm -rf /home_taihi/ )'
