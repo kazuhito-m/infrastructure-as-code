@@ -21,6 +21,8 @@
           - byobu
           - vim
           - ntp
+          - parted
+          - mdadm
 
   - block:
 
@@ -33,3 +35,18 @@
     - name: ホスト名設定。
       hostname:
         name: fumiko
+
+  - block:
+
+    - name: NTP設定ファイルを反映。
+      copy: 
+        src: resources/etc/ntp.conf
+        dest: /etc/ntp.conf
+        backup: yes
+
+    - name: NTPサービス再起動。
+      systemd:
+        name: ntp.service
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
