@@ -26,7 +26,7 @@
 ### 最低限のインストールのためのツールのインストール
 
 ```bash
-apt-get install sudo git fabric
+apt-get install sudo git parted
 ```
 
 ### sudo有効設定
@@ -34,7 +34,7 @@ apt-get install sudo git fabric
 必要なユーザをsudoグループに入れる。
 
 ```bash
-gpasswd -a kazuhito sudo
+gpasswd -a kazuhito sudo 
 ```
 
 おそらく、suでrootになってると、戻っても有効になってないので、ログアウトか再起動後確認。
@@ -50,7 +50,7 @@ gpasswd -a kazuhito sudo
 ### ディスク状況を調べる
 
 ```bash
-ls -l /devsd*
+ls -l /dev/sd*
 brw-rw---- 1 root disk 8,  0  1月  4 08:39 /dev/sda
 brw-rw---- 1 root disk 8,  1  1月  4 08:39 /dev/sda1
 brw-rw---- 1 root disk 8,  2  1月  4 08:39 /dev/sda2
@@ -67,7 +67,10 @@ sudo parted /dev/sdc
 
 mktable
 New disk label type ? GPT
-mkpart primary 0% 100%
+
+mkpart primary 0% 100% # これ１文でコマンド
+
+quit
 ```
 一応タイプ設定しとく。
 
@@ -78,13 +81,17 @@ Partition type (type L to list all types): 21
 :w
 ```
 
-### fabricでRAID0組む
+上記を、HDD分繰り返す。
 
-この後、fabricでタスクを実行
+### ansibleでRAID0組む
+
+この後、ansibleでタスクを実行
 
 ```bash
-fab -H fumiko -u kazuhito --initial-password-prompt setup_md_raid0
+./setup_sample.sh
 ```
+
+(テスト時は test.sh, test_ansible_only.sh)
 
 サーバに入り、構築状況をwatchする。
 
