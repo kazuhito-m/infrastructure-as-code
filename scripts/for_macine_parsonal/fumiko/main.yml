@@ -58,28 +58,25 @@
         daemon_reload: yes
         enabled: yes
 
+  - name: すでにRAIDが構築されているかを確認。
+    shell: grep '/home' /etc/fstab
+    register: sh_ls_raid_dev
+    failed_when: no
+
   - block:
-    
-    - name: すでにRAIDが構築されているかを確認。
-      shell: ls {{ raid_dev }}
-      register: sh_ls_raid_dev
-      failed_when: no
 
     - name: RAIDデバイス作成。
-      shell: yes | mdadm --create --verbose "{{ raid_dev }}" --level="{{ raid_level }}" --name="{{ raid_name }}" --raid-devices=2 /dev/sdb /dev/sdc
-      when: sh_ls_raid_dev.stdout_lines.count("{{ raid_dev }}") == 0
+      shell: yes | mdadm --create --verbose "{{ raid_dev }}" --level="{{ raid_level }}" --raid-devices=2 /dev/sdb /dev/sdc
 
-    - name: ファイルシステムの確認 {{ raid_dev }}
-      shell: parted -l | grep "{{ raid_dev }}"
-      register: sh_parted_l
-      failed_when: no
+    - name: 今回追加したRAIDの状態を設定ファイルに記載(再起動してもマウントできるように)。
+      shell: mdadm --detail --scan >> /etc/mdadm/mdadm.conf
 
     - name: RAID1のデバイスにEXT4のファイルシステムを作成。
       shell: mkfs.ext4 -L "{{ raid_name }}" "{{ raid_dev }}"
-      when: sh_parted_l.stdout_lines.count("unrecognised disk label") != 0
 
-    - name: 元のHomeを退避する
-      shell: df | grep '/dev/md0' | grep '/home' || cp -ar /home /home_taihi
+    # コレ以下のマウントディレクトリ作成とマウントがコケてしまうため、自力で(かつShellで)一度まうんとまでやってしまう。
+    - name: 元のHomeを退避しマウントを自力でして退避したファイルをマウント後のところに移動
+      shell: df | grep '/dev/md0' | grep '/home' || ( mv /home /home_taihi && mkdir /home/ && mount -w -t ext4 /dev/md0 /home && cp -ar /home_taihi/* /home/ && rm -rf /home_taihi )
 
     - name: マウント用のディレクトリを作成する。
       file:
@@ -89,12 +86,7 @@
         group: root
         mode: '0755'
 
-    - name: RAID1デバイスをマウント。
-      mount:
-        name: "{{ raid_mount }}"
-        src: "{{ raid_dev }}"
-        fstype: ext4
-        state: mounted
+    - name: RAID1デバイスのマウントを永続化。
+      shell: echo "UUID=$(tune2fs -l /dev/md0 | grep UUID | sed -e 's/.*UUID.   *//g') /home ext4 defaults 0 0" >> /etc/fstab
 
-    - name: 退避しているディレクトリが在る場合は中身を移動し削除。
-      shell:  '[ ! -d /home_taihi ] || ( cp -ar /home_taihi/* /home/ && rm -rf /home_taihi/ )'
+    when: sh_ls_raid_dev.rc != 0
