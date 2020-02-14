@@ -26,7 +26,7 @@
 ### 最低限のインストールのためのツールのインストール
 
 ```bash
-apt-get install sudo git parted
+apt-get install sudo git parted gdisk
 ```
 
 ### sudo有効設定
