@@ -77,7 +77,7 @@ quit
 ```bash
 sudo fdisk /dev/sdc
 :t
-Partition type (type L to list all types): 21
+Partition type (type L to list all types): fd
 :w
 ```
 
