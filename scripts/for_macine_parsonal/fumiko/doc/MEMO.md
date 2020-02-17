@@ -1,6 +1,32 @@
 必要リンクとコピペベース等
 ===
 
+## Trables
+
+### 仮想機で1GB程度のドライブを作ったところ、GPTの場合にRaid作成後エラーに
+
+仮想機で1GBのドライブを設定し、 `manual_operation.md` の記述どおり、GPT設定でパーティションを作成。
+
+`fdisk -l` などを行った際に、
+
+```
+Error: The primary GPT table is corrupt, but the backup appears OK, so that will
+be used.
+```
+
+という記述がでて、処理が止まってしまう。
+
+`gdisk` の r,c,w などで「直すことは出来る」ものの、一度作ったRAIDアレイだと、その後のext4のファイルシステム作成やらでエラーが起きてしまう。
+
+---
+
+おそらく「TB級でないのにGPT使ってるから」だとアタリをつけ、作成時にGPT以外を指定することで回避。
+
+```bash
+sudo parted /dev/sdb
+mktable
+New disk label type ? msdos
+```
 ## Links
 
 ### インストール
