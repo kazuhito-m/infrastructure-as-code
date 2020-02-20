@@ -28,7 +28,12 @@ be used.
 sudo parted /dev/sdb
 mktable
 New disk label type ? msdos
-```
+
+---
+
+参考
+
+- https://ath575.wordpress.com/2017/05/08/regza%E3%81%AE%E9%8C%B2%E7%94%BB%E7%94%A8%E3%83%8F%E3%83%BC%E3%83%89%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E3%82%92%E3%83%87%E3%83%95%E3%83%A9%E3%82%B0%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B%EF%BC%88-3/
 
 ## Links
 
