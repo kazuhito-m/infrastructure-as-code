@@ -54,3 +54,11 @@ New disk label type ? msdos
 - https://qiita.com/maueki/items/c4ce7c2b7834e3f4ad7d
   - Portは「基本2つしかない」「Deviceでコントロールする」みたい(おそらくIDEのmaster/slaveのやつ)
   - 今回は、結局「sdcをport:0,device:1」にした(恐らく1つ目のHDDと同じとこに居る…と思う)
+
+### ResilioSyncのtips
+
+#### LDAPと連携できるのか
+
+- https://connect.resilio.com/hc/en-us/articles/360004797779-Linking-Active-Directory-AD-Server
+
+ちゃんと読んでないが、Plugin的に設定することにより、LDAPと連携できる？
