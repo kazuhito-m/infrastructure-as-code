@@ -2,7 +2,7 @@
 from fabric.api import local, run, sudo, put, env, settings
 import datetime
 
-SELF_MAIL_ADDRESS = "kazuhito.sumpic@gmail.com"
+SELF_MAIL_ADDRESS = "xxx@gmail.com"
 USER_NAME = "kazuhito"
 GIT_USER = "kazuhito-m"
 
@@ -14,6 +14,9 @@ GIT_USER = "kazuhito-m"
 # またローカルサーバに入れるときは、以下のインストールを予めする必要がある。
 # - git,fabricのインストール
 # - ssh で「自端末にログインできる」ようにしておく。
+#
+# インストールしている最中にも、以下の事を行う
+# - Dropboxのnautilus連携が入った直後にログインしておく(最後らへんにDropboxのローカルフォルダを期待しているものがある)
 
 def setup_all():
 	all_upgrade()
@@ -30,7 +33,7 @@ def setup_all():
 	install_git_and_setting()
 	install_text_editors()
 	install_vim_all()
-	install_gcp_sdk()
+	# install_gcp_sdk() # 最新版のUbuntuに対応していない可能性があるので、手動インストール
 	install_multi_media()
 	install_drowing_tools()
 	# install_jenkins()
@@ -157,17 +160,6 @@ def install_multi_media():
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install ffmpeg", pty=False)
 
-def install_text_editors():
-	# editor系一式
-	# Atom Editor
-	sudo("wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -")
-	sudo("echo 'deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main' > /etc/apt/sources.list.d/atom.list")
-	sudo("apt-get update", pty=False)
-	sudo("apt-get install -y atom", pty=False)
-	# plugin設定
-	run("apm install plantuml-viewer language-plantuml japanese-menu markdown-scroll-sync atom-beautify auto-encoding document-outline") # http://pierre3.hatenablog.com/entry/2015/08/23/220217
-	# TODO gedtの設定ファイル持ってくる。
-
 def install_vim_all():
 	sudo("apt-get install -y vim", pty=False)
 	put("./resources/.vimrc","~/.vimrc")
@@ -230,9 +222,8 @@ def install_developers_tools():
 	sudo("apt-get install -y postgresql-client-common", pty=False)
 
 def install_provisioning_tools():
-	sudo("apt-get install -y fabric", pty=False)
-	sudo("apt-get install -y python-pip", pty=False)
-	sudo("pip install ansible", pty=False)
+	sudo("apt-get install -y python3-pip", pty=False)
+	sudo("pip3 install ansible fabric3", pty=False)
 
 def install_msvsc():
 	run("curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg", pty=False)
@@ -347,10 +338,11 @@ def install_docker_latest():
 
 def install_communication_tools():
 	sudo("apt-get install -y gconf2", pty=False)
-	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-4.2.0-amd64.deb")
+	run("wget -O /tmp/slack-desktop.deb https://downloads.slack-edge.com/linux_releases/slack-desktop-4.11.1-amd64.deb")
 	sudo("dpkg -i /tmp/slack-desktop.deb", pty=False)
 	# 自動起動設定。
 	put("./resources/.config/autostart/slack.desktop", "/tmp/slack.desktop")
+	run("mkdir -p ~/.config/autostart")
 	sudo("cp /tmp/slack.desktop /home/" + USER_NAME + "/.config/autostart/slack.desktop")
 
 	# discrod
