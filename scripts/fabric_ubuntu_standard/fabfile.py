@@ -2,7 +2,7 @@
 from fabric.api import local, run, sudo, put, env, settings
 import datetime
 
-SELF_MAIL_ADDRESS = "xxx@gmail.com"
+SELF_MAIL_ADDRESS = "kazuhito.sumpic@gmail.com"
 USER_NAME = "kazuhito"
 GIT_USER = "kazuhito-m"
 
@@ -236,10 +236,10 @@ def install_provisioning_tools():
 
 def install_msvsc():
 	run("curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /tmp/microsoft.gpg", pty=False)
- 	sudo("mv /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg" , pty=False)
+	sudo("mv /tmp/microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg" , pty=False)
 	sudo("echo 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main' > /etc/apt/sources.list.d/vscode.list", pty=False)
- 	sudo("apt-get update" , pty=False)
- 	sudo("apt-get install -y code" , pty=False)
+	sudo("apt-get update" , pty=False)
+	sudo("apt-get install -y code" , pty=False)
 
 def install_nodejs():
 	sudo("apt-get install -y nodejs npm", pty=False)
@@ -260,8 +260,8 @@ def install_plantuml():
 	sudo("chmod 755 /usr/share/plantuml/plantuml.jar")
 	sudo("echo 'java -jar /usr/share/plantuml/plantuml.jar ${@}' > /usr/bin/plantuml")
 	sudo("chmod 755 /usr/bin/plantuml")
- 	# atomがインストールされていた場合、atomのプラグインを入れる
- 	run("which atom && apm install plantuml-viewer language-plantuml")
+	# atomがインストールされていた場合、atomのプラグインを入れる
+	run("which atom && apm install plantuml-viewer language-plantuml")
 
 # Window/Screenキャプチャをアニメgifで取るコマンドのインストール。
 def install_screencapture_gif():
@@ -288,22 +288,22 @@ def install_screencapture_gif():
 	sudo("ln -s /usr/local/lib/byzanz-record-wrapper/byzanz-record-region /usr/local/bin/byzanz-record-region", pty=False)
 
 def install_scala_and_sbt():
- 	# scala install
- 	SCALA_VER='2.13.0'
- 	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
- 	sudo("dpkg -i /tmp/scala.deb" , pty=False)
- 	# sbt apt regist
-   	sudo("mkdir -p /etc/apt/sources.list.d/")
-   	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
+	# scala install
+	SCALA_VER='2.13.0'
+	run("wget -O /tmp/scala.deb http://www.scala-lang.org/files/archive/scala-" + SCALA_VER + ".deb")
+	sudo("dpkg -i /tmp/scala.deb" , pty=False)
+	# sbt apt regist
+	sudo("mkdir -p /etc/apt/sources.list.d/")
+	sudo("echo 'deb https://dl.bintray.com/sbt/debian /' > /etc/apt/sources.list.d/sbt.list")
 	sudo("sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 99E82A75642AC823", pty=False)
-   	sudo("apt-get update -y" , pty=False)
-   	sudo("apt-get install --allow-unauthenticated -y sbt", pty=False)
-  	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
+	sudo("apt-get update -y" , pty=False)
+	sudo("apt-get install --allow-unauthenticated -y sbt", pty=False)
+	# conscript , giter8 (この技術は廃れるかもしれない。試験導入。)
 	sudo("apt-get install -y curl", pty=False)
- 	run("wget -O /tmp/sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
- 	run("chmod 755 /tmp/sc_setup.sh")
- 	run("CONSCRIPT_HOME=~/.conscript /tmp/sc_setup.sh")
- 	run("~/.conscript/bin/cs n8han/giter8")
+	run("wget -O /tmp/sc_setup.sh https://raw.github.com/n8han/conscript/master/setup.sh")
+	run("chmod 755 /tmp/sc_setup.sh")
+	run("CONSCRIPT_HOME=~/.conscript /tmp/sc_setup.sh")
+	run("~/.conscript/bin/cs n8han/giter8")
 		# ここで「プロンプトが出て止まる」場合がある。その場合は"exit"打って続行させる。
 
 def install_golang():
@@ -452,7 +452,7 @@ def config_current_user():
 	run('mv ' + bashrc_file + '.modify ' + bashrc_file)
 	run('rm ' + bashrc_addition_file)
 	# alias ファイルの設置
-	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode=0644)
+	put("resources/user_home/.bash_aliases", "/home/" + USER_NAME + "/.bash_aliases", mode='0644')
 	# ssh設定をシンボリックリンク
 	run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.ssh/config  /home/' + USER_NAME  + '/.ssh/config')
 	run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.netrc  /home/' + USER_NAME  + '/.netrc')
