@@ -19,9 +19,9 @@ GIT_USER = "kazuhito-m"
 # - Dropboxのnautilus連携が入った直後にログインしておく(最後らへんにDropboxのローカルフォルダを期待しているものがある)
 
 def setup_all():
-	all_upgrade()
-	# japanize() # 日本語Limux”以外”を使う場合はonにする
-	rename_home_template_dirs()
+ 	all_upgrade()
+ 	# japanize() # 日本語Limux”以外”を使う場合はonにする
+ 	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
 	install_asciidoc()
@@ -31,7 +31,6 @@ def setup_all():
 	# install_vncserver()
 	install_web_tools()
 	install_git_and_setting()
-	install_text_editors()
 	install_vim_all()
 	# install_gcp_sdk() # 最新版のUbuntuに対応していない可能性があるので、手動インストール
 	install_multi_media()
@@ -80,7 +79,7 @@ def rename_home_template_dirs():
 	run("find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf")
 
 def basic_tools_setup():
-	sudo("apt-get install -y curl nautilus-actions ca-certificates openssl nkf cifs-utils unity-tweak-tool xsel" , pty=False)
+	sudo("apt-get install -y curl ca-certificates openssl nkf cifs-utils unity-tweak-tool xsel" , pty=False)
 
 def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu screen pandoc ffmpeg unrar nkf apt-file jq", pty=False)
@@ -251,15 +250,9 @@ def install_plantuml():
 	sudo("chmod 755 /usr/share/plantuml/plantuml.jar")
 	sudo("echo 'java -jar /usr/share/plantuml/plantuml.jar ${@}' > /usr/bin/plantuml")
 	sudo("chmod 755 /usr/bin/plantuml")
-	# atomがインストールされていた場合、atomのプラグインを入れる
-	run("which atom && apm install plantuml-viewer language-plantuml")
 
 # Window/Screenキャプチャをアニメgifで取るコマンドのインストール。
 def install_screencapture_gif():
-	# 'peek' インストール
-	sudo("add-apt-repository ppa:peek-developers/stable", pty=False)
-	sudo("apt-get update", pty=False)
-	sudo("apt-get install -y peek", pty=False)
 	# 'byzanz'（+ wrapper） インストール
 	sudo("apt-get install -y byzanz libx11-dev autoconf", pty=False)
 	sudo("mkdir -p /usr/local/lib/byzanz-record-wrapper", pty=False)
