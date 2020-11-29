@@ -3,6 +3,8 @@
 # standard
 code --install-extension coenraads.bracket-pair-colorizer
 code --install-extension esbenp.prettier-vscode
+code --install-extension oderwat.indent-rainbow
+code --install-extension mechatroner.rainbow-csv 
 
 # TypeScript
 code --install-extension steoates.autoimport
