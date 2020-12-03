@@ -14,5 +14,8 @@ code --install-extension stringham.move-ts
 # js/es
 code --install-extension dsznajder.es7-react-js-snippets
 
+# C Sharp
+code --install-extension ms-dotnettools.csharp
+
 # Docker
 code --install-extension ms-azuretools.vscode-docker
