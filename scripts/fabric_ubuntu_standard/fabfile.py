@@ -57,6 +57,7 @@ def setup_all():
 	# install_android_env()
 	# install_kvm() # ネットワークがおかしくなるリスク在る…ので、後付で設定
 	install_ngrok()
+        install_strage_client()
 	config_current_user()
 
 def japanize():
@@ -423,6 +424,11 @@ def install_dotnet_core():
 	sudo("apt-get install -y apt-transport-https", pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install -y dotnet-sdk-2.2", pty=False)
+
+def install_strage_client():
+	sudo("add-apt-repository ppa:nextcloud-devs/client", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install -y nextcloud-client", pty=False)
 
 def config_current_user():
 	# bashrc のカスタマイズ（冪等のため、特定の文字列の行以降を置き換える）
