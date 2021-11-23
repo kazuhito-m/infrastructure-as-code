@@ -19,9 +19,9 @@ GIT_USER = "kazuhito-m"
 # - Dropboxのnautilus連携が入った直後にログインしておく(最後らへんにDropboxのローカルフォルダを期待しているものがある)
 
 def setup_all():
- 	all_upgrade()
- 	# japanize() # 日本語Limux”以外”を使う場合はonにする
- 	rename_home_template_dirs()
+	all_upgrade()
+	# japanize() # 日本語Limux”以外”を使う場合はonにする
+	rename_home_template_dirs()
 	basic_tools_setup()
 	install_common_tools()
 	install_asciidoc()
@@ -58,7 +58,7 @@ def setup_all():
 	# install_android_env()
 	# install_kvm() # ネットワークがおかしくなるリスク在る…ので、後付で設定
 	install_ngrok()
-        install_strage_client()
+	install_strage_client()
 	config_current_user()
 
 def japanize():
@@ -87,8 +87,6 @@ def install_common_tools():
 	sudo("apt-get install -f -y stopwatch convmv incron indicator-multiload tree clipit xbacklight byobu screen pandoc ffmpeg unrar nkf apt-file jq", pty=False)
 	# DVD movie play
 	sudo("apt-file update")
-	# UI Customize tools
-	sudo("apt-get install -y gnome-tweak-tool", pty=False)
 	# Dropbox
 	install_dropbox_client()
 	# GoogleDrive
@@ -214,7 +212,7 @@ def install_system_maintenance():
 
 def install_developers_tools():
 	# java8 installl
-	sudo("apt-get install -y openjdk-13-jdk openjdk-11-jdk openjdk-8-jdk galternatives", pty=False)
+	sudo("apt-get install -y openjdk-17-jdk openjdk-11-jdk openjdk-8-jdk galternatives", pty=False)
 	# Fablic install.
 	# VCS visualize tools
 	# sudo("apt-get install -y rapidsvn", pty=False)	# SVNこれから要らなくなるだろうからパス
@@ -313,9 +311,7 @@ def install_docker_latest():
 	sudo("apt-get install -y apt-transport-https ca-certificates curl software-properties-common", pty=False)
 	sudo("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -", pty=False)
 	sudo("apt-key fingerprint 0EBFCD88", pty=False)
-	# sudo('add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"' , pty=False)
-	# discoのリポジトリはないので、cosmicで代用
-	sudo('add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu cosmic stable"' , pty=False)
+	sudo('add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"' , pty=False)
 	sudo("apt-get update", pty=False)
 	sudo("apt-get install -y docker-ce docker-ce-cli containerd.io", pty=False)
 	sudo("service docker start")
