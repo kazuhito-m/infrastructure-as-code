@@ -47,6 +47,7 @@ def setup_all():
 	# install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
+	install_dotnet_core()
 	install_docker_latest()
 	install_communication_tools()
 	# bug , Ubuntu16.10にて「sdkmangでgradle入れたときに、Ubuntuにログインできなくなる(ログイン画面->パスワード入力&Enter->”トコトン音”とともに再びログイン画面)」となるため、コメントアウト。
@@ -418,12 +419,13 @@ def install_ngrok():
 	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
 
 def install_dotnet_core():
-	sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb", pty=False)
-	sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
-	sudo("add-apt-repository universe", pty=False)
-	sudo("apt-get install -y apt-transport-https", pty=False)
-	sudo("apt-get update", pty=False)
-	sudo("apt-get install -y dotnet-sdk-2.2", pty=False)
+	# sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb", pty=False)
+	# sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
+	# sudo("add-apt-repository universe", pty=False)
+	# sudo("apt-get install -y apt-transport-https", pty=False)
+	# sudo("apt-get update", pty=False)
+	# sudo("apt-get install -y dotnet-sdk-2.2", pty=False)
+	sudo("snap install dotnet-sdk --classic", pty=False)
 
 def install_strage_client():
 	sudo("add-apt-repository ppa:nextcloud-devs/client", pty=False)
