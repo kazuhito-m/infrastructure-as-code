@@ -43,7 +43,7 @@ def setup_all():
 	install_msvsc()
 	install_nodejs()
 	install_plantuml()
-	install_screencapture_gif()
+	# install_screencapture_gif()
 	# install_scala_and_sbt()
 	install_golang()
 	# install_touchpad_controltool()
@@ -253,6 +253,8 @@ def install_plantuml():
 
 # Window/Screenキャプチャをアニメgifで取るコマンドのインストール。
 def install_screencapture_gif():
+	# FIXME 代替機能の模索。 https://github.com/lolilolicon/xrectsel が無くなったので。
+
 	# 'byzanz'（+ wrapper） インストール
 	sudo("apt-get install -y byzanz libx11-dev autoconf", pty=False)
 	sudo("mkdir -p /usr/local/lib/byzanz-record-wrapper", pty=False)
@@ -370,10 +372,10 @@ def install_android_env():
 
 def install_dropbox_client():
 	# dropbox.deb が依存しているライブラリをインストール。
-	sudo("apt-get install -y libpango1.0-0 libpangox-1.0-0", pty=False)
-	run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb -O /tmp/dropbox.deb")
-	sudo("dpkg -i --force-conflicts	/tmp/dropbox.deb")
-	sudo("dropbox start -i")
+	# sudo("apt-get install -y libpango1.0-0 libpangox-1.0-0", pty=False)
+	# run("wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb -O /tmp/dropbox.deb")
+	# sudo("dpkg -i --force-conflicts	/tmp/dropbox.deb")
+	# sudo("dropbox start -i")
 	sudo("apt-get install -y nautilus-dropbox", pty=False)
 
 def install_googledrive_client():
@@ -415,13 +417,12 @@ def install_ngrok():
 	sudo("mv /tmp/ngrok /usr/local/bin", pty=False)
 
 def install_dotnet_core():
-	# sudo("curl -sL -o /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb", pty=False)
-	# sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
-	# sudo("add-apt-repository universe", pty=False)
-	# sudo("apt-get install -y apt-transport-https", pty=False)
-	# sudo("apt-get update", pty=False)
-	# sudo("apt-get install -y dotnet-sdk-2.2", pty=False)
-	sudo("snap install dotnet-sdk --classic", pty=False)
+	run("wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -r -s)/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb")
+	sudo("dpkg -i /tmp/packages-microsoft-prod.deb", pty=False)
+	sudo("apt-get install -y apt-transport-https", pty=False)
+	sudo("apt-get update", pty=False)
+	sudo("apt-get install -y dotnet-sdk-6.0", pty=False)
+	# sudo("snap install dotnet-sdk --classic", pty=False)
 
 def install_strage_client():
 	sudo("add-apt-repository ppa:nextcloud-devs/client", pty=False)
