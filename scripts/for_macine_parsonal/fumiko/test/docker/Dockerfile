@@ -1,6 +1,4 @@
-FROM debian
-
-MAINTAINER kazuhito_m
+FROM debian:bullseye
 
 # インストール
 RUN apt-get update ; apt-get upgrade -y
