@@ -20,7 +20,6 @@ def setup_all():
 	setup_network_settings()
 	setup_ntp_settings()
 	# setup_md_raid0()
-	setup_nfs_settings()
 
 # small tasks
 
@@ -66,9 +65,6 @@ def setup_md_raid0():
 	sudo("apt-get install -y -f parted mdadm", pty=False)
 	# TODO 途中で入力が求められる…可能性があるので、次にやる機会があれば、対話型対応する。
         sudo('mdadm --create /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb /dev/sdc', pty=False)
-def setup_nfs_settings():
-	sudo("apt-get -y install nfs-kernel-server", pty=False)
-
 
 # TODO
 
