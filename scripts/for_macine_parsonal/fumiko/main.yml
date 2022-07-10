@@ -30,6 +30,7 @@
           - ntp
           - parted
           - mdadm
+          - nfs-kernel-server
 
   - block:
 
@@ -90,3 +91,18 @@
       shell: echo "UUID=$(tune2fs -l /dev/md0 | grep UUID | sed -e 's/.*UUID.   *//g') /home ext4 defaults 0 0" >> /etc/fstab
 
     when: sh_ls_raid_dev.rc != 0
+
+  - block:
+
+    - name: NFS設定ファイルを配置
+      copy: 
+        src: resources/etc/exports
+        dest: /etc/exports
+        backup: yes
+
+    - name: NFSサービス再起動。
+      systemd:
+        name: nfs-server.service
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
