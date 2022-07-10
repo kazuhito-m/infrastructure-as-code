@@ -1,5 +1,5 @@
 # coding:utf-8
-# for Debian 10
+# for Debian 11
 
 - hosts: all
   become: yes
