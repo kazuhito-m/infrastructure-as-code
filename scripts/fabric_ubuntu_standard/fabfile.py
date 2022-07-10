@@ -60,6 +60,7 @@ def setup_all():
 	install_ngrok()
 	install_strage_client()
 	config_current_user()
+        install_and_setting_nfs_local()
 
 def japanize():
 	# change locale
@@ -446,6 +447,13 @@ def config_current_user():
 	# ssh設定をシンボリックリンク
 	run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.ssh/config  /home/' + USER_NAME  + '/.ssh/config')
 	run('ln -s /home/' + USER_NAME + '/Dropbox/ubuntu_profile/home/kazuhito/.netrc  /home/' + USER_NAME  + '/.netrc')
+    
+# これからAnasibleに置き換えていく予定なので、これは「実行したこと無いタスク」である。
+# 移植を忘れないように「コマンド履歴をFabric風で書いておく」事をしておく。
+
+def install_and_setting_nfs_local()
+	sudo("apt-get install -y nfs-common", pty=False)
+        sudo("grep 'fumiko' /etc/fstab || echo 'fumiko.local.sumpic.orz.hm:/home/kazuhito/preliminary /home/kazuhito/fumiko nfs user,auto 0 0' >> /etc/fstab", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
