@@ -31,6 +31,7 @@
           - parted
           - mdadm
           - nfs-kernel-server
+          - fdisk
 
   - block:
 
