@@ -41,6 +41,7 @@
         name:
           - tree
           - byobu
+          - ntp
           - bind9
           - isc-dhcp-server
 
@@ -54,7 +55,7 @@
 
     - name: ホスト名設定。
       hostname:
-        name: {{ host_name }}
+        name: "{{ host_name }}"
 
     - name: raspi-config設定
       shell: |
