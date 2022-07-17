@@ -84,14 +84,14 @@
         dest: /etc/bind/
         owner: root
         group: bind
-        mode: 644
+        mode: "0644"
         backup: yes
       with_fileglob:
         - resources/etc/bind/*
 
     - name: bind9サービス再起動。
       systemd:
-        name: bind9.service
+        name: named.service
         state: restarted
         daemon_reload: yes
         enabled: yes
