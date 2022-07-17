@@ -10,91 +10,91 @@
 
   tasks:
 
-  - block:
+  # - block:
 
-    - name: システム全更新。
-      apt:
-        update_cache: "yes"
-        upgrade: "dist"
+  #   - name: システム全更新。
+  #     apt:
+  #       update_cache: "yes"
+  #       upgrade: "dist"
 
-    - name: 不要なパッケージを削除。
-      apt:
-        name:
-          - wireless-regdb
-          - wireless-tools
-          - nano
-          - bluez-firmware
-          - bluez
-          - cifs-utils
-          - dosfstools
-          - nfs-common
-          - ntfs-3g
-          - python2
-        state: absent
-        purge: yes
-        autoremove: yes
+  #   - name: 不要なパッケージを削除。
+  #     apt:
+  #       name:
+  #         - wireless-regdb
+  #         - wireless-tools
+  #         - nano
+  #         - bluez-firmware
+  #         - bluez
+  #         - cifs-utils
+  #         - dosfstools
+  #         - nfs-common
+  #         - ntfs-3g
+  #         - python2
+  #       state: absent
+  #       purge: yes
+  #       autoremove: yes
 
-    - name: 必要なツールをインストール。
-      apt:
-        name:
-          - tree
-          - byobu
-          - ntp
-          - bind9
-          - isc-dhcp-server
+  #   - name: 必要なツールをインストール。
+  #     apt:
+  #       name:
+  #         - tree
+  #         - byobu
+  #         - ntp
+  #         - bind9
+  #         - isc-dhcp-server
 
-  - block:
+  # - block:
 
-    - name: ネットワーク設定ファイルを反映。
-      copy: 
-        src: resources/etc/dhcpcd.conf
-        dest: /etc/dhcpcd.conf
-        backup: yes
+  #   - name: ネットワーク設定ファイルを反映。
+  #     copy: 
+  #       src: resources/etc/dhcpcd.conf
+  #       dest: /etc/dhcpcd.conf
+  #       backup: yes
 
-    - name: raspi-config設定
-      shell: |
-        raspi-config nonint do_hostname {{ host_name }}
-        raspi-config nonint do_change_locale ja_JP.UTF-8
-        raspi-config nonint do_change_timezone Asia/Tokyo
+  #   - name: raspi-config設定
+  #     shell: |
+  #       raspi-config nonint do_hostname {{ host_name }}
+  #       raspi-config nonint do_change_locale ja_JP.UTF-8
+  #       raspi-config nonint do_change_timezone Asia/Tokyo
 
-    - name: ホスト名設定。
-      hostname:
-        name: "{{ host_name }}"
+  #   - name: ホスト名設定。
+  #     hostname:
+  #       name: "{{ host_name }}"
 
-  - block:
+  # - block:
 
-    - name: NTP設定ファイルを反映。
-      copy: 
-        src: resources/etc/ntp.conf
-        dest: /etc/ntp.conf
-        backup: yes
+  #   - name: NTP設定ファイルを反映。
+  #     copy: 
+  #       src: resources/etc/ntp.conf
+  #       dest: /etc/ntp.conf
+  #       backup: yes
 
-    - name: NTPサービス再起動。
-      systemd:
-        name: ntp.service
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
+  #   - name: NTPサービス再起動。
+  #     systemd:
+  #       name: ntp.service
+  #       state: restarted
+  #       daemon_reload: yes
+  #       enabled: yes
 
-  - block:
+  # - block:
 
-    - name: ゾーンファイルをコピー。
-      copy:
-        src: "{{ item }}"
-        dest: /etc/bind/
-        owner: root
-        group: bind
-        mode: "0644"
-        backup: yes
-      with_fileglob:
-        - resources/etc/bind/*
+  #   - name: ゾーンファイルをコピー。
+  #     copy:
+  #       src: "{{ item }}"
+  #       dest: /etc/bind/
+  #       owner: root
+  #       group: bind
+  #       mode: "0644"
+  #       backup: yes
+  #     with_fileglob:
+  #       - resources/etc/bind/*
 
-    - name: bind9サービス再起動。
-      systemd:
-        name: named.service
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
+  #   - name: bind9サービス再起動。
+  #     systemd:
+  #       name: named.service
+  #       state: restarted
+  #       daemon_reload: yes
+  #       enabled: yes
 
   - block:
 
@@ -108,8 +108,8 @@
 
     - name: dhcpdの設定をコピー。
       copy:
-        src: resources/etc/dhcpd/dhcpd.conf
-        dest: /etc/dhcpd/dhcpd.conf
+        src: resources/etc/dhcp/dhcpd.conf
+        dest: /etc/dhcp/dhcpd.conf
         owner: root
         mode: "0644"
         backup: yes
