@@ -95,3 +95,28 @@
         state: restarted
         daemon_reload: yes
         enabled: yes
+
+  - block:
+
+    - name: isc-dhcp-serverの設定をコピー。
+      copy:
+        src: resources/etc/default/isc-dhcp-server
+        dest: /etc/default/isc-dhcp-server
+        owner: root
+        mode: "0644"
+        backup: yes
+
+    - name: dhcpdの設定をコピー。
+      copy:
+        src: resources/etc/dhcpd/dhcpd.conf
+        dest: /etc/dhcpd/dhcpd.conf
+        owner: root
+        mode: "0644"
+        backup: yes
+
+    - name: dhcpサービス再起動。
+      systemd:
+        name: isc-dhcp-server.service
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
