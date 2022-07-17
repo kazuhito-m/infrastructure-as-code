@@ -25,8 +25,6 @@
           - nano
           - bluez-firmware
           - bluez
-          - pi-bluetooth
-          - alsa-utils
           - cifs-utils
           - dosfstools
           - nfs-common
@@ -53,15 +51,15 @@
         dest: /etc/dhcpcd.conf
         backup: yes
 
-    - name: ホスト名設定。
-      hostname:
-        name: "{{ host_name }}"
-
     - name: raspi-config設定
       shell: |
         raspi-config nonint do_hostname {{ host_name }}
         raspi-config nonint do_change_locale ja_JP.UTF-8
         raspi-config nonint do_change_timezone Asia/Tokyo
+
+    - name: ホスト名設定。
+      hostname:
+        name: "{{ host_name }}"
 
   - block:
 
