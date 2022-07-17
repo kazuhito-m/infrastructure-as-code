@@ -1,0 +1,12 @@
+zone "local.sumpic.orz.hm" {
+        type master;
+        file "/etc/bind/local.miu2.f5.si.zone";
+        allow-update { none; };
+};
+
+zone "1.168.192.in-addr.arpa"{
+	type master;
+        file "/etc/bind/1.168.192.in-addr.arpa.zone";
+        allow-update { none; };
+};
+

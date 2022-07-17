@@ -1,0 +1,29 @@
+$TTL	3600
+@	IN	SOA	ns1.local.miu2.f5.si. root.local.miu2.f5.si.  (
+				2010091101      ; Serial
+				3600		; Refresh
+				900		; Retry
+				3600000		; Expire
+				3600 )		; Minimum
+		IN	NS	matsuichi.local.miu2.f5.si.
+		IN	MX	10 fumiko.local.miu2.f5.si.
+matsuichi	IN	A	192.168.1.5
+fumiko		IN	A	192.168.1.6
+minoru		IN	A	192.168.1.7
+makino		IN	A	192.168.1.8
+wlanconv01	IN	A	192.168.1.21
+
+rspi01		IN 	A 	192.168.1.31
+rspi02		IN	A	192.168.1.32
+rspi02		IN	A	192.168.1.33
+
+docker01	IN	A	192.168.1.253
+odokumi001	IN	A	192.168.1.254
+kazuhito	IN	A	192.168.1.110
+sumire		IN	A	192.168.1.120
+kazuhito-d	IN	A	192.168.1.130
+kazuhito-d5	IN	A	192.168.1.133
+
+debian-test	IN	A	192.168.1.252
+debian-test2	IN	A	192.168.1.251
+debian-test-hutsuno-samba IN A  192.168.1.250

@@ -1,0 +1,41 @@
+options {
+	directory "/var/cache/bind";
+
+	// If there is a firewall between you and nameservers you want
+	// to talk to, you may need to fix the firewall to allow multiple
+	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+	// If your ISP provided one or more IP addresses for stable 
+	// nameservers, you probably want to use them as forwarders.  
+	// Uncomment the following block, and insert the addresses replacing 
+	// the all-0's placeholder.
+
+	// forwarders {
+	// 	0.0.0.0;
+	// };
+
+	auth-nxdomain no;    # conform to RFC1035
+	listen-on-v6 { any; };
+
+	// add option setting 
+	recursion yes;
+	version "unknown";
+
+        allow-query{
+                    127.0.0.1;
+                    192.168.1.0/24;	// DNS Server useing on local network
+        };
+        allow-recursion{
+                    127.0.0.1;
+                    192.168.1.0/24;	// DNS Cashe server useing on local network
+        };
+        allow-transfer{
+                    127.0.0.1;
+                    192.168.1.0/24;	// Zone data trans on local network
+        };
+        forwarders{
+                    192.168.1.1;
+        };
+
+};
+

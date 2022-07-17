@@ -1,0 +1,30 @@
+$TTL	3600
+@	IN	SOA	ns1.local.miu2.f5.si. root.local.miu2.f5.si.  (
+				2010011201      ; Serial
+				3600		; Refresh
+				900		; Retry
+				3600000		; Expire
+				3600 )		; Minimum
+		IN	NS	ns1.local.miu2.f5.si.
+		IN	NS	ns2.local.miu2.f5.si.
+5		IN	PTR	matsuichi.local.miu2.f5.si.
+6		IN	PTR	fumiko.local.miu2.f5.si.
+7		IN	PTR	minoru.local.miu2.f5.si.
+8		IN	PTR	makino.local.miu2.f5.si.
+21		IN	PTR	wlanconv01.local.miu2.f5.si.
+
+31		IN	PTR	rspi01.local.miu2.f5.si.
+32		IN	PTR	rspi02.local.miu2.f5.si.
+33		IN	PTR	rspi03.local.miu2.f5.si.
+
+253		IN	PTR	docker01.local.miu2.f5.si.
+
+254		IN	PTR	odokumi001.local.miu2.f5.si.
+110		IN	PTR	kazuhito.local.miu2.f5.si.
+120		IN	PTR	sumire.local.miu2.f5.si.
+130		IN	PTR	kazuhito-d.local.miu2.f5.si.
+133		IN	PTR	kazuhito-d5.local.miu2.f5.si.
+
+252		IN	PTR	debian-test.local.miu2.f5.si.
+251		IN	PTR	debian-test2.local.miu2.f5.si.
+250		IN	PTR	debian-test-hutsuno-samba.local.miu2.f5.si.
