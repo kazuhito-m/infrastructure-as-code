@@ -1,4 +1,4 @@
-zone "local.sumpic.orz.hm" {
+zone "local.miu2.f5.si" {
         type master;
         file "/etc/bind/local.miu2.f5.si.zone";
         allow-update { none; };
