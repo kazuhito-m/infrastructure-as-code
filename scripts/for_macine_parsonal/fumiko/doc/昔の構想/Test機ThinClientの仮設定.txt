@@ -1,0 +1,31 @@
+apt-get install slapd
+
+makino:/etc/ldap# slappasswd -s [password] -h {MD5}
+
+
+
+vi ./slapd.conf
+
+     56 suffix          "dc=sumpic,dc=orz,dc=hm"
+     60 rootdn          "dc=Manager,dc=sumpic,dc=orz,dc=hm"
+     61 rootpw          {MD5}HkByzvyXMN02ruIEvBZU0w==
+
+    142 access to attrs=userPassword
+    143         by self write
+    144         by dn="cn=Manager,dc=sumpic,dc=orz,dc=hm" write
+    145         by anonymous auth
+    146         by * none
+    147
+    148 access to *
+    149         by dn="cn=Manager,dc=sumpic,dc=orz,dc=hm" write
+    150         by self write
+    151         by * read
+ 
+ 
+makino:/etc/ldap# vi ./ldap.conf
+
+BASE    dc=sumpic,dc=orz,dc=hm
+URI     ldap://192.168.0.8
+
+
+

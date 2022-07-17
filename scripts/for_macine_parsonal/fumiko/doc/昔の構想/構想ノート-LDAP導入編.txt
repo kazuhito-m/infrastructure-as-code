@@ -1,0 +1,342 @@
+■仕込みたいもの
+
+
+・LDAP
+	→SSL(内側はスピード面からも普通で良いが、外と「レプリケーション」する問い合わせには暗号化が欲しい
+
+・Linuxユーザ
+	→基本的にはLDAPに置き換え
+	→SSHも自動的にそっち見てくれる想定
+	
+	0.openldap
+	1.nss_ldap
+	2.pam_ldap
+	3./etc/nsswitch.conf
+
+
+・WabDav
+	→認証と連携できるか？
+	→Samba、SFTPと同じく、ユーザ＝ディレクトリの運用を簡単にできるのか？
+	→ファイルの更新はできるのか？
+・NFS
+	→ユーザの認証をLDAPでまかなえるのか？
+	→そのユーザしか無理、を実現できるか。
+	
+・Apache
+	→Basic認証とかの、土台になりえるか。
+
+
+・クオータ
+	※クロ箱Debianサーバのみ
+
+・RAUD0
+	※クロ箱Debianサーバのみ	
+	
+・遠隔地のレプリケーション(実家にLDAPサーバ(複製)を置く)
+
+
+・SVNサーバ
+	※クロ箱Debianサーバのみ
+	→これのユーザもLdapに出来ないか？
+	→SSHで暗号化、遠隔地端末から無理か？
+	
+
+
+
+
+■調査点
+
+・黒NASにいれるであろう、最新のdebianは？
+→Lenns
+
+
+
+■疑問点
+
+
+■参考サイト
+
+・KURO-NAS
+http://www.yamasita.jp/linkstation/category/kuronasx4/
+
+
+■作業履歴
+
+1.毒見サーバでのトライアル
+
+・DVDで入れて、aptの設定をしくっている感じがあるので、設定を追加する。
+
+deb http://ftp.jp.debian.org/debian/ lenny main contrib non-free
+deb http://ftp.jp.debian.org/debian-volatile/ lenny/volatile main contrib non-free
+
+
+・OpenLdapインストール
+
+apt-get install slapd
+パスワードはSPIC8693
+
+・Sambaインストール
+
+apt-get install samba
+
+ワークグループ:MIURA
+DHCPからWINSに置き換えますか？:いいえ
+
+
+・ケルベロスインストール
+
+apt-get install libkrb53
+
+…とおもったが、入っている模様
+
+・サンバの仮設定
+
+cd /etc/samba/
+mv smb.conf smb.conf.org
+cp smb.conf.org smb.conf
+
+vi smb.conf
+
+[global]
+writable = yes
+
+・SWATインストール(本ちゃんの時は入れるか検討)
+
+apt-get install swat
+
+サービス制御、今自動起動するものの確認
+http://www.hasta-pronto.org/archives/2007/03/04-1650.php
+
+vi /etc/inetd.conf
+
+※Swatがあるかどうか
+
+この状態で、何をやってもSambaもSwatも動かない。
+再起動すると動く。
+
+・適当に公開フォルダを作る
+tmp作成
+
+・smb-ldap-toolsを入れる
+
+apt-get install smbldap-tools
+
+・LDAPサーバの設定
+
+Sambaスキーマコピー
+cp /usr/share/doc/samba-doc/examples/LDAP/samba.schema.gz /etc/ldap/schema
+cd /etc/ldap/schema/
+gunzip samba.schema.gz
+
+LDAPスキーマ追加
+
+vi /etc/ldap/schema/samba.schema
+
+     15 include         /etc/ldap/schema/samba.schema
+
+
+管理者パスワード作成
+
+slappasswd -s SPIC8693 -h {MD5}
+{MD5}HkByzvyXMN02ruIEvBZU0w==
+
+・ldapクライアント設定
+
+vi /etc/ldap/ldap.conf
+
+
+      1 host    127.0.0.1
+      2 prot    389
+      3 ldap_version    3
+      4 base    dc=local,dc=sumpic,dc=orz,dc=hm
+      5 binddn  cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm
+      6 bindpw  secret
+      7 scope   sub
+      8 crypt   des
+      9 ssl     no
+     10 bind_policy     soft
+     11
+
+・アカウントデータの追加
+
+
+vi accounts.ldif
+
+
+
+
+よみこませる…と、ここで大ブレーキ。slapd.confが設定おかしい。
+
+slaptest -d 255
+
+Unrecognized database type (bdb)
+/etc/ldap/slapd.conf: line 147: <database> failed init (bdb)
+slaptest: bad configuration file!
+
+debianのslapdのデフォルトは、データベースタイプがbdb(デフォルト)は受付ないらしい。
+slapd.confの設定を以下のように。
+
+    145 # user add
+    146
+    147 database        hdb
+    148 suffix          "dc=local,dc=sumpic,dc=orz,dc=hm"
+    149 rootdn          "cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm"
+    150 rootpw          {MD5}HkByzvyXMN02ruIEvBZU0w==
+    151 directory       "/var/lib/ldap"
+
+なお、デフォルトのディレクトリにこんなファイル群がなければ、ディレクトリを指定しても動かないようだ。
+
+
+debian:/etc/ldap# ls -la "/etc/ldap/ldap-data"
+合計 464
+drwxr-xr-x 2 root root    4096 2010-08-29 22:32 .
+drwxr-xr-x 5 root root    4096 2010-08-29 22:48 ..
+-rw-r--r-- 1 root root      96 2010-08-29 22:27 DB_CONFIG
+-rw------- 1 root root    8192 2010-08-29 22:32 __db.001
+-rw------- 1 root root 2629632 2010-08-29 22:32 __db.002
+-rw------- 1 root root   98304 2010-08-29 22:32 __db.003
+-rw------- 1 root root  565248 2010-08-29 22:32 __db.004
+-rw------- 1 root root   24576 2010-08-29 22:32 __db.005
+-rw-r--r-- 1 root root    2048 2010-08-29 22:32 alock
+-rw------- 1 root root      64 2010-08-29 22:32 log.0000000001
+
+改めて、DB流し込み…がこれまたコケる
+ググルとBDBの１ファイルが壊れている模様。
+http://blog.livedoor.jp/super_he2000live/archives/51252402.html
+
+db_recover というコマンドが必要なのだが、見つからない。
+色々探して、以下のモジュールに入っているっぽいので、なんとかする。
+
+apt-get install sopenser-berkeley-module
+
+cd /var/lib/ldap
+dbd_recover
+	
+slapadd -l accounts.ldif
+
+…どうなったのかしらないが、なんかすでに登録できていたっぽいので、リストアするノウハウを。
+
+cd /var/lib
+mv ldap/ ldap_org
+cp ldap_org/ ldap
+cp -R ldap_org/ ldap
+cd ldap
+rm -rf *
+cp -rp ../ldap_org/DB_CONFIG  ./
+
+
+ちゃんと検索できるかテストしたいので、コマンド群を導入。
+
+apt-get install ldap-utils
+
+サーバ起動…がここでまたイラン事が怒る。
+
+/etc/init.d/slapd start
+
+Starting OpenLDAP: slapd - failed.
+The operation failed but no output was produced. For hints on what went
+wrong please refer to the system's logfiles (e.g. /var/log/syslog) or
+try running the daemon in Debug mode like via "slapd -d 16383" (warning:
+this will create copious output).
+
+Below, you can find the command line options used by this script to
+run slapd. Do not forget to specify those options if you
+want to look to debugging output:
+  slapd -g openldap -u openldap -f /etc/ldap/slapd.conf
+
+上で要らんレストアなんかしたせいで、DBディレクトリのユーザが変わっていた模様。
+
+chown -R openldap:openldap /var/lib/ldap
+/etc/init.d/slapd start
+
+こんどはちゃんと動く。値を返すかテスト。
+
+ldapsearch -x -LLL -D "cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm" -W -b "dc=local,dc=sumpic,dc=orz,dc=hm"
+
+
+・nss-ldap , pam-ldap インストール
+
+
+apt-get install libpam-ldap
+apt-get install libnss-ldap
+
+
+・nssの設定
+
+vi /etc/nsswitch.conf
+
+      7 passwd:         compat ldap
+      8 group:          compat ldap
+      9 shadow:         compat ldap
+
+パッケージで入れた場合、以下のファイルが設定ファイルとなる模様。重要なところはコメント外の４箇所のみ。
+
+vi /etc/libnss-ldap.conf
+
+     24 base dc=local,dc=sumpic,dc=orz,dc=hm
+     27 uri ldap://127.0.0.1
+     36 ldap_version 3
+     53 rootbinddn cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm
+    324 pam_password md5
+
+vi /etc/pam_ldap.conf
+
+      1 base dc=local,dc=sumpic,dc=orz,dc=hm
+      2 uri ldap://127.0.0.1
+      3 ldap_version 3
+      4 rootbinddn cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm
+      5 pam_password md5
+
+・PAM系設定
+
+一応バックアップ
+
+cd /etc/
+cp -a pam.d pam.d.org
+
+vi common-account
+
+account [success=1 default=ignore] pam_unix.so
+account required pam_ldap.so
+account required pam_permit.so
+
+
+vi common-auth
+
+auth [success=1 default=ignore] pam_unix.so
+auth required pam_ldap.so use_first_pass
+auth required pam_permit.so
+
+vi common-password
+
+password   sufficient pam_ldap.so
+password   required   pam_unix.so nullok obscure md5	
+
+
+vi common-session
+
+session optional	pam_foreground.so
+session required	pam_unix.so
+session optional	pam_ldap.so
+session required	pam_mkhomedir.so skel=/etc/skel umask=0022
+~
+
+ログインできた！unixユーザとかぶってるユーザを削除する。
+
+・「初回ログイン時にディレクトリを作成する」設定
+http://ad.robata.org/ad_ldap9.html
+※上の common-session を参照
+
+
+
+・sambaの設定
+
+詳細ログの取得(var/log/mesegesが鬼のように出る) 
+
+vfs object = audit
+
+
+・ウィルスチェッカー導入
+
+apt-get install clamav clamav-daemon
+wget http://tank.sv.lnf.it/~gaio/samba-vscan/libsamba-vscan_0.3.6b-14a.3sarge2_i386.deb

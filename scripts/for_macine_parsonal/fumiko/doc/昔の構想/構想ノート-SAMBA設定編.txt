@@ -1,0 +1,354 @@
+■Sambaのウィルスチェック機構作成
+
+※本当は、samba-vscanを使ったリアルタイムスキャンを行なおうとおもったが、
+情報が少ない、パッケージオンリーでは出来ない、負荷が大きいなどの情報により断念。
+大きく妥協して、「clamavによる週一全ファイルチェック→結果メール送信」で納得する。
+
+vi /etc/cron.weekly/all_viruscheck.bsh
+
+      1 #!/bin/bash
+      2 # weekly all file virus check script
+      3
+      4 # check log file (tempolaly)
+      5 export LOG_FILE=/tmp/viruscheck.log
+      6
+      7 # 全てのファイルのチェックを開始
+      8 clamscan -ri --exclude-dir=/sys  / > $LOG_FILE
+      9
+     10 # 「エラーは０」の記述が見つかれば
+     11 grep -q 'Infected files: 0' $LOG_FILE
+     12 if [ $? == 0 ] ; then
+     13         # 見つかったら正常、ファイル後始末して正常終了
+     14         rm $LOG_FILE
+     15         exit 0
+     16 else
+     17         # 見つからなかったら異常、ファイルの内容を標準出力に書き出し、終了
+     18         cat $LOG_FILE
+     19         rm $LOG_FILE
+     20         exit 1
+     21 fi
+
+異常があればエラー終了＆標準出力に結果を出す→cronの仕事でメールを飛ばしてくる…はず。
+
+■samba-vscanをビルドする
+
+※いろいろ省略
+
+make
+
+お、エラーなし？拍子抜けだがうまく行った。(その前に試行錯誤で半日吹っ飛んでるがｗ)
+
+make install
+
+で、エラーは発生。
+
+Make Directory /usr/lib/samba/vfs
+Install VFS Modules:
+vscan-antivir.so vscan-clamav.so vscan-fprotd.so vscan-fsav.so vscan-icap.so vscan-kavp.so vscan-mcdaemon.so vscan-mksd.so vscan-oav.so vscan-sophos.so vscan-trend.so
+to /usr/lib/samba/vfs with @SAMBA_INSTALLPERMS_BIN@
+/usr/bin/install: invalid mode `@SAMBA_INSTALLPERMS_BIN@'
+make: *** [install] エラー 1
+
+なにやら、Makefile内の "install -m " に与えるパラメータが変な模様。無難な値に書き換える。
+
+vi Makefile
+
+     64 # SAMBA_INSTALLPERMS_BIN = @SAMBA_INSTALLPERMS_BIN@
+     65 SAMBA_INSTALLPERMS_BIN = 0644
+
+うん。うまくインストールできた。
+
+
+・debパッケージ化を試みる
+
+ココを参考に試行錯誤してみる。
+http://www015.upp.so-net.ne.jp/unixlife/linux/de-deb.html
+
+apt-get install build-dep dh-make autogen automake fakeroot
+
+上記作業、samba-vscanの./configure 直前までの作業をした後、以下の通り変更する
+
+mv samba-vscan samba-vscan-0.3.6c-beta6
+cd samba-vscan-0.3.6c-beta6
+vi configure
+
+   3675 SAMBA_SOURCE="./samba-source"
+   3676 SAMBA_INSTALLPERMS_BIN="0644"
+
+   4302 SAMBA_VFSLIBDIR="/usr/lib/samba/vfs"
+ 
+   6907 s,@SAMBA_INSTALLPERMS_BIN@,$SAMBA_INSTALLPERMS_BIN,;t t
+
+※configure終了後のMakefile内容の固定のため、上記を追加。
+
+cd ../
+tar -cvzf samba-vscan-0.3.6c-beta6.tgz samba-vscan-0.3.6c-beta6/
+cd ./samba-vscan-0.3.6c-beta6
+dh_make -e kazuhito.sumpic@gmail.com -f ../samba-vscan-0.3.6c-beta6.tgz
+
+これでdebファイルを作るための材料が、./debian に出力された。
+control , copyright , changelog , rules ファイルを確認・変更。
+
+・パッケージの作成とインストール
+
+dpkg-buildpackage -rfakeroot
+
+ビルド成功！一階層上にdeb系のファイル群が出現
+
+
+-rw-r--r--  1 root  root    13085 2010-09-05 03:11 samba-vscan_0.3.6c-beta6-1.diff.gz
+-rw-r--r--  1 root  root      846 2010-09-05 03:11 samba-vscan_0.3.6c-beta6-1.dsc
+-rw-r--r--  1 root  root     1628 2010-09-05 03:12 samba-vscan_0.3.6c-beta6-1_i386.changes
+-rw-r--r--  1 root  root    24576 2010-09-05 03:12 samba-vscan_0.3.6c-beta6-1_i386.deb
+-rw-r--r--  1 root  root  5210090 2010-09-05 02:45 samba-vscan_0.3.6c-beta6.orig.tar.gz
+
+が、肝心のdebに バイナリファイルが入っていない。
+
+debian:/home/tmp# dpkg -c samba-vscan_0.3.6c-beta6-1_i386.deb
+
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/share/
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/share/doc/
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/share/doc/samba-vscan/
+-rw-r--r-- root/root      2168 2005-02-10 03:32 ./usr/share/doc/samba-vscan/FAQ
+-rw-r--r-- root/root      2440 2007-09-15 23:40 ./usr/share/doc/samba-vscan/NEWS.gz
+-rw-r--r-- root/root      2093 2005-02-10 03:29 ./usr/share/doc/samba-vscan/TODO
+-rw-r--r-- root/root       186 2010-09-05 03:10 ./usr/share/doc/samba-vscan/changelog.Debian.gz
+-rw-r--r-- root/root      3454 2005-04-08 04:02 ./usr/share/doc/samba-vscan/README
+-rw-r--r-- root/root       186 2010-09-05 03:10 ./usr/share/doc/samba-vscan/README.Debian
+-rw-r--r-- root/root     15629 2007-09-15 23:38 ./usr/share/doc/samba-vscan/changelog.gz
+-rw-r--r-- root/root       662 2010-09-05 03:10 ./usr/share/doc/samba-vscan/copyright
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/sbin/
+drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/bin/
+
+うーん、わけわからん。まだまだ道は遠そうだ。
+
+■その他・samba微調整
+
+・QUOTA導入
+
+※HDDのフォーマットからせなあかんから…本番機で。
+
+・ゴミ箱機能追加
+
+     25         vfs objects = vscan-clamav audit recycle
+     27         recycle:repository = .trash
+     28         recycle:keeptree = yes
+
+■Windowsドメイン構築
+
+・sambaの追加設定
+
+vi /etc/samba/smb.conf
+
+
+      6         workgroup = LOCAL.SUMPIC.ORZ.HM
+      7         netbios name = DEBIANLDAPTEST
+     21         domain logons = Yes
+     22         os level = 64
+     23         preferred master = Yes
+     24         domain master = Yes
+     33         local master = Yes
+
+・マシンアカウント(～$)作成
+
+/usr/sbin/groupadd miura
+useradd -g miura -s /bin/false -d /dev/null sumire$
+
+・管理者権限登録
+
+※管理者権限を持つWindowsユーザは、uid=0(root) or [grobal]のadmin usersパラメータに指定されているsambaユーザ。
+sambaユーザをまだ固めていないため、rootを使う。
+
+・sambaユーザ側にrootを追加
+
+pdbedit -a root
+
+…としたが、いつの間にか登録していた模様。samba側パスワードだけ書き換える。
+
+smbpasswd root
+
+この後、再起動してサーバ側はOK。
+
+・クライアント側の設定
+
+ドメインに入ってみる。
+ドメイン名だが、local.sumpic.orz.hm は駄目だった。(長さ？ピリオド三つが駄目？)
+sumpic.orz.hmにして、なんとかOK。
+
+・ログオンスクリプト設定
+
+vi /etc/samba/smb.conf
+
+      5 [global]
+     35         logon script = logon.bat
+
+     64 [netlogon]
+     65         path = /home/samba/netlogon
+     66         guest ok = Yes
+     67         browseable = No
+
+ログオンスクリプト例
+
+logon.bat
+
+net use T: \\192.168.1.190\tmp
+net use P: \\192.168.1.190\data
+
+
+・ホームディレクトリの自動マウント
+
+vi /etc/samba/smb.conf
+
+     36         logon home = \\%L\%U
+     37         logon drive = U:
+
+(多分、logon home は書かなくてもデフォルトでそうなっている…気がする)
+
+
+※個々のユーザに設定を施すには
+
+現在の「samba内におけるHome Directory」を確認
+
+pdbedit -v kazuhito
+
+
+～
+Home Directory:       \\debianldaptest\kazuhito
+～
+
+このディレクトリが、Windows上で U: ドライブに設定されるようにコマンドを打つ。
+
+pdbedit -D U: kazuhito
+
+
+・移動プロファイル周りの設定
+
+ユーザごとのデスクトップの情報など「他マシンでも持ち越せるユーザ情報」の格納場所の設定。
+定石としては"profiles"と言う名のsamba共有を作成して、そこにユーザごとのディレクトリが
+自動的に出来るようにして運用するのが吉のようだ。
+
+プロファイル格納用のディレクトリ作成。
+※誰でも変更できるディレクトリにするためスティッキービットを利用。
+
+mkdir -p /home/samba/profiles
+chmod 1777 /home/samba/profiles
+
+samba設定ファイル側
+
+vi /etc/samba/smb.conf
+
+      5 [global]
+
+     38         logon path = \\%L\profiles\%U
+
+     72 [profiles]
+     73         path = /home/samba/profiles
+     74         browseable = no
+     75         read only = no
+     76         create mask = 0600
+     77         directory mask = 0700
+ 
+
+
+・ACL(アクセス・コントロール・リスト)の機能
+
+
+vi /etc/fstab
+
+      5 /dev/hdc2       /               ext3    errors=remount-ro,acl 0       1
+
+vi /etc/samba/smb.conf
+
+      5 [global]
+     39         admin users = Administrator
+     40         nt acl support = Yes
+
+上記設定で再起動すれば、有効になる。
+ドメインに参加したマシンから、Sambaディレクトリにアクセスし、
+プロパティ→セキュリティで、ユーザを足したり、アクセス権を変更出来ればOK。
+(上記未設定で、ドメインに入っただけでは「設定が保存されない」「ユーザ追加で権限で怒られる」などの動きとなる)
+
+
+Sambaを通して設定したaclの設定がある場合、Linuxの標準アクセス権より拡張されたものは"+"で表示される。
+
+drwxr-xr-x   7 root   root       4096 2010-09-07 01:44 ..
+drwx------   4 nobody nogroup    4096 2010-09-09 00:44 .trash
+drwxr-xr-x+  2 nobody nogroup    4096 2010-09-09 00:44 abc
+-
+
+Linux側でのAclの確認/設定する。まずaclパッケージを導入。
+
+apt-get install acl
+
+フォルダ・ファイルのaclの確認は、getfacl コマンドで確認。
+
+getfacl abc
+
+# file: abc
+# owner: nobody
+# group: nogroup
+user::rwx
+user:kazuhito:rwx
+group::---
+mask::rwx
+other::---
+default:user::rwx
+default:user:kazuhito:rwx
+default:group::---
+default:mask::rwx
+default:other::---
+
+せっとするには、setfacl を使う。以下例はabcにclamavさんの読み取り権限を付加。
+
+setfacl -d u:clamav:r abc
+
+getfacl abc
+# file: abc
+# owner: nobody
+# group: nogroup
+user::rwx
+user:clamav:r--
+user:kazuhito:rwx
+group::---
+mask::rwx
+other::---
+default:user::rwx
+default:user:kazuhito:rwx
+default:group::---
+default:mask::rwx
+default:other::---
+
+
+・Windows側アプリケーションからのSambaユーザ・グループ管理機能
+
+smb.conf修正。以下の内容を追加。
+
+vi /etc/samba/smb.conf
+
+     42         # windows user management application setting
+     43         add user script         = /usr/sbin/useradd "%u"
+     44         delete user script      = /usr/sbin/userdel -r "%u"
+     45         add group script        = /usr/sbin/groupadd "%g"
+     46         delete group script     = /usr/sbin/groupdel "%g"
+     47         add user to group script = /usr/bin/gpasswd -a "%u" "%g"
+     48         delete user from group script = /usr/bin/gpasswd -d "%u" "%g"
+     49         set primary group script = /usr/sbin/usermod -g "%g" "%u"
+ 
+
+
+--以下、構想--
+■NFS&Kerbelos&LFAPサーバ
+■SVNサーバ
+■Webdav & SSL & LDAP サーバ
+■DNLAサーバ
+
+--以下、要件--
+
+■ドメインに満たさねばならない物(要件)
+・強権はDomainAdministratorか、administratorに寄せる。
+・一応、kazuhitoも強権付けとく(smb.conf)
+・rootはドメインユーザに入れない。
+・friends,miura くらいのグループで管理。
+・ディレクトリはhome/ユーザ,public(身内のみ),share(全開放)にデモしようかと(審議中)

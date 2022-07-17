@@ -1,0 +1,61 @@
+
+
+     51         # ldap setting
+     52         passdb backend          = ldapsam:ldap://localhost
+     53         ldap suffix             = dc=local,dc=sumpic,dc=orz,dc=hm
+     54         ldap user suffix        = ou=people
+     55         ldap group suffix       = ou=groups
+     56         ldap machine suffix     = ou=computers
+     57         ldap admin dn           = cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm
+     58         ldap passwd sync        = yes
+     59         admin users = admin
+
+smbpasswd -w [password]
+Setting stored password for "cn=admin,dc=local,dc=sumpic,dc=orz,dc=hm" in secrets.tdb
+
+
+
+vi /etc/smbldap-tools/smbldap.conf
+
+      1 SID="S-1-5-21-2252255531-4061614174-2474224977"
+      2 sambaDomain="sumpic.orz.hm"
+      3 slaveLDAP="127.0.0.1"
+      4 slavePort="389"
+      5 masterLDAP="127.0.0.1"
+      6 masterPort="389"
+      7 ldapTLS="0"
+      8 verify="require"
+      9 cafile="/etc/smbldap-tools/ca.pem"
+     10 clientcert="/etc/smbldap-tools/smbldap-tools.pem"
+     11 clientkey="/etc/smbldap-tools/smbldap-tools.key"
+     12 suffix="dc=local,dc=sumpic,dc=orz,dc=hm"
+     13 usersdn="ou=people,${suffix}"
+     14 computersdn="ou=computers,${suffix}"
+     15 groupsdn="ou=groups,${suffix}"
+     16 idmapdn="ou=Idmap,${suffix}"
+     17 sambaUnixIdPooldn="sambaDomainName=${sambaDomain},${suffix}"
+     18 scope="sub"
+     19 hash_encrypt="MD5"
+     20 crypt_salt_format="%s"
+     21 userLoginShell="/bin/bash"
+     22 userHome="/home/%U"
+     23 userHomeDirectoryMode="700"
+     24 userGecos="System User"
+     25 defaultUserGid="513"
+     26 defaultComputerGid="515"
+     27 skeletonDir="/etc/skel"
+     28 defaultMaxPasswordAge="45"
+     29 userSmbHome="\\%L\%U"
+     30 userProfile="\\%L\profiles\%U"
+     31 userHomeDrive="U:"
+     32 userScript="logon.bat"
+     33 mailDomain="sumpic.orz.hm"
+     34 with_smbpasswd="0"
+     35 smbpasswd="/usr/bin/smbpasswd"
+     36 with_slappasswd="0"
+     37 slappasswd="/usr/sbin/slappasswd"
+
+
+
+
+ldapdelete -x -D "cn=Manager,dc=sumpic,dc=orz,dc=hm" -W "cn=Print Operators,ou=Groups,dc=sumpic,dc=orz,dc=hm"
