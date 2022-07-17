@@ -120,3 +120,31 @@
         state: restarted
         daemon_reload: yes
         enabled: yes
+
+  - block:
+
+    - name: DDNS反映スクリプトをコピー。
+      copy:
+        src: resources/usr/local/bin/ddns_sync.sh
+        dest: /usr/local/bin/ddns_sync.sh
+        mode: "0755"
+
+    - name: DDNS反映スクリプトの設定ファイルをコピー。
+      copy:
+        src: resources/usr/local/etc/ddns_sync.conf.csv
+        dest: /usr/local/etc/ddns_sync.conf.csv
+        mode: "0644"
+
+    - name: DDNS反映スクリプトのログローテート設定ファイルをコピー。
+      copy:
+        src: resources/etc/logrotate.d/ddns_sync
+        dest: /etc/logrotate.d/ddns_sync
+        mode: "0644"
+
+    - name: DDNS反映スクリプトのcron設定。
+      become: True
+      cron:
+        name: DDNS反映
+        minute: "*/15"
+        job: "/usr/local/bin/ddns_sync.sh"
+        state: present

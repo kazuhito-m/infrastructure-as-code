@@ -1,3 +1,0 @@
-# DDNSの更新を15分ごとに実行する。
-# m h dom mon dow user  command
-*/15 * * * *    root    /usr/local/bin/ddns_sync.sh
