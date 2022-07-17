@@ -79,7 +79,7 @@
   - block:
 
     - name: ゾーンファイルをコピー。
-    - copy:
+      copy:
         src: "{{ item }}"
         dest: /etc/bind/
         owner: root
