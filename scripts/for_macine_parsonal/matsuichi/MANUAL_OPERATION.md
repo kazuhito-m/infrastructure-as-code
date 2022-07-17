@@ -1,29 +1,11 @@
-2020/05/08 緊急メンテ
+セットアップ手動作業
 ===
 
-動かなくなったので、暫定的に「RaspberyPIを暫定matsuichi化」する。
+全てをAsCode出来ないので、
 
-## やったこと
+2022/07/18, UpdateかつDDNSの更新をしようとしたら、アクセス不能になって死んだので、再度インストール＆構成。
 
-1. /etc/network/interface を編集し、有線でIP固定
-0. 自身ユーザ作成 (adduserコマンド)
-0. /etc/resolv.conf に 8.8.8.8 仕込む
-0. apt-get update & apt-get upgrade & apt-get dist-uggrade 実行(リポジトリは無事な模様)
-0. git init  & git add & git commit で /etc 下の履歴をトリ始める
-0. aptの対象バージョンが、古すぎて取れなそうだったので、wheezyからjessieへとあげる。
-
-
-ここからは新規インストール。
-
-## DNS設定
-
-sudo apt-get install bind9
-
----
-
-…と、ここまでやった時点で、bind9も見つからなければ、ディスクも不安定で急にReadOnlyになったり再起動がかかったりしたので、RaspberyPiから入れ直すことに。
-
-# Raspabin再インストール
+# Raspabinインストール＆付属設定
 
 1. https://www.raspberrypi.org/downloads/ から、 rpi-imagerのdebパッケージを取得
 0. 上記をUbuntuにインストール
@@ -55,7 +37,7 @@ systemctl list-timers
 0. /etc/dhcp/dhcpd6.conf をノリで修正
 0. systemctl enable isc-dhcp-server && systemctl restart isc-dhcp-server
 0. /etc/dhcpcd.conf に「DNSサーバの仕込みをしていなかった」ので修正。
-0. 
+0. `dpkg-reconfigure locales` で `ja_JP:UTF-8` をデフォルトに変更。
 0. reboot
 
 ## 削除できそうだから削除してみたもの
@@ -75,6 +57,21 @@ systemctl list-timers
   
 ### 容量がデカイファイルを見繕って削除
 
+localeフォルダがデカイので、使わないだろうものを削除。
+
+以下はroot。
+
+```bash
+mkdir /usr/share/locale_back
+mv /usr/share/locale/* /usr/share/locale_back/
+# 必要なものだけ戻す
+cd /usr/share/locale_back/
+mv ./en ../locale/
+mv ./ja ../locale/
+mv ./locale.alias ../locale/
+cd ../
+rm -rf ./locale_back
+```
 
 
 ## 参考
