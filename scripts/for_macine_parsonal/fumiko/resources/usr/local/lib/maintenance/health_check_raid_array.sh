@@ -36,7 +36,7 @@ fi
 
 ## 異常時
 
-mdstat=$(/proc/mdstat)
+mdstat=$(cat /proc/mdstat)
 
 data=`cat <<_EOT_
 {
