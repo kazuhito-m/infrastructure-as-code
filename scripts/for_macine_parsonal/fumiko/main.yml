@@ -27,6 +27,7 @@
           - tree
           - byobu
           - vim
+          - curl
           - ntp
           - parted
           - mdadm
@@ -147,6 +148,6 @@
     - name: RAIDチェックスクリプトのcrontab設定。
       cron:
         name: mdのDiskArrayチェック。
-        hour: "*/6+2"
-        job: "/usr/local/lib/maintenance/health_check_raid_array.sh >> /var/log/maintenance/health_check_raid_array.log"
+        hour: "4,10,16,22"
+        job: "/usr/local/lib/maintenance/health_check_raid_array.sh >> /var/log/maintenance/health_check_raid_array.log 2>&1"
         state: present
