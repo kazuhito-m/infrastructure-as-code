@@ -55,7 +55,7 @@ data=`cat <<_EOT_
                 {
                     "title": "Status Detail",
                     "value": "cat /proc/mdadm said... \\\`\\\`\\\`${mdstat}\\\`\\\`\\\` ",
-                    "short": true
+                    "short": false
                 },
             ],
         }
