@@ -453,7 +453,7 @@ def config_current_user():
 
 def install_and_setting_nfs_local()
 	sudo("apt-get install -y nfs-common", pty=False)
-        sudo("grep 'fumiko' /etc/fstab || echo 'fumiko.local.sumpic.orz.hm:/home/kazuhito/preliminary /home/kazuhito/fumiko nfs user,auto 0 0' >> /etc/fstab", pty=False)
+        sudo("grep 'fumiko' /etc/fstab || echo 'fumiko.local.miu2.f5.si:/home/kazuhito/preliminary /home/kazuhito/fumiko nfs user,auto 0 0' >> /etc/fstab", pty=False)
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
