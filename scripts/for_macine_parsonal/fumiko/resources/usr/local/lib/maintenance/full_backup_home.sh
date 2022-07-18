@@ -24,6 +24,9 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 SCRIPT_DIR=$(cd $(dirname $(readlink -f $0 || echo $0));pwd -P)
 cd ${SCRIPT_DIR}
 
+# 設定読込
+source ../../etc/maintenance/slack.conf
+
 # main part
 
 echo "${0} start at `date '+%Y/%m/%d %R'`"
