@@ -9,6 +9,9 @@
 #   以下のコマンドを必要とする
 #     dump mkdir curl
 #
+# 経緯
+# - 当初、 -y や -j での圧縮を試していたが「微々たるもの」「100時間くらいかかる」となったので無圧縮に落ち着いた。
+#
 
 # 定数
 SELF_HOST_NAME=$(hostname)
@@ -38,7 +41,7 @@ dump_file_name="$(hostname)_home_dir_$(date '+%Y%m%d%H%M%S').dump.bz2"
 dump_file_path="${BACKUP_DIR}/${dump_file_name}"
 
 # 実行
-time dump -j -f ${dump_file_path} /home
+time dump -f ${dump_file_path} /home
 
 if [ $? -eq 0 ]; then
     echo '異常無し。正常終了。'
