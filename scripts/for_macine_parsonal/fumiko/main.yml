@@ -148,6 +148,7 @@
     - name: RAIDチェックスクリプトのcrontab設定。
       cron:
         name: mdのDiskArrayチェック。
+        minute: "22"
         hour: "4,10,16,22"
         job: "/usr/local/lib/maintenance/health_check_raid_array.sh >> /var/log/maintenance/health_check_raid_array.log 2>&1"
         state: present
