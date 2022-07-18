@@ -37,13 +37,14 @@ fi
 ## 異常時
 
 mdstat=$(cat /proc/mdstat)
+mdadm_detail=$(mdadm --detail /dev/md/0)
 
 data=`cat <<_EOT_
 {
      "attachments": [
         {
 	        "mrkdwn_in": ["text"],
-            "color": "danger",
+            "color": "danger",z
             "title": "MD Array Invalid Status",
             "pretext": "${SELF_HOST_NAME} のソフトウェアRAIDのArrayの状態異常です。",
             "fields": [
@@ -53,8 +54,13 @@ data=`cat <<_EOT_
                     "short": false
                 },
                 {
-                    "title": "Status Detail",
+                    "title": "MD Status",
                     "value": "cat /proc/mdadm said... \\\`\\\`\\\`${mdstat}\\\`\\\`\\\` ",
+                    "short": false
+                },
+                {
+                    "title": "mdadm Details",
+                    "value": "mdadm --detail said... \\\`\\\`\\\`${mdadm_detail}\\\`\\\`\\\` ",
                     "short": false
                 },
             ],
