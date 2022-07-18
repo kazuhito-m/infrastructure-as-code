@@ -1,0 +1,7 @@
+/var/log/maintenance/full_backup_home.log {
+    rotate 4
+    compress
+    monthly
+    missingok
+    notifempty
+}

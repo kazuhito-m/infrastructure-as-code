@@ -1,17 +1,21 @@
 #!/bin/bash
 
 # 
-# ソフトウェアRAID(md)のArrayが正常かをチェックし異常ならSlackに報告するスクリプト。
+# 週に一度フルバックアップをサブディスクに取得するスクリプト
+# 
+# - 異常ならSlackに報告する
 #
 # Premise
 #   以下のコマンドを必要とする
-#     cat grep curl
+#     dump mkdir curl
 #
 
 # 定数
 SELF_HOST_NAME=$(hostname)
 SELF_HOST_DOMAIN_NAME=${SELF_HOST_NAME}.local.miu2.f5.si
 SELF_HOST_IP=$(host ${SELF_HOST_DOMAIN_NAME} | sed 's/.*address //g')
+
+BACKUP_DIR='/subarea/backup_home'
 
 # Path調整
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -20,14 +24,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 SCRIPT_DIR=$(cd $(dirname $(readlink -f $0 || echo $0));pwd -P)
 cd ${SCRIPT_DIR}
 
-# 設定読込
-source ../../etc/maintenance/slack.conf
-
 # main part
 
 echo "${0} start at `date '+%Y/%m/%d %R'`"
 
-cat /proc/mdstat | grep 'blocks' | grep '\[UU\]'
+mkdir ${BACKUP_DIR}
+
+
 if [ $? -eq 0 ]; then
     echo '異常無し。正常終了。'
     echo "${0} end   at `date '+%Y/%m/%d %R'`"
@@ -36,7 +39,8 @@ fi
 
 ## 異常時
 
-mdstat=$(cat /proc/mdstat)
+df_state=$(df -h)
+lsblk_state=$(lsblk)
 
 data=`cat <<_EOT_
 {
@@ -44,8 +48,8 @@ data=`cat <<_EOT_
         {
 	        "mrkdwn_in": ["text"],
             "color": "danger",
-            "title": "MD Array Invalid Status",
-            "pretext": "${SELF_HOST_NAME} のソフトウェアRAIDのArrayの状態異常です。",
+            "title": "/home full backup failed.",
+            "pretext": "${SELF_HOST_NAME} の /home のフル・バックアップに失敗しました。",
             "fields": [
                 {
                     "title": "Host Name(IP Address)",
@@ -53,8 +57,13 @@ data=`cat <<_EOT_
                     "short": false
                 },
                 {
-                    "title": "Status Detail",
-                    "value": "cat /proc/mdadm said... \\\`\\\`\\\`${mdstat}\\\`\\\`\\\` ",
+                    "title": "Disk status",
+                    "value": "df -h said... \\\`\\\`\\\`${df_state}\\\`\\\`\\\` ",
+                    "short": false
+                },
+                {
+                    "title": "Block Device status",
+                    "value": "lsblk said... \\\`\\\`\\\`${lsblk_state}\\\`\\\`\\\` ",
                     "short": false
                 },
             ],
