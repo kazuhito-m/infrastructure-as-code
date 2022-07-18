@@ -153,7 +153,7 @@
         job: "/usr/local/lib/maintenance/health_check_raid_array.sh >> /var/log/maintenance/health_check_raid_array.log 2>&1"
         state: present
 
-    - name: RAIDチェックスクリプトのcrontab設定。
+    - name: homeのフルバックアップスクリプトのcrontab設定。
       cron:
         name: homeのフルバックアップ。
         job: "/usr/local/lib/maintenance/full_backup_home.sh >> /var/log/maintenance/full_backup_home.log 2>&1"
