@@ -107,3 +107,46 @@
         state: restarted
         daemon_reload: yes
         enabled: yes
+
+  - block:
+
+    - name: 運用スクリプトをコピー。
+      copy:
+        src: "{{ item }}"
+        dest: /usr/local/lib/maintenance/
+        owner: root
+        mode: "0755"
+      with_fileglob:
+        - resources/usr/local/lib/maintenance/*
+
+    - name: 運用スクリプトの設定ファイルをコピー。
+      copy:
+        src: "{{ item }}"
+        dest: /usr/local/etc/maintenance/
+        owner: root
+        mode: "0755"
+      with_fileglob:
+        - resources/usr/local/etc/maintenance/*
+
+    - name: 運用スクリプトのログローテート設定ファイルをコピー。
+      copy:
+        src: "{{ item }}"
+        dest: /etc/logrotate.d/
+        owner: root
+        mode: "0644"
+      with_fileglob:
+        - resources/etc/logrotate.d/*
+
+    - name: 運用スクリプトのロディレクトリの作成。
+      file:
+        path: "/var/log/maintenance"
+        state: directory
+        owner: "root"
+        mode: "775"
+
+    - name: RAIDチェックスクリプトのcrontab設定。
+      cron:
+        name: mdのDiskArrayチェック。
+        hour: "*/6+2"
+        job: "/usr/local/lib/maintenance/health_check_raid_array.sh >> /var/log/maintenance/health_check_raid_array.log"
+        state: present

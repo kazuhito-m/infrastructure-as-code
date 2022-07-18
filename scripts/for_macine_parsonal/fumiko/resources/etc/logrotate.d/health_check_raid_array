@@ -1,0 +1,7 @@
+/var/log/maintenance/health_check_raid_array.log {
+    rotate 4
+    compress
+    weekly
+    missingok
+    notifempty
+}
