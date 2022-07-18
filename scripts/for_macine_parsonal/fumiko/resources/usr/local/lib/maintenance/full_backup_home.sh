@@ -34,11 +34,11 @@ echo "${0} start at `date '+%Y/%m/%d %R'`"
 mkdir -p ${BACKUP_DIR}
 rm -f ${BACKUP_DIR}/*.dump.*
 
-dump_file_name="$(hostname)_home_dir_$(date '+%Y%m%d%H%M%S').dump.lzo"
+dump_file_name="$(hostname)_home_dir_$(date '+%Y%m%d%H%M%S').dump.bz2"
 dump_file_path="${BACKUP_DIR}/${dump_file_name}"
 
 # 実行
-dump -y -f ${dump_file_path} /home
+dump -j -f ${dump_file_path} /home
 
 if [ $? -eq 0 ]; then
     echo '異常無し。正常終了。'
