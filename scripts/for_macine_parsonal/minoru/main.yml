@@ -40,8 +40,6 @@
           - tree
           - byobu
           - ntp
-          - bind9
-          - isc-dhcp-server
 
   - block:
 
