@@ -51,3 +51,26 @@
 - https://docs.npmjs.com/cli/v8/commands/npm-version
 - https://qiita.com/guai3/items/4d38dcb8a877951b718a
 - https://www.suzu6.net/posts/291-node-max-old-space-size/
+
+
+## エクスポートデータを作成する方法
+
+旧形式のデータは、新VersionのGROWIではインポート出来ない。
+
+なので「旧→新にアップグレードしてエクスポート」する。
+
+1. nvm install v14.21.1
+2. cd /opt/growi && rm -rf ./*
+3. git reset --hard HEAD
+4. git checkout v4.1.0
+5. yarn && MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
+6. サイトでバックアップデータをインポート
+7. トップ画面だけは手動で書き換え
+8. 停止
+9. nvm install v16.18.1
+10. cd /opt/growi && rm -rf ./*
+11. git reset --hard HEAD
+12. git checkout v5.1.8
+13. yarn && MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
+14. サイトでバックアップZIPをエクスポート
+
