@@ -43,6 +43,7 @@
           - curl
           - apt-transport-https
           - gnupg
+          - build-essential
 
   - block:
 
