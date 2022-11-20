@@ -40,6 +40,9 @@
           - tree
           - byobu
           - ntp
+          - curl
+          - apt-transport-https
+          - gnupg
 
   - block:
 
