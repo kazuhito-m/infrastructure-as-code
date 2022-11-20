@@ -50,3 +50,4 @@
 - http://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 Release
 - https://docs.npmjs.com/cli/v8/commands/npm-version
 - https://qiita.com/guai3/items/4d38dcb8a877951b718a
+- https://www.suzu6.net/posts/291-node-max-old-space-size/

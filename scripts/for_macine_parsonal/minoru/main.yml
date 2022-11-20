@@ -77,3 +77,6 @@
         state: restarted
         daemon_reload: yes
         enabled: yes
+
+
+# TODO 「ファイルが無かったら」起点で、SwapFileを設定する。
