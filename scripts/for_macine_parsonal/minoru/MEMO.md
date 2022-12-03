@@ -17,6 +17,7 @@
 
 ## Growi設定
 
+- apt-get install libatomic1
 - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 - nvm install v16.18.1
 - npm install -g npm@6.14.7 yarn
@@ -101,6 +102,9 @@ Linux minoru 5.15.76-v7+ #1597 SMP Fri Nov 4 12:13:17 GMT 2022 armv7l GNU/Linux
 
 ## RasPIに最新UbuntuServer入れて、素の手順(否Docker)で動くトコまで行くかためしてみる
 
+- そも64bit版は「起動しなかった」ので、32bitのUbuntuを入れる
+  - これで、おそらく「DockerでGrowi入れる」もできなくなったはず…なので素で入れる前提で
+    - 実際にやって「出来ない(ビルド中に0以外返す)」を確認(無論、 armv7lで動くコンテナに変えて)
 - ip固定
   - https://corgi-lab.com/linux/rpi4-ubuntu-server-2004/#:~:text=%E5%9B%BA%E5%AE%9AIP%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B,-%E3%81%93%E3%81%AE%E3%81%BE%E3%81%BE%E4%BD%BF%E3%81%84%E5%A7%8B%E3%82%81%E3%81%A6&text=%E3%81%BE%E3%81%9A%E3%81%AF%20%2Fetc%2Fnetplan%2F50,%E8%A8%AD%E5%AE%9A%E3%81%AA%E3%81%A9%E3%82%92%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%81%BE%E3%81%99%E3%80%82
 - apt update && apt upgrade && apt dist-upgrade
@@ -113,3 +117,93 @@ Linux minoru 5.15.76-v7+ #1597 SMP Fri Nov 4 12:13:17 GMT 2022 armv7l GNU/Linux
     - https://lil.la/archives/5277
 - 必要なものインストール
   - apt install byobu
+- swapfileの有効化
+  - https://centos.bungu-do.jp/archives/65
+
+### Growiのインストール
+
+#### 前準備
+
+- apt-get install libatomic1
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+- nvm install v16.18.1
+- npm install -g npm@6.14.7 yarn
+- sudo apt-get install openjdk-17-jdk
+
+#### エラスティックサーチのインストール
+
+以下らへんを参考に。
+
+- https://mebee.info/2020/05/27/post-11387/
+- https://awesome-linus.com/2017/09/07/elasticsearch-5-6-1-install-tar-gz/
+- https://qiita.com/takilog/items/21461e0e6ac73965f678
+- https://nakamurake-site.com/archives/configuration-of-elasticsearch-kibana-in-raspberry-pi-4/
+- https://arkgame.com/2021/03/23/post-269593/
+
+---
+
+- wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.tar.gz
+- tar zxvf elasticsearch-6.1.1.tar.gz
+- cd elasticsearch-6.1.1/
+- sysctl -w vm.max_map_count=262144
+- vi ./config/jvm.options
+
+```
+## GC configuration
+# 以下は動かないのでコメントアウト
+# -XX:+UseConcMarkSweepGC
+# -XX:CMSInitiatingOccupancyFraction=75
+# -XX:+UseCMSInitiatingOccupancyOnly
+...
+-Xms256M
+-Xmx256M
+```
+
+- vi ./config/elasticsearch.yml
+
+```
+bootstrap.system_call_filter: false
+network.host: 0.0.0.0
+transport.host: localhost
+transport.tcp.port: 9300
+```
+
+- ./bin/elasticsearch-plugin install analysis-kuromoji
+- ./bin/elasticsearch-plugin install analysis-icu
+
+TODO サービス化
+
+#### MongoDBのインストール
+
+apt-getにmongoあるのだが…インストール時にコケる。
+
+公式のapt-lineを足そうにも、arm32(armhf/armv7l)のアーキテクチャ対応は無い模様。
+
+なので「自力でビルド」することにする。
+
+https://koenaerts.ca/compile-and-install-mongodb-on-raspberry-pi/
+
+---
+
+```bash
+apt-get install -y scons build-essential libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libboost-thread-dev python3-pymongo
+ln -s /bin/python3 /bin/python
+wget https://fastdl.mongodb.org/src/mongodb-src-r4.0.28.tar.gz
+tar xvf ./mongodb-src-r4.0.28.tar.gz
+cd mongodb-src-r4.0.28/
+cd src/third_party/mozjs-*
+./get_sources.sh
+./gen-config.sh arm linux
+```
+
+と、ここで
+
+```bash
+Unknown configuration platform/arm/linux
+```
+
+と出て失敗。
+
+恐らく 3.x 系ならビルド出来たのかも知れないが…
+
+これ以上は「Mongoのノウハウの蓄積」になるし、数百円の電気代のために頑張るのもなんだかなぁなので、断念。
