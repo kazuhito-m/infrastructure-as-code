@@ -41,6 +41,13 @@
 - sudo MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
 
 
+### RasPIならでわのフロー
+
+- elasticsearch
+  - wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.5.1-arm64.deb
+  - sudo dpkg -i --force-all --ignore-depends=libc6 elasticsearch-8.5.1-amd64.deb
+
+
 ### 参考
 
 - https://qiita.com/steepay/items/96605cfbdd78995d707f
@@ -74,3 +81,35 @@
 13. yarn && MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
 14. サイトでバックアップZIPをエクスポート
 
+## やり直しで「RasPI＆DockerでGrowi建てる」お試し
+
+- cd /var/lib && mkdir growi && cd ./growi
+- git clone https://github.com/temple1026/growi-docker-compose-pi.git growi
+- cd growi && vi docker-compose.yml
+
+Linux minoru 5.15.76-v7+ #1597 SMP Fri Nov 4 12:13:17 GMT 2022 armv7l GNU/Linux
+
+
+この方策で、上手く行かなかったから断念。別の方策を取る。
+
+## RasPIに最新RaspberyOS入れて、素の手順(否Docker)で動くトコまで行くかためしてみる
+
+- まずは「64bit版RaspberyOS」を入れて、さっき失敗したDockerComposeインストールしてみる
+  - そも「RasPI2ModelBでは動かなかった」ので断念
+- 次に「RaspberyOS」を入れて、「素で入れる」を試してみる
+  - https://qiita.com/steepay/items/96605cfbdd78995d707f これはUbuntu前提だが、いけるとこまで行って観る
+
+## RasPIに最新UbuntuServer入れて、素の手順(否Docker)で動くトコまで行くかためしてみる
+
+- ip固定
+  - https://corgi-lab.com/linux/rpi4-ubuntu-server-2004/#:~:text=%E5%9B%BA%E5%AE%9AIP%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B,-%E3%81%93%E3%81%AE%E3%81%BE%E3%81%BE%E4%BD%BF%E3%81%84%E5%A7%8B%E3%82%81%E3%81%A6&text=%E3%81%BE%E3%81%9A%E3%81%AF%20%2Fetc%2Fnetplan%2F50,%E8%A8%AD%E5%AE%9A%E3%81%AA%E3%81%A9%E3%82%92%E6%9B%B8%E3%81%8D%E8%BE%BC%E3%81%BF%E3%81%BE%E3%81%99%E3%80%82
+- apt update && apt upgrade && apt dist-upgrade
+- SSH有効
+  - https://codechacha.com/ja/ubuntu-install-openssh/
+  - apt install openssh-server
+  - systemctl enable ssh
+  - systemctl start ssh
+  - 動かなかったが、以下で解決
+    - https://lil.la/archives/5277
+- 必要なものインストール
+  - apt install byobu
