@@ -11,7 +11,7 @@
   - 本体SSD(sda)をすべてext4で `/` に
   - USBメモリ16Gをsdbで `/var` に
 - インストール時には「taskselの全てを解除」する
-- apt-get install -y byobu openssh-server sudo
+- apt-get install -y byobu openssh-server sudo curl gpg
 - systemctl enable ssh && systemctl start ssh
 - sudo 設定
   - adduser kazuhito sudo
@@ -79,6 +79,33 @@ elasticsearchにつながらないせいで死んでるかはわからないが�
 いろいろためしたが「仮想機なら難なく起動する」ので、「機種依存(Dockerで？そりゃないよ…)」だと考え、断念。
 
 通常のパッケージインストールでGROWIを動かす方針にする。(インストールはAnsibleで行う方向で)
+
+
+## 手動でDocker使わずGROWIインストール
+
+- apt-get install libatomic1
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+- nvm install v16.18.1
+- npm install -g npm@6.14.7 yarn
+- sudo apt-get install openjdk-17-jdk
+- curl https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+- echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
+- apt-get update && apt-get install elasticsearch
+- systemctl start elasticsearch
+- sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
+- sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+- wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+- echo "deb http://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+- sudo apt-get update
+- sudo apt-get install mongodb-org
+- sudo systemctl enable --now mongod
+- wget https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
+- gunzip ./v5.1.8.tar.gz
+- sudo tar xvf ./v5.1.8.tar -C /opt
+- sudo rm -rf /opt/growi
+- sudo mv /opt/growi-5.1.8 /opt/growi
+- cd /opt/growi && yarn
+- sudo MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
 
 
 
