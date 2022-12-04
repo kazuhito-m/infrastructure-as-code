@@ -83,22 +83,43 @@ elasticsearchにつながらないせいで死んでるかはわからないが�
 
 ## 手動でDocker使わずGROWIインストール
 
+
+### node,npm,yarnインストール
+
 - apt-get install libatomic1
 - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 - nvm install v16.18.1
 - npm install -g npm@6.14.7 yarn
+
+### OpenJDKインストール
+
 - sudo apt-get install openjdk-17-jdk
+
+### Elasticsearchインストール
+
+TODO 失敗したので、全部削除して、一個下げた6系をインストールしてみる https://www.elastic.co/guide/en/elasticsearch/reference/6.8/deb.html
+
 - curl https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 - echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
 - apt-get update && apt-get install elasticsearch
 - systemctl start elasticsearch
-- sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
-- sudo /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
-- wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-- echo "deb http://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-- sudo apt-get update
-- sudo apt-get install mongodb-org
-- sudo systemctl enable --now mongod
+- /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
+- /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+
+### MongoDBインストール
+
+```bash
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+apt-get update
+apt-get install -y mongodb-org
+systemctl start mongod
+systemctl status mongod
+systemctl enable mongod
+```
+
+### Growiインストール
+
 - wget https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
 - gunzip ./v5.1.8.tar.gz
 - sudo tar xvf ./v5.1.8.tar -C /opt
