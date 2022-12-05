@@ -86,25 +86,70 @@ elasticsearchにつながらないせいで死んでるかはわからないが�
 
 ### node,npm,yarnインストール
 
-- apt-get install libatomic1
-- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-- nvm install v16.18.1
-- npm install -g npm@6.14.7 yarn
+```bash
+apt-get install libatomic1
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+nvm install v16.18.1
+npm install -g npm@6.14.7 yarn
+```
 
 ### OpenJDKインストール
 
-- sudo apt-get install openjdk-17-jdk
+```bash
+apt-get install openjdk-17-jdk
+```
 
 ### Elasticsearchインストール
 
 TODO 失敗したので、全部削除して、一個下げた6系をインストールしてみる https://www.elastic.co/guide/en/elasticsearch/reference/6.8/deb.html
 
-- curl https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
-- echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-7.x.list
+- wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+- apt-get install apt-transport-https
+- echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-6.x.list
 - apt-get update && apt-get install elasticsearch
 - systemctl start elasticsearch
 - /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
 - /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+
+が、systemctl startでコケてしまう。`no such file` なので、起動前の問題のような気はするのだが…。
+
+#### もっと原始的なElaasticsearchインストール
+
+上記でも動かなかったので、バイナリ落として無理から動かす。
+
+rootで動かない、という制約があるので、以下は一般ユーザで実行。
+
+- wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.tar.gz
+- tar zxvf elasticsearch-6.1.1.tar.gz
+- cd elasticsearch-6.1.1/
+- sysctl -w vm.max_map_count=262144
+- vi ./config/jvm.options
+
+```
+## GC configuration
+# 以下は動かないのでコメントアウト
+# -XX:+UseConcMarkSweepGC
+# -XX:CMSInitiatingOccupancyFraction=75
+# -XX:+UseCMSInitiatingOccupancyOnly
+...
+-Xms256M
+-Xmx256M
+```
+
+- vi ./config/elasticsearch.yml
+
+```
+bootstrap.system_call_filter: false
+network.host: 0.0.0.0
+transport.host: localhost
+transport.tcp.port: 9300
+```
+
+- ./bin/elasticsearch-plugin install analysis-kuromoji
+- ./bin/elasticsearch-plugin install analysis-icu
+- ./bin/elasticsearch
+
+
 
 ### MongoDBインストール
 
@@ -120,14 +165,18 @@ systemctl enable mongod
 
 ### Growiインストール
 
-- wget https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
-- gunzip ./v5.1.8.tar.gz
-- sudo tar xvf ./v5.1.8.tar -C /opt
-- sudo rm -rf /opt/growi
-- sudo mv /opt/growi-5.1.8 /opt/growi
-- cd /opt/growi && yarn
-- sudo MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
 
+```bash
+wget https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
+gunzip ./v5.1.8.tar.gz
+tar xvf ./v5.1.8.tar -C /opt
+rm -rf /opt/growi
+mv /opt/growi-5.1.8 /opt/growi
+cd /opt/growi
+echo "network-timeout 3600000" > .yarnrc
+yarn
+MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
+```
 
 
 ## 検討事項

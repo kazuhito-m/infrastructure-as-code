@@ -38,7 +38,9 @@
 - sudo tar xvf ./v5.1.8.tar -C /opt
 - sudo rm -rf /opt/growi
 - sudo mv /opt/growi-5.1.8 /opt/growi
-- cd /opt/growi && yarn
+- cd /opt/growi
+- echo "network-timeout 3600000" > .yarnrc
+- yarn
 - sudo MONGO_URI=mongodb://localhost:27017/growi  ELASTICSEARCH_URI=http://localhost:9200/growi npm start
 
 
@@ -170,6 +172,7 @@ transport.tcp.port: 9300
 
 - ./bin/elasticsearch-plugin install analysis-kuromoji
 - ./bin/elasticsearch-plugin install analysis-icu
+- ./bin/elasticsearch
 
 TODO サービス化
 
