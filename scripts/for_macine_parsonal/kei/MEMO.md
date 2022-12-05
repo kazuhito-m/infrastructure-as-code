@@ -103,7 +103,7 @@ apt-get install openjdk-17-jdk
 
 TODO 失敗したので、全部削除して、一個下げた6系をインストールしてみる https://www.elastic.co/guide/en/elasticsearch/reference/6.8/deb.html
 
-- wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+- wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add 
 - apt-get install apt-transport-https
 - echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-6.x.list
 - apt-get update && apt-get install elasticsearch
@@ -119,13 +119,13 @@ TODO 失敗したので、全部削除して、一個下げた6系をインス�
 
 rootで動かない、という制約があるので、以下は一般ユーザで実行。
 
-- wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.tar.gz
-- tar zxvf elasticsearch-6.1.1.tar.gz
-- cd elasticsearch-6.1.1/
-- sysctl -w vm.max_map_count=262144
-- vi ./config/jvm.options
+```bash
+curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.1.1.tar.gz
+tar zxvf elasticsearch-6.1.1.tar.gz
+cd elasticsearch-6.1.1/
+sudo sysctl -w vm.max_map_count=262144
+vi ./config/jvm.options
 
-```
 ## GC configuration
 # 以下は動かないのでコメントアウト
 # -XX:+UseConcMarkSweepGC
@@ -134,27 +134,23 @@ rootで動かない、という制約があるので、以下は一般ユーザ�
 ...
 -Xms256M
 -Xmx256M
-```
 
-- vi ./config/elasticsearch.yml
+vi ./config/elasticsearch.yml
 
-```
 bootstrap.system_call_filter: false
 network.host: 0.0.0.0
 transport.host: localhost
 transport.tcp.port: 9300
+
+./bin/elasticsearch-plugin install analysis-kuromoji
+./bin/elasticsearch-plugin install analysis-icu
+./bin/elasticsearch
 ```
-
-- ./bin/elasticsearch-plugin install analysis-kuromoji
-- ./bin/elasticsearch-plugin install analysis-icu
-- ./bin/elasticsearch
-
-
 
 ### MongoDBインストール
 
 ```bash
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+curl -L https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
 echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
 apt-get update
 apt-get install -y mongodb-org
@@ -167,7 +163,8 @@ systemctl enable mongod
 
 
 ```bash
-wget https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
+apt-get install -y build-essential
+curl -LO https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
 gunzip ./v5.1.8.tar.gz
 tar xvf ./v5.1.8.tar -C /opt
 rm -rf /opt/growi
