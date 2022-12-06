@@ -87,7 +87,7 @@ elasticsearchにつながらないせいで死んでるかはわからないが�
 ### node,npm,yarnインストール
 
 ```bash
-apt-get install libatomic1
+apt-get install -y libatomic1 build-essential curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 nvm install v16.18.1
 npm install -g npm@6.14.7 yarn
@@ -96,20 +96,23 @@ npm install -g npm@6.14.7 yarn
 ### OpenJDKインストール
 
 ```bash
-apt-get install openjdk-17-jdk
+apt-get install openjdk-17-jdk-headless
 ```
 
 ### Elasticsearchインストール
 
 TODO 失敗したので、全部削除して、一個下げた6系をインストールしてみる https://www.elastic.co/guide/en/elasticsearch/reference/6.8/deb.html
 
-- wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add 
-- apt-get install apt-transport-https
-- echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-6.x.list
-- apt-get update && apt-get install elasticsearch
-- systemctl start elasticsearch
-- /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
-- /usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+
+```bash
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add 
+apt-get install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-6.x.list
+apt-get update && apt-get install elasticsearch
+systemctl start elasticsearch
+/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-kuromoji
+/usr/share/elasticsearch/bin/elasticsearch-plugin install analysis-icu
+```
 
 が、systemctl startでコケてしまう。`no such file` なので、起動前の問題のような気はするのだが…。
 
@@ -150,8 +153,8 @@ transport.tcp.port: 9300
 ### MongoDBインストール
 
 ```bash
-curl -L https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
-echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+curl -L https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
 apt-get update
 apt-get install -y mongodb-org
 systemctl start mongod
@@ -165,10 +168,10 @@ systemctl enable mongod
 ```bash
 apt-get install -y build-essential
 curl -LO https://github.com/weseek/growi/archive/refs/tags/v5.1.8.tar.gz
-gunzip ./v5.1.8.tar.gz
-tar xvf ./v5.1.8.tar -C /opt
+gunzip ./v*.tar.gz
+tar xvf ./v*.tar -C /opt
 rm -rf /opt/growi
-mv /opt/growi-5.1.8 /opt/growi
+mv /opt/growi-* /opt/growi
 cd /opt/growi
 echo "network-timeout 3600000" > .yarnrc
 yarn

@@ -86,9 +86,12 @@
 
 ## やり直しで「RasPI＆DockerでGrowi建てる」お試し
 
-- cd /var/lib && mkdir growi && cd ./growi
-- git clone https://github.com/temple1026/growi-docker-compose-pi.git growi
-- cd growi && vi docker-compose.yml
+```bash
+cd /var/lib
+git clone https://github.com/temple1026/growi-docker-compose-pi.git growi
+cd growi && vi docker-compose.yml
+docker-compose up
+```
 
 Linux minoru 5.15.76-v7+ #1597 SMP Fri Nov 4 12:13:17 GMT 2022 armv7l GNU/Linux
 
