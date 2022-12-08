@@ -3,9 +3,9 @@ source /etc/network/interfaces.d/*
 auto lo
 iface lo inet loopback
 
-allow-hotplug enp1s0
+allow-hotplug enp5s0
 
-iface enp1s0 inet static
+iface enp5s0 inet static
 address 192.168.1.11
 network 192.168.1.0
 netmask 255.255.255.0
