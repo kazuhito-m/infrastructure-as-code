@@ -1,0 +1,37 @@
+# coding:utf-8
+# for Debian 11
+
+- hosts: all
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - block:
+
+    - name: システム全更新。
+      apt:
+        update_cache: "yes"
+        upgrade: "dist"
+
+    - name: 必要なツールをインストール。
+      apt:
+        name:
+          - tree
+          - byobu
+          - vim
+          - curl
+          - ntp
+          - nfs-common
+
+  - block:
+
+    - name: ネットワーク設定ファイルを反映。
+      copy: 
+        src: resources/etc/network/interfaces
+        dest: /etc/network/interfaces
+        backup: yes
+
+    - name: ホスト名設定。
+      hostname:
+        name: hachiro
