@@ -1,0 +1,7 @@
+# coding:utf-8
+# for Debian 11
+
+- name: GROWIのdocker-composeリポジトリから、ソースアーカイブ(zip)をダウンロード。
+  ansible.builtin.get_url:
+    url: https://github.com/weseek/growi-docker-compose/archive/refs/heads/master.zip
+    dest: /tmp/growi.zip
