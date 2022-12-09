@@ -22,7 +22,6 @@
   file:
     path: /etc/apt/keyrings
     state: directory
-    owner: "root"
 
 - name: dockerのaptlineのgpgkeyの追加。
   ansible.builtin.apt_key:

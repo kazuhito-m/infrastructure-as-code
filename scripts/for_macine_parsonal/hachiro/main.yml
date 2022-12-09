@@ -41,12 +41,10 @@
       hostname:
         name: hachiro
 
-  # - block: 
-
-  #   - name: 本家からのdocker/docker-composeインストール。
-  #     include_tasks: tasks/install_docker.yml
-
   - block: 
+
+    - name: 本家からのdocker/docker-composeインストール。
+      include_tasks: tasks/install_docker.yml
 
     - name: GROWIのdocker-composeからのインストール＆起動。
       include_tasks: tasks/install_growi_on_docker.yml
