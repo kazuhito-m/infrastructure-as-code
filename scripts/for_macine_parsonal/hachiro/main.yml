@@ -38,3 +38,8 @@
     - name: ホスト名設定。
       hostname:
         name: hachiro
+
+  - block: 
+
+    - name: 本家からのdocker/docker-composeインストール。
+      include_tasks: tasks/install_docker.yml

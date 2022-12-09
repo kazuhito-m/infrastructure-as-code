@@ -1,0 +1,6 @@
+# coding:utf-8
+# for Debian 11
+
+- name: インクルードの実験。
+  debug:
+    msg: "これが出たら成功。"
