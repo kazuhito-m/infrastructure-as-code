@@ -23,6 +23,9 @@
           - curl
           - ntp
           - nfs-common
+          - sudo
+          - parted
+          - dnsutils
 
   - block:
 

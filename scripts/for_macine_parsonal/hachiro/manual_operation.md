@@ -37,7 +37,7 @@
 ### 最低限のインストールのためのツールのインストール
 
 ```bash
-apt-get install -y sudo parted
+apt-get install -y sudo parted dnsutils
 ```
 
 ### sudo有効設定
@@ -71,3 +71,16 @@ fd -h /
 ```
 
 fdコマンド上の容量が変わっていたら、リサイズ終了。
+
+## swap作る
+
+4GBのメモリはある程度安心できるものの、万が一の足りないフリーズがあり得るので、少しSWAPファイル足しておく。
+
+```bash
+dd if=/dev/zero of=/var/swapfile bs=1M count=2048
+mkswap /var/swapfile
+chmod 600 /var/swapfile
+swapon /var/swapfile
+vi /etc/fstab
+#/var/swapfile               swap                   swap    defaults        0 0
+```
