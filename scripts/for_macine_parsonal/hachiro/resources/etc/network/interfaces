@@ -3,10 +3,10 @@ source /etc/network/interfaces.d/*
 auto lo
 iface lo inet loopback
 
-allow-hotplug enp5s0
+allow-hotplug enp0s3   # TODO 設定が終わったら実際の物理的なものに戻す。
 
-iface enp5s0 inet static
-address 192.168.1.11
+iface enp0s3 inet static    # TODO 設定が終わったら実際の物理的なものに戻す。
+address 192.168.1.236   # TODO 設定を終わったら 11 に戻す。
 network 192.168.1.0
 netmask 255.255.255.0
 broadcast 192.168.1.255

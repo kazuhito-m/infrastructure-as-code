@@ -10,12 +10,13 @@
   - block:
 
     - name: システム全更新。
-      apt:
+      ansible.builtin.apt:
         update_cache: "yes"
         upgrade: "dist"
+        autoremove: true
 
     - name: 必要なツールをインストール。
-      apt:
+      ansible.builtin.apt:
         name:
           - tree
           - byobu

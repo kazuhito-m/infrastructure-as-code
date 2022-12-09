@@ -37,7 +37,7 @@
 ### 最低限のインストールのためのツールのインストール
 
 ```bash
-apt-get install -y sudo parted dnsutils
+apt-get install -y sudo parted python3
 ```
 
 ### sudo有効設定
