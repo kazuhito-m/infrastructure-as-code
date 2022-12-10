@@ -1,6 +1,8 @@
-#!/bin/sh -xd
+#!/bin/sh
 #
 # GROWIのWikiデータをバックアップを行うスクリプト。
+#
+# 規定のファイル数に達すると古いものから消していくローテーション機能有り。
 #
 
 TARGET_DIR=/var/lib/growi
@@ -24,7 +26,8 @@ echo "archive中... ${tmp_file_path}"
 tar czf ${tmp_file_path} ${TARGET_DIR}
 
 echo "ファイル転送中..."
-mv ${tmp_file_path} ${backup_file_path}
+chown kazuhito:kazuhito ${tmp_file_path}  # 環境依存の問題への苦肉の策。
+sudo -u kazuhito mv ${tmp_file_path} ${backup_file_path}
 
 echo "古いデータの削除中(ローテート)..."
 cd ${BACKUP_DIR}
