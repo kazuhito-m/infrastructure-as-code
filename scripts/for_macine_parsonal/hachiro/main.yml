@@ -54,3 +54,18 @@
 
     - name: GROWIのdocker-composeからのインストール＆起動。
       include_tasks: tasks/install_growi_on_docker.yml
+
+  - block:
+
+    - name: マウントポイントのディレクトリ作成。
+      file:
+        path: /dev/nfs/fumiko
+        state: directory
+
+    - name: ファイルサーバをマウント。
+      mount:
+        path: /dev/nfs/fumiko
+        src: fumiko.local.miu2.f5.si:/home/kazuhito/preliminary
+        fstype: nfs
+        opts: "user,auto"
+        state: mounted
