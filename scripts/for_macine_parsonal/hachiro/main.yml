@@ -41,6 +41,11 @@
       hostname:
         name: hachiro
 
+  - block:
+
+    - name: Swapをファイルで設定する。
+      include_tasks: tasks/generate-and-mount-swapfile.yml
+
   - block: 
 
     - name: 本家からのdocker/docker-composeインストール。
