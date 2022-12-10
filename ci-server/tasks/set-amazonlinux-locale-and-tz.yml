@@ -1,0 +1,25 @@
+# coding:utf-8
+
+- name: ロケール設定
+  lineinfile:
+    dest: /etc/cloud/cloud.cfg
+    line: 'locale: ja_JP.UTF-8'
+
+- name: 国際化の設定にロケール指定
+  replace:
+    dest: /etc/sysconfig/i18n
+    regexp: '^LANG=en_US\.UTF-8'
+    replace: 'LANG=ja_JP.UTF-8'
+
+- name: TimeZone設定
+  replace:
+    dest: /etc/sysconfig/clock
+    regexp: '^ZONE=\"UTC\"'
+    replace: 'ZONE="Asia/Tokyo"'
+
+- name: TimeZone設定のシンボリックリンクを東京のものに
+  file:
+    src: /usr/share/zoneinfo/Asia/Tokyo
+    dest: /etc/localtime
+    state: link
+    force: yes

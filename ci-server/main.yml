@@ -1,0 +1,106 @@
+# coding:utf-8
+
+- hosts: all
+  user: ec2-user
+  become: yes
+
+  tasks:
+    - name: 不必要かつ最初から入っているパッケージの削除
+      yum: name=postfix state=absent
+
+    - name: yumリポジトリにEPELを加える
+      shell: 'amazon-linux-extras install epel -y'
+
+    - name: すべてのyumパッケージアップデート
+      yum: name=* state=latest
+
+    - name: 必要なパッケージをインストール
+      yum:
+        name: '{{ packages }}'
+        disable_gpg_check: no
+        state: installed
+      vars:
+        packages:
+          - libselinux-python
+          - byobu
+          - yum-plugin-security
+          - python2-pip
+
+    - name: LocaleとTimeZone設定
+      include: tasks/set-amazonlinux-locale-and-tz.yml
+
+    # docker関連
+
+    - name: dockerインストール
+      shell: 'amazon-linux-extras install docker -y'
+
+    - name: dockerサーバ起動
+      service: name=docker enabled=yes state=started
+
+    - name: docker(pythonのライブラリ) のインストール
+      pip:
+        name: 'docker'
+        version: 3.2.1
+        state: present
+
+    - name: docker-composeのインストール
+      pip:
+        name: 'docker-compose'
+        state: present
+
+    - name: ec2ユーザにdockerが叩けるように
+      shell: 'gpasswd -a ec2-user docker'
+
+    - name: swapファイルを設定
+      include: tasks/set-swapfile.yml
+
+    # サーバ自体の構成に関する設定
+
+    - name: 「永続データ」はすべて/var/localに寄せるのでディレクトリだけ作成
+      file:
+        path: /var/local/{{ item }}
+        state: directory
+        owner: root
+        group: root
+        mode: 0777
+      with_items:
+        - jenkins_home
+        - nexus_data
+        - postgres_data
+        - yum_repo
+        - letsencrypt
+        - sonarqube
+
+    - name: sonarqubeのプラグインフォルダを作成
+      file:
+        path: /var/local/sonarqube/plugins
+        state: directory
+        owner: root
+        group: root
+        mode: 0777
+
+    - name: このサーバのデータ(/var/local)全体をバックアップするスクリプトを設置
+      copy:
+        src: ./scripts/backup_ci_local_all_data
+        dest: /etc/cron.monthly
+        mode: 0755
+
+    - name: vm設定値で「メモリマップの領域の最大数」を設定(Elasticsearch対策)
+      copy:
+        src: ./resources/etc/sysctl.d/01-vm.conf
+        dest: /etc/sysctl.d/01-vm.conf
+        mode: 0644
+
+    # CI/静的解析/インハウスリポジトリの構築をdocker-composeで
+
+    - name: dcoker-composeのファイルをコピー
+      copy:
+        src: ./docker-compose
+        dest: /var/local
+
+    - name: docker-composeを実行
+      docker_compose:
+        project_src: /var/local/docker-compose
+        files:
+          - docker-compose.yml
+        state: present

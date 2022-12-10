@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# 「Let's Encryptの証明書を定期的に取得する」スクリプト。
+#
+
+LOG_FILE=/var/log/renew_letsencrypt.log
+
+# もうnginxが動き出しているので、それを利用する
+echo "$(date) Let's ecryptからサーバ証明書を更新します。" >> ${LOG_FILE}
+certbot renew --force-renewal --webroot -w /usr/share/nginx/html --agree-tos -n ${SERTBOT_OPTIONS} >> ${LOG_FILE} 2>&1
+if [ ${?} != 0 ]; then
+    echo "$(date) 証明書の更新に失敗しました。" >> ${LOG_FILE}
+    exit 1
+fi
+
+echo "$(date) 証明書の更新に成功しました。" >> ${LOG_FILE}
+
+exit 0

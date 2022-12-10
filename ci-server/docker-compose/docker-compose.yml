@@ -1,0 +1,79 @@
+version: '3'
+
+services:
+  jenkins:
+    build:
+      context: ./jenkins
+    container_name: ci_jenkins
+    ports:
+      - 8080:8080
+      - 49600:49600
+    volumes:
+      - /var/local/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes/:/var/lib/docker/volumes/
+      - /var/local/:/var/local/
+    links:
+      - sonarqube:sonarqube
+      - postgres_db:postgres_db
+    restart: unless-stopped
+  nexus:
+    image: sonatype/nexus
+    container_name: ci_nexus
+    ports:
+      - 8081:8081
+    volumes:
+      - /var/local/nexus_data:/sonatype-work
+    restart: unless-stopped
+  postgres_db:
+    build:
+      context: ./postgres_db
+    container_name: ci_postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/local/postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+  sonarqube:
+    image: sonarqube:8.1-community-beta
+    container_name: ci_sonarqube
+    ports:
+      - 9000:9000
+      - 9200:9200
+    environment:
+      - sonar.jdbc.username=sonarqube
+      - sonar.jdbc.password=sonarqube
+      - sonar.jdbc.url=jdbc:postgresql://postgres_db:5432/sonarqube
+    volumes:
+      - /var/local/sonarqube/plugins:/opt/sonarqube/extensions/plugins
+    depends_on:
+      - postgres_db
+    links:
+      - postgres_db:postgres_db
+    ulimits:  # elasticsearchでの下限チェック対策
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+    restart: unless-stopped
+  nginx:
+    build:
+      context: ./nginx
+    container_name: ci_nginx
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - SERVER_NAME=ci-server.example.com
+    volumes:
+      - /var/local/yum_repo/:/var/local/yum_repo/
+      - /var/local/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - jenkins
+      - sonarqube
+      - nexus
+    links:
+      - jenkins:jenkins
+      - sonarqube:sonarqube
+      - nexus:nexus
+    restart: unless-stopped
