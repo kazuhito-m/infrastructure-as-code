@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# 週一sonarqubeデータベースバックアップスクリプト。
+#
+
+export BACKUP_DIR=/var/local/sonarqube/backup/db
+export BACKUP_FILE_MAX=12
+
+# デイレクトリはなければ作る
+mkdir -p ${BACKUP_DIR}
+
+# DBを作る元となったスクリプトから「DBの接続設定」を抽出。
+db_name=$(cat /docker-entrypoint-initdb.d/*.sql | grep 'CREATE DATABASE' |  cut -f3 -d' ')
+db_user=$(cat /docker-entrypoint-initdb.d/*.sql | grep 'CREATE USER' |  cut -f3 -d' ')
+
+# バックアップ取得
+backup_file_name=${db_name}_$(date '+%Y%m%d%H%M%S').dump
+backup_file_path=${BACKUP_DIR}/${backup_file_name}
+
+/usr/local/bin/pg_dump -U ${db_user} ${db_name} > ${backup_file_path}
+gzip ${backup_file_path}
+
+# 古いものがあれば消す(ローテート)
+pushd ${BACKUP_DIR}
+file_count=$(find . -type f | wc -l)
+excess_count=$(expr ${file_count} - ${BACKUP_FILE_MAX})
+if [ ${excess_count} -gt 0 ]; then
+  ls -trF | grep -v '/' | head -n ${excess_count} | xargs rm
+fi
+popd

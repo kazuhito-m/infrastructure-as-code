@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: .
+    container_name: test_ci_nginx
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - SERVER_NAME=manage.kazuhito.ga
+      - SERTBOT_OPTIONS=--staging
+    restart: unless-stopped
