@@ -28,6 +28,7 @@
           - parted
           - dnsutils
           - unzip
+          - file
 
   - block:
 
@@ -44,7 +45,7 @@
   - block:
 
     - name: Swapをファイルで設定する。
-      include_tasks: tasks/generate-and-mount-swapfile.yml
+      include_tasks: tasks/generate_and_mount_swapfile.yml
 
   - block: 
 
