@@ -69,3 +69,9 @@
         fstype: nfs
         opts: "user,auto"
         state: mounted
+
+    - name: バックアップスクリプトを毎日実行cronに登録。
+      copy:
+        src: ./resources/etc/cron.daily/backup_backup_daily.sh
+        dest: /etc/cron.daily
+        mode: 0755
