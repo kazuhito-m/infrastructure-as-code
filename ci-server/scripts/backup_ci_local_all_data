@@ -1,0 +1,85 @@
+#!/bin/bash
+#
+# ciサーバの「全データ」である、/var/local の全体バックアップを行うスクリプト。
+#
+# 20GB近くを外へとばすことは難しいため、三浦持ちのcloudatcostのストレージに投げる。(タダなんで)
+#
+
+CLOUDATCOST_STRAGE_USERNAME="no specific"
+CLOUDATCOST_STRAGE_PASSWORD="no specific"
+
+function upload_cloudatcost_strage() {
+
+    target_local_file=${1}
+
+    echo "${target_local_file} をアップロードします。"
+
+    curl -o /dev/null --dump-header -  https://download.cloudatcost.com/user/manage-check.php -X POST \
+    -d "username=${CLOUDATCOST_STRAGE_USERNAME}" \
+    -d "password=${CLOUDATCOST_STRAGE_PASSWORD}&submit=" \
+    > ./result.log
+
+    grep 'login.php?error' ./result.log > /dev/null
+    if [ $? -eq 0 ] ; then
+        echo 'ユーザorパスワードが間違っています。'
+        exit 128
+    fi
+
+    session_cookie=`grep 'Set-Cookie:' ./result.log | sed -e 's/.*PHPSESSID/PHPSESSID/g' | sed -e 's/; .*//g'`
+
+    curl https://download.cloudatcost.com/upload.php -X POST \
+    -H "Cookie: ${session_cookie}" \
+    -F "file=@${target_local_file}" \
+    > ./result.log
+
+    if [ $? -ne 0 ] ; then
+        echo 'アップロード時にエラーが発生しました。'
+        cat ./result.log
+        exit 128
+    fi
+
+    grep '^1' ./result.log > /dev/null
+    if [ $? -ne 0 ] ; then
+        echo 'アップロード時にエラーが発生しました。'
+        cat ./result.log
+        exit 128
+    fi
+
+    file_key=`sed 's/^1.//g' ./result.log`
+    echo "アップロード成功。 http://download.cloudatcost.com/download/${file_key}"
+}
+
+export LOG_FILE=/var/log/$(basename ${0} | sed -e 's/\..*$/.log/g').log # スクリプト名で末尾.log
+exec 2> >(tee -a ${LOG_FILE}) 1>&2 # このスクリプトの全ての出力をログファイルへ
+
+# main.
+
+echo "$(date '+%Y/%m/%d %H:%M:%S') バックアップを開始します。"
+
+file_prefix="backup_ci_local_$(date '+%Y%m%d%H%M%S')_"
+backup_dir=/tmp/backup
+backup_file_path=${backup_dir}/${file_prefix}.zip
+
+# 一応、前回分とか残ってないか削除。
+rm -rf ${backup_dir}
+mkdir ${backup_dir}
+cd ${backup_dir}
+
+echo "zipping中... ${backup_file_path}"
+zip -q -r ${backup_file_path} /var/local
+
+echo "ファイル分割中..."
+split -d -a 3 -b 1G ${backup_file_path} ${file_prefix}
+rm -f ${backup_file_path}
+
+echo "ファイル転送中..."
+for i in $(ls) ; do
+    last_zip_name=${i}_zip
+    mv ${i} ${last_zip_name}
+    upload_cloudatcost_strage ${last_zip_name}
+done
+
+# 後片付け。ディレクトリ削除。
+rm -rf ${backup_dir}
+
+echo "$(date '+%Y/%m/%d %H:%M:%S') バックアップが完了しました。"
