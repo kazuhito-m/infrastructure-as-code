@@ -11,4 +11,4 @@ hachiro
 
 以下を責務とする。
 
-1. 三浦家用GROWIのWiki
+1. パーソナルなGrowiWiki
