@@ -19,6 +19,12 @@
     dest: /etc/nginx/sites-available/miura_wiki.conf
   when: not domain_file.stat.exists
 
+- name: バーチャルドメインの設定ファイルを有効にする。
+  file:
+    src: /etc/nginx/sites-available/miura_wiki.conf
+    dest: /etc/nginx/sites-enabled/miura_wiki.conf
+    state: link
+
 - name: デバッグ「ファイルが在ったか判定」の判定時期を確認。
   debug:
     msg: "domain_file.stat:{{ domain_file.stat }}"
