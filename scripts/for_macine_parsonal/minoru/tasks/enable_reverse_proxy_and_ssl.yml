@@ -25,6 +25,15 @@
     dest: /etc/nginx/sites-enabled/wiki.conf
     state: link
 
+- name: 証明書の取得が必要かどうかをディレクトリの存在有無で確かめる。
+  stat:
+    path: "/etc/letsencrypt/archive/{{ wiki_server_domain_name }}"
+  register: cert_dir
+
+- name: SertBotを使いLetsEncriptから証明書を取得しnginxの設定も書き換える。
+  shell: certbot --nginx --agree-tos --non-interactive -d {{ wiki_server_domain_name }} -m {{ wiki_server_domain_email }}
+  when: not cert_dir.stat.exists
+
 - name: デバッグ「ファイルが在ったか判定」の判定時期を確認。
   debug:
     msg: "wiki_server_domain_name:{{ wiki_server_domain_name }}"

@@ -14,5 +14,3 @@ ansible-playbook \
     --ask-pass \
     --ask-become-pass \
     -e 'ansible_python_interpreter=/usr/bin/python3'
-
-
