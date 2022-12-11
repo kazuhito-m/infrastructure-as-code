@@ -1,5 +1,5 @@
 # coding:utf-8
-# for Debian(Raspberry PI OS 11) 11
+# for Raspberry PI OS 11
 
 - hosts: all
   become: yes
