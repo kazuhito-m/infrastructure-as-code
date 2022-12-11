@@ -72,6 +72,6 @@
 
     - name: バックアップスクリプトを毎日実行cronに登録。
       copy:
-        src: ./resources/etc/cron.daily/backup_backup_daily.sh
+        src: ./resources/etc/cron.daily/backup_backup_daily
         dest: /etc/cron.daily
         mode: 0755
