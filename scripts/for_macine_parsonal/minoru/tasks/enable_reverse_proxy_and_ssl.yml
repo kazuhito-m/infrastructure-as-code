@@ -10,21 +10,21 @@
 
 - name: バーチャルドメイン設定ファイルの存在確認。
   stat:
-    path: "/etc/nginx/sites-available/miura_wiki.conf"
+    path: "/etc/nginx/sites-available/wiki.conf"
   register: domain_file
 
 - name: バーチャルドメインの設定ファイルを追加。
-  copy:
-    src: resources/etc/nginx/sites-available/miura_wiki.conf
-    dest: /etc/nginx/sites-available/miura_wiki.conf
+  template:
+    src: resources/etc/nginx/sites-available/wiki.conf
+    dest: /etc/nginx/sites-available/wiki.conf
   when: not domain_file.stat.exists
 
 - name: バーチャルドメインの設定ファイルを有効にする。
   file:
-    src: /etc/nginx/sites-available/miura_wiki.conf
-    dest: /etc/nginx/sites-enabled/miura_wiki.conf
+    src: /etc/nginx/sites-available/wiki.conf
+    dest: /etc/nginx/sites-enabled/wiki.conf
     state: link
 
 - name: デバッグ「ファイルが在ったか判定」の判定時期を確認。
   debug:
-    msg: "domain_file.stat:{{ domain_file.stat }}"
+    msg: "wiki_server_domain_name:{{ wiki_server_domain_name }}"

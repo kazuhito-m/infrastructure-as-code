@@ -5,8 +5,8 @@
   become: yes
   become_user: root
 
-  vars:
-    host_name: minoru
+  vars_files:
+    - settings.yml
 
   tasks:
 
