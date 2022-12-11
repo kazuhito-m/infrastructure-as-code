@@ -1,5 +1,5 @@
 # coding:utf-8
-# for Debian(Raspberry PI OS 11) 11
+# for Raspberry PI OS 11
 
 - hosts: all
   become: yes
@@ -39,11 +39,7 @@
         name:
           - tree
           - byobu
-          - ntp
           - curl
-          - apt-transport-https
-          - gnupg
-          - build-essential
 
   - block:
 
@@ -65,18 +61,10 @@
 
   - block:
 
-    - name: NTP設定ファイルを反映。
+    - name: NTPクライアント設定ファイルを反映。
       copy: 
-        src: resources/etc/ntp.conf
-        dest: /etc/ntp.conf
+        src: resources/etc/systemd/timesyncd.conf
+        dest: /etc/systemd/timesyncd.conf
         backup: yes
-
-    - name: NTPサービス再起動。
-      systemd:
-        name: ntp.service
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
-
 
 # TODO 「ファイルが無かったら」起点で、SwapFileを設定する。
