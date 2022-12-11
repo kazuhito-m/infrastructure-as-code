@@ -42,6 +42,12 @@
       hostname:
         name: hachiro
 
+    - name: NTPクライアント設定ファイルを反映。
+      copy: 
+        src: resources/etc/systemd/timesyncd.conf
+        dest: /etc/systemd/timesyncd.conf
+        backup: yes
+
   - block:
 
     - name: Swapをファイルで設定する。
