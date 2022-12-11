@@ -1,0 +1,24 @@
+# coding:utf-8
+# for Raspberry PI OS 11
+
+- name: Webサーバと証明書更新ツールをインストール。
+  ansible.builtin.apt:
+    name:
+      - nginx
+      - certbot
+      - python3-certbot-nginx
+
+- name: バーチャルドメイン設定ファイルの存在確認。
+  stat:
+    path: "/etc/nginx/sites-available/miura_wiki.conf"
+  register: domain_file
+
+- name: バーチャルドメインの設定ファイルを追加。
+  copy:
+    src: resources/etc/nginx/sites-available/miura_wiki.conf
+    dest: /etc/nginx/sites-available/miura_wiki.conf
+  when: not domain_file.stat.exists
+
+- name: デバッグ「ファイルが在ったか判定」の判定時期を確認。
+  debug:
+    msg: "domain_file.stat:{{ domain_file.stat }}"

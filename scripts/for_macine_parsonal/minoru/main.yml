@@ -67,4 +67,7 @@
         dest: /etc/systemd/timesyncd.conf
         backup: yes
 
-# TODO 「ファイルが無かったら」起点で、SwapFileを設定する。
+  - block:
+
+    - name: リバースプロキシ用の設定とLet's EncryptのSSL証明書定期更新を有効に。
+      include_tasks: tasks/enable_reverse_proxy_and_ssl.yml
