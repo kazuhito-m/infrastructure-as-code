@@ -23,10 +23,11 @@ tmp_file_path=${TMP_DIR}/${file_name}
 mkdir -p ${BACKUP_DIR}
 
 echo "archive中... ${tmp_file_path}"
-tar czf ${tmp_file_path} ${TARGET_DIR} \
-  --exclude "${TARGET_DIR}/data/mongo/db/journal" \
-  --exclude "${TARGET_DIR}/data/mongo/db/diagnostic.data" 
-  
+tar \
+  --exclude="${TARGET_DIR}/data/mongo/db/diagnostic.data" \
+  --exclude="${TARGET_DIR}/data/mongo/db/journal" \
+  -czf ${tmp_file_path} ${TARGET_DIR}
+
 echo "ファイル転送中..."
 chown kazuhito:kazuhito ${tmp_file_path}  # 環境依存の問題への苦肉の策。
 sudo -u kazuhito mv ${tmp_file_path} ${backup_file_path}
