@@ -1,5 +1,7 @@
 # 手動でやったおためし作業の記録
 
+無改造の `HP Compaq t5735` にDebian入れてGrowiを動かそうとした試行錯誤の記録。
+
 容量不足に苦しんだので、次回入れるときには [構成を絞る](https://www.mk-mode.com/blog/2021/09/02/debian-11-installation-for-small-server/) 感じのインストール方法にしたい。
 
 ## サーバ自体へのDebianインストール
