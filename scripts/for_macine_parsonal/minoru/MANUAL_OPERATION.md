@@ -15,11 +15,14 @@
 2. SDカードを指して、RaspberryPI起動
 3. 最新のRaspaberryOSでは「ユーザを最初に指定する」のでkazuhitoを追加
 4. 再起動
-5. sudoは最初からかかるようになってるが、「パスワードを必ず指定するように」の設定を足す
-    - /etc/sudoers.d/10_pi-nopasswd ファイルを編h宗旨
-6. systemctl enable ssh && reboot
-7. 外からsshが接続できるか確認、一度ログインする
-8. `ip a` を叩き、IPアドレスを把握しておく
+5. 外からsshが接続できるか確認、一度ログインする
+6. sudoは最初からかかるようになってるが、「パスワードを必ず指定するように」の設定を足す
+    - /etc/sudoers.d/10_pi-nopasswd ファイルを編集し、ファイルを空にする
+7. ip固定
+    - ansibleの仕事で「外から参照出来る」必要が有り、Routerからこのマシンのhttpsポートが見えていないといけないため
+    - `/etc/dhcpcd.conf` を編集して、IP固定する
+8. reboot
+9.  変更したipアドレスでログインを確認
 
 ### Ansbileでのプロビジョニング
 
