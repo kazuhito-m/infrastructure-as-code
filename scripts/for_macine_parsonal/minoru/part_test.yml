@@ -1,0 +1,16 @@
+# coding:utf-8
+# for Raspberry PI OS 11
+
+- hosts: all
+  become: yes
+  become_user: root
+
+  vars_files:
+    - settings.yml
+
+  tasks:
+
+  - block:
+
+    - name: Tasksにある部品ファイルだけを実行。
+      include_tasks: tasks/enable_reverse_proxy_and_ssl.yml

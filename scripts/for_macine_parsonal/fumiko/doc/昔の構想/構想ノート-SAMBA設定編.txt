@@ -1,8 +1,8 @@
-¡Samba‚ÌƒEƒBƒ‹ƒXƒ`ƒFƒbƒN‹@\ì¬
+ï¿½ï¿½Sambaï¿½ÌƒEï¿½Bï¿½ï¿½ï¿½Xï¿½`ï¿½Fï¿½bï¿½Nï¿½@ï¿½\ï¿½ì¬
 
-¦–{“–‚ÍAsamba-vscan‚ðŽg‚Á‚½ƒŠƒAƒ‹ƒ^ƒCƒ€ƒXƒLƒƒƒ“‚ðs‚È‚¨‚¤‚Æ‚¨‚à‚Á‚½‚ªA
-î•ñ‚ª­‚È‚¢AƒpƒbƒP[ƒWƒIƒ“ƒŠ[‚Å‚Ío—ˆ‚È‚¢A•‰‰×‚ª‘å‚«‚¢‚È‚Ç‚Ìî•ñ‚É‚æ‚è’f”OB
-‘å‚«‚­‘Ã‹¦‚µ‚ÄAuclamav‚É‚æ‚éTˆê‘Sƒtƒ@ƒCƒ‹ƒ`ƒFƒbƒN¨Œ‹‰Êƒ[ƒ‹‘—Mv‚Å”[“¾‚·‚éB
+ï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½ÍAsamba-vscanï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½È‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A
+ï¿½ï¿½ñ‚ªï¿½ï¿½È‚ï¿½ï¿½Aï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Å‚Íoï¿½ï¿½ï¿½È‚ï¿½ï¿½Aï¿½ï¿½ï¿½×‚ï¿½ï¿½å‚«ï¿½ï¿½ï¿½È‚Ç‚Ìï¿½ï¿½É‚ï¿½ï¿½fï¿½Oï¿½B
+ï¿½å‚«ï¿½ï¿½ï¿½Ã‹ï¿½ï¿½ï¿½ï¿½ÄAï¿½uclamavï¿½É‚ï¿½ï¿½Tï¿½ï¿½Sï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½Êƒï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½vï¿½Å”[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
 vi /etc/cron.weekly/all_viruscheck.bsh
 
@@ -12,61 +12,61 @@ vi /etc/cron.weekly/all_viruscheck.bsh
       4 # check log file (tempolaly)
       5 export LOG_FILE=/tmp/viruscheck.log
       6
-      7 # ‘S‚Ä‚Ìƒtƒ@ƒCƒ‹‚Ìƒ`ƒFƒbƒN‚ðŠJŽn
+      7 # ï¿½Sï¿½Ä‚Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Ìƒ`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½Jï¿½n
       8 clamscan -ri --exclude-dir=/sys  / > $LOG_FILE
       9
-     10 # uƒGƒ‰[‚Í‚Ov‚Ì‹Lq‚ªŒ©‚Â‚©‚ê‚Î
+     10 # ï¿½uï¿½Gï¿½ï¿½ï¿½[ï¿½Í‚Oï¿½vï¿½Ì‹Lï¿½qï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½
      11 grep -q 'Infected files: 0' $LOG_FILE
      12 if [ $? == 0 ] ; then
-     13         # Œ©‚Â‚©‚Á‚½‚ç³íAƒtƒ@ƒCƒ‹ŒãŽn––‚µ‚Ä³íI—¹
+     13         # ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç³ï¿½ï¿½Aï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½Iï¿½ï¿½
      14         rm $LOG_FILE
      15         exit 0
      16 else
-     17         # Œ©‚Â‚©‚ç‚È‚©‚Á‚½‚çˆÙíAƒtƒ@ƒCƒ‹‚Ì“à—e‚ð•W€o—Í‚É‘‚«o‚µAI—¹
+     17         # ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùï¿½Aï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì“ï¿½ï¿½eï¿½ï¿½Wï¿½ï¿½ï¿½oï¿½Í‚Éï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Aï¿½Iï¿½ï¿½
      18         cat $LOG_FILE
      19         rm $LOG_FILE
      20         exit 1
      21 fi
 
-ˆÙí‚ª‚ ‚ê‚ÎƒGƒ‰[I—¹••W€o—Í‚ÉŒ‹‰Ê‚ðo‚·¨cron‚ÌŽdŽ–‚Åƒ[ƒ‹‚ð”ò‚Î‚µ‚Ä‚­‚éc‚Í‚¸B
+ï¿½Ùí‚ªï¿½ï¿½ï¿½ï¿½ÎƒGï¿½ï¿½ï¿½[ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½oï¿½Í‚ÉŒï¿½ï¿½Ê‚ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½cronï¿½ÌŽdï¿½ï¿½ï¿½Åƒï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Î‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½cï¿½Í‚ï¿½ï¿½B
 
-¡samba-vscan‚ðƒrƒ‹ƒh‚·‚é
+ï¿½ï¿½samba-vscanï¿½ï¿½ï¿½rï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½
 
-¦‚¢‚ë‚¢‚ëÈ—ª
+ï¿½ï¿½ï¿½ï¿½ï¿½ë‚¢ï¿½ï¿½È—ï¿½
 
 make
 
-‚¨AƒGƒ‰[‚È‚µH”Žq”²‚¯‚¾‚ª‚¤‚Ü‚­s‚Á‚½B(‚»‚Ì‘O‚ÉŽŽsöŒë‚Å”¼“ú‚Á”ò‚ñ‚Å‚é‚ª‚—)
+ï¿½ï¿½ï¿½Aï¿½Gï¿½ï¿½ï¿½[ï¿½È‚ï¿½ï¿½Hï¿½ï¿½ï¿½qï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½B(ï¿½ï¿½ï¿½Ì‘Oï¿½ÉŽï¿½ï¿½sï¿½ï¿½ï¿½ï¿½Å”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‚é‚ªï¿½ï¿½)
 
 make install
 
-‚ÅAƒGƒ‰[‚Í”­¶B
+ï¿½ÅAï¿½Gï¿½ï¿½ï¿½[ï¿½Í”ï¿½ï¿½ï¿½ï¿½B
 
 Make Directory /usr/lib/samba/vfs
 Install VFS Modules:
 vscan-antivir.so vscan-clamav.so vscan-fprotd.so vscan-fsav.so vscan-icap.so vscan-kavp.so vscan-mcdaemon.so vscan-mksd.so vscan-oav.so vscan-sophos.so vscan-trend.so
 to /usr/lib/samba/vfs with @SAMBA_INSTALLPERMS_BIN@
 /usr/bin/install: invalid mode `@SAMBA_INSTALLPERMS_BIN@'
-make: *** [install] ƒGƒ‰[ 1
+make: *** [install] ï¿½Gï¿½ï¿½ï¿½[ 1
 
-‚È‚É‚â‚çAMakefile“à‚Ì "install -m " ‚É—^‚¦‚éƒpƒ‰ƒ[ƒ^‚ª•Ï‚È–Í—lB–³“ï‚È’l‚É‘‚«Š·‚¦‚éB
+ï¿½È‚É‚ï¿½ï¿½AMakefileï¿½ï¿½ï¿½ï¿½ "install -m " ï¿½É—^ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½ï¿½ï¿½Ï‚È–Í—lï¿½Bï¿½ï¿½ï¿½ï¿½È’lï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
 vi Makefile
 
      64 # SAMBA_INSTALLPERMS_BIN = @SAMBA_INSTALLPERMS_BIN@
      65 SAMBA_INSTALLPERMS_BIN = 0644
 
-‚¤‚ñB‚¤‚Ü‚­ƒCƒ“ƒXƒg[ƒ‹‚Å‚«‚½B
+ï¿½ï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Cï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½B
 
 
-EdebƒpƒbƒP[ƒW‰»‚ðŽŽ‚Ý‚é
+ï¿½Edebï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý‚ï¿½
 
-ƒRƒR‚ðŽQl‚ÉŽŽsöŒë‚µ‚Ä‚Ý‚éB
+ï¿½Rï¿½Rï¿½ï¿½ï¿½Qï¿½lï¿½ÉŽï¿½ï¿½sï¿½ï¿½ï¿½ë‚µï¿½Ä‚Ý‚ï¿½B
 http://www015.upp.so-net.ne.jp/unixlife/linux/de-deb.html
 
 apt-get install build-dep dh-make autogen automake fakeroot
 
-ã‹Lì‹ÆAsamba-vscan‚Ì./configure ’¼‘O‚Ü‚Å‚Ìì‹Æ‚ð‚µ‚½ŒãAˆÈ‰º‚Ì’Ê‚è•ÏX‚·‚é
+ï¿½ï¿½Lï¿½ï¿½ÆAsamba-vscanï¿½ï¿½./configure ï¿½ï¿½ï¿½Oï¿½Ü‚Å‚Ìï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½È‰ï¿½ï¿½Ì’Ê‚ï¿½ÏXï¿½ï¿½ï¿½ï¿½
 
 mv samba-vscan samba-vscan-0.3.6c-beta6
 cd samba-vscan-0.3.6c-beta6
@@ -79,21 +79,21 @@ vi configure
  
    6907 s,@SAMBA_INSTALLPERMS_BIN@,$SAMBA_INSTALLPERMS_BIN,;t t
 
-¦configureI—¹Œã‚ÌMakefile“à—e‚ÌŒÅ’è‚Ì‚½‚ßAã‹L‚ð’Ç‰ÁB
+ï¿½ï¿½configureï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Makefileï¿½ï¿½ï¿½eï¿½ÌŒÅ’ï¿½Ì‚ï¿½ï¿½ßAï¿½ï¿½Lï¿½ï¿½Ç‰ï¿½ï¿½B
 
 cd ../
 tar -cvzf samba-vscan-0.3.6c-beta6.tgz samba-vscan-0.3.6c-beta6/
 cd ./samba-vscan-0.3.6c-beta6
 dh_make -e kazuhito.sumpic@gmail.com -f ../samba-vscan-0.3.6c-beta6.tgz
 
-‚±‚ê‚Ådebƒtƒ@ƒCƒ‹‚ðì‚é‚½‚ß‚ÌÞ—¿‚ªA./debian ‚Éo—Í‚³‚ê‚½B
-control , copyright , changelog , rules ƒtƒ@ƒCƒ‹‚ðŠm”FE•ÏXB
+ï¿½ï¿½ï¿½ï¿½ï¿½debï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ÌÞ—ï¿½ï¿½ï¿½ï¿½A./debian ï¿½Éoï¿½Í‚ï¿½ï¿½ê‚½ï¿½B
+control , copyright , changelog , rules ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½Eï¿½ÏXï¿½B
 
-EƒpƒbƒP[ƒW‚Ìì¬‚ÆƒCƒ“ƒXƒg[ƒ‹
+ï¿½Eï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½Ìì¬ï¿½ÆƒCï¿½ï¿½ï¿½Xï¿½gï¿½[ï¿½ï¿½
 
 dpkg-buildpackage -rfakeroot
 
-ƒrƒ‹ƒh¬Œ÷IˆêŠK‘wã‚ÉdebŒn‚Ìƒtƒ@ƒCƒ‹ŒQ‚ªoŒ»
+ï¿½rï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½Kï¿½wï¿½ï¿½ï¿½debï¿½nï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½Qï¿½ï¿½ï¿½oï¿½ï¿½
 
 
 -rw-r--r--  1 root  root    13085 2010-09-05 03:11 samba-vscan_0.3.6c-beta6-1.diff.gz
@@ -102,7 +102,7 @@ dpkg-buildpackage -rfakeroot
 -rw-r--r--  1 root  root    24576 2010-09-05 03:12 samba-vscan_0.3.6c-beta6-1_i386.deb
 -rw-r--r--  1 root  root  5210090 2010-09-05 02:45 samba-vscan_0.3.6c-beta6.orig.tar.gz
 
-‚ªAŠÌS‚Ìdeb‚É ƒoƒCƒiƒŠƒtƒ@ƒCƒ‹‚ª“ü‚Á‚Ä‚¢‚È‚¢B
+ï¿½ï¿½ï¿½Aï¿½ÌSï¿½ï¿½debï¿½ï¿½ ï¿½oï¿½Cï¿½iï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½B
 
 debian:/home/tmp# dpkg -c samba-vscan_0.3.6c-beta6-1_i386.deb
 
@@ -122,23 +122,23 @@ drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/share/doc/samba-vscan/
 drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/sbin/
 drwxr-xr-x root/root         0 2010-09-05 03:12 ./usr/bin/
 
-‚¤[‚ñA‚í‚¯‚í‚©‚ç‚ñB‚Ü‚¾‚Ü‚¾“¹‚Í‰“‚»‚¤‚¾B
+ï¿½ï¿½ï¿½[ï¿½ï¿½Aï¿½í‚¯ï¿½í‚©ï¿½ï¿½ï¿½Bï¿½Ü‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½Í‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
-¡‚»‚Ì‘¼Esamba”÷’²®
+ï¿½ï¿½ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Esambaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-EQUOTA“±“ü
+ï¿½EQUOTAï¿½ï¿½ï¿½ï¿½
 
-¦HDD‚ÌƒtƒH[ƒ}ƒbƒg‚©‚ç‚¹‚È‚ ‚©‚ñ‚©‚çc–{”Ô‹@‚ÅB
+ï¿½ï¿½HDDï¿½Ìƒtï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½ï¿½ï¿½ç‚¹ï¿½È‚ï¿½ï¿½ï¿½ï¿½ñ‚©‚ï¿½cï¿½{ï¿½Ô‹@ï¿½ÅB
 
-EƒSƒ~” ‹@”\’Ç‰Á
+ï¿½Eï¿½Sï¿½~ï¿½ï¿½ï¿½@ï¿½\ï¿½Ç‰ï¿½
 
      25         vfs objects = vscan-clamav audit recycle
      27         recycle:repository = .trash
      28         recycle:keeptree = yes
 
-¡WindowsƒhƒƒCƒ“\’z
+ï¿½ï¿½Windowsï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½\ï¿½z
 
-Esamba‚Ì’Ç‰ÁÝ’è
+ï¿½Esambaï¿½Ì’Ç‰ï¿½ï¿½Ý’ï¿½
 
 vi /etc/samba/smb.conf
 
@@ -151,33 +151,33 @@ vi /etc/samba/smb.conf
      24         domain master = Yes
      33         local master = Yes
 
-Eƒ}ƒVƒ“ƒAƒJƒEƒ“ƒg(`$)ì¬
+ï¿½Eï¿½}ï¿½Vï¿½ï¿½ï¿½Aï¿½Jï¿½Eï¿½ï¿½ï¿½g(ï¿½`$)ï¿½ì¬
 
 /usr/sbin/groupadd miura
 useradd -g miura -s /bin/false -d /dev/null sumire$
 
-EŠÇ—ŽÒŒ ŒÀ“o˜^
+ï¿½Eï¿½Ç—ï¿½ï¿½ÒŒï¿½ï¿½ï¿½ï¿½oï¿½^
 
-¦ŠÇ—ŽÒŒ ŒÀ‚ðŽ‚ÂWindowsƒ†[ƒU‚ÍAuid=0(root) or [grobal]‚Ìadmin usersƒpƒ‰ƒ[ƒ^‚ÉŽw’è‚³‚ê‚Ä‚¢‚ésambaƒ†[ƒUB
-sambaƒ†[ƒU‚ð‚Ü‚¾ŒÅ‚ß‚Ä‚¢‚È‚¢‚½‚ßAroot‚ðŽg‚¤B
+ï¿½ï¿½ï¿½Ç—ï¿½ï¿½ÒŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Windowsï¿½ï¿½ï¿½[ï¿½Uï¿½ÍAuid=0(root) or [grobal]ï¿½ï¿½admin usersï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½ÉŽwï¿½è‚³ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½sambaï¿½ï¿½ï¿½[ï¿½Uï¿½B
+sambaï¿½ï¿½ï¿½[ï¿½Uï¿½ï¿½ï¿½Ü‚ï¿½ï¿½Å‚ß‚Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ßArootï¿½ï¿½ï¿½gï¿½ï¿½ï¿½B
 
-Esambaƒ†[ƒU‘¤‚Éroot‚ð’Ç‰Á
+ï¿½Esambaï¿½ï¿½ï¿½[ï¿½Uï¿½ï¿½ï¿½ï¿½rootï¿½ï¿½Ç‰ï¿½
 
 pdbedit -a root
 
-c‚Æ‚µ‚½‚ªA‚¢‚Â‚ÌŠÔ‚É‚©“o˜^‚µ‚Ä‚¢‚½–Í—lBsamba‘¤ƒpƒXƒ[ƒh‚¾‚¯‘‚«Š·‚¦‚éB
+ï¿½cï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Â‚ÌŠÔ‚É‚ï¿½ï¿½oï¿½^ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Í—lï¿½Bsambaï¿½ï¿½ï¿½pï¿½Xï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
 smbpasswd root
 
-‚±‚ÌŒãAÄ‹N“®‚µ‚ÄƒT[ƒo‘¤‚ÍOKB
+ï¿½ï¿½ï¿½ÌŒï¿½Aï¿½Ä‹Nï¿½ï¿½ï¿½ï¿½ï¿½ÄƒTï¿½[ï¿½oï¿½ï¿½ï¿½ï¿½OKï¿½B
 
-EƒNƒ‰ƒCƒAƒ“ƒg‘¤‚ÌÝ’è
+ï¿½Eï¿½Nï¿½ï¿½ï¿½Cï¿½Aï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ÌÝ’ï¿½
 
-ƒhƒƒCƒ“‚É“ü‚Á‚Ä‚Ý‚éB
-ƒhƒƒCƒ“–¼‚¾‚ªAlocal.sumpic.orz.hm ‚Í‘Ê–Ú‚¾‚Á‚½B(’·‚³HƒsƒŠƒIƒhŽO‚Â‚ª‘Ê–ÚH)
-sumpic.orz.hm‚É‚µ‚ÄA‚È‚ñ‚Æ‚©OKB
+ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½Ä‚Ý‚ï¿½B
+ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Alocal.sumpic.orz.hm ï¿½Í‘Ê–Ú‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B(ï¿½ï¿½ï¿½ï¿½ï¿½Hï¿½sï¿½ï¿½ï¿½Iï¿½hï¿½Oï¿½Â‚ï¿½ï¿½Ê–ÚH)
+sumpic.orz.hmï¿½É‚ï¿½ï¿½ÄAï¿½È‚ï¿½Æ‚ï¿½OKï¿½B
 
-EƒƒOƒIƒ“ƒXƒNƒŠƒvƒgÝ’è
+ï¿½Eï¿½ï¿½ï¿½Oï¿½Iï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½Ý’ï¿½
 
 vi /etc/samba/smb.conf
 
@@ -189,7 +189,7 @@ vi /etc/samba/smb.conf
      66         guest ok = Yes
      67         browseable = No
 
-ƒƒOƒIƒ“ƒXƒNƒŠƒvƒg—á
+ï¿½ï¿½ï¿½Oï¿½Iï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ï¿½
 
 logon.bat
 
@@ -197,45 +197,45 @@ net use T: \\192.168.1.190\tmp
 net use P: \\192.168.1.190\data
 
 
-Eƒz[ƒ€ƒfƒBƒŒƒNƒgƒŠ‚ÌŽ©“®ƒ}ƒEƒ“ƒg
+ï¿½Eï¿½zï¿½[ï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ÌŽï¿½ï¿½ï¿½ï¿½}ï¿½Eï¿½ï¿½ï¿½g
 
 vi /etc/samba/smb.conf
 
      36         logon home = \\%L\%U
      37         logon drive = U:
 
-(‘½•ªAlogon home ‚Í‘‚©‚È‚­‚Ä‚àƒfƒtƒHƒ‹ƒg‚Å‚»‚¤‚È‚Á‚Ä‚¢‚éc‹C‚ª‚·‚é)
+(ï¿½ï¿½ï¿½ï¿½ï¿½Alogon home ï¿½Íï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Å‚ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½cï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
 
-¦ŒÂX‚Ìƒ†[ƒU‚ÉÝ’è‚ðŽ{‚·‚É‚Í
+ï¿½ï¿½ï¿½ÂXï¿½Ìƒï¿½ï¿½[ï¿½Uï¿½ÉÝ’ï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½É‚ï¿½
 
-Œ»Ý‚Ìusamba“à‚É‚¨‚¯‚éHome Directoryv‚ðŠm”F
+ï¿½ï¿½ï¿½Ý‚Ìusambaï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½Home Directoryï¿½vï¿½ï¿½ï¿½mï¿½F
 
 pdbedit -v kazuhito
 
 
-`
+ï¿½`
 Home Directory:       \\debianldaptest\kazuhito
-`
+ï¿½`
 
-‚±‚ÌƒfƒBƒŒƒNƒgƒŠ‚ªAWindowsã‚Å U: ƒhƒ‰ƒCƒu‚ÉÝ’è‚³‚ê‚é‚æ‚¤‚ÉƒRƒ}ƒ“ƒh‚ð‘Å‚ÂB
+ï¿½ï¿½ï¿½Ìƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½AWindowsï¿½ï¿½ï¿½ U: ï¿½hï¿½ï¿½ï¿½Cï¿½uï¿½ÉÝ’è‚³ï¿½ï¿½ï¿½æ‚¤ï¿½ÉƒRï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½Å‚ÂB
 
 pdbedit -D U: kazuhito
 
 
-EˆÚ“®ƒvƒƒtƒ@ƒCƒ‹Žü‚è‚ÌÝ’è
+ï¿½Eï¿½Ú“ï¿½ï¿½vï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌÝ’ï¿½
 
-ƒ†[ƒU‚²‚Æ‚ÌƒfƒXƒNƒgƒbƒv‚Ìî•ñ‚È‚Çu‘¼ƒ}ƒVƒ“‚Å‚àŽ‚¿‰z‚¹‚éƒ†[ƒUî•ñv‚ÌŠi”[êŠ‚ÌÝ’èB
-’èÎ‚Æ‚µ‚Ä‚Í"profiles"‚ÆŒ¾‚¤–¼‚Ìsamba‹¤—L‚ðì¬‚µ‚ÄA‚»‚±‚Éƒ†[ƒU‚²‚Æ‚ÌƒfƒBƒŒƒNƒgƒŠ‚ª
-Ž©“®“I‚Éo—ˆ‚é‚æ‚¤‚É‚µ‚Ä‰^—p‚·‚é‚Ì‚ª‹g‚Ì‚æ‚¤‚¾B
+ï¿½ï¿½ï¿½[ï¿½Uï¿½ï¿½ï¿½Æ‚Ìƒfï¿½Xï¿½Nï¿½gï¿½bï¿½vï¿½Ìï¿½ï¿½È‚Çuï¿½ï¿½ï¿½}ï¿½Vï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ï¿½éƒ†ï¿½[ï¿½Uï¿½ï¿½ï¿½vï¿½ÌŠiï¿½[ï¿½êŠï¿½ÌÝ’ï¿½B
+ï¿½ï¿½Î‚Æ‚ï¿½ï¿½Ä‚ï¿½"profiles"ï¿½ÆŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sambaï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ÄAï¿½ï¿½ï¿½ï¿½ï¿½Éƒï¿½ï¿½[ï¿½Uï¿½ï¿½ï¿½Æ‚Ìƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Éoï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½Ä‰^ï¿½pï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½gï¿½Ì‚æ‚¤ï¿½ï¿½ï¿½B
 
-ƒvƒƒtƒ@ƒCƒ‹Ši”[—p‚ÌƒfƒBƒŒƒNƒgƒŠì¬B
-¦’N‚Å‚à•ÏX‚Å‚«‚éƒfƒBƒŒƒNƒgƒŠ‚É‚·‚é‚½‚ßƒXƒeƒBƒbƒL[ƒrƒbƒg‚ð—˜—pB
+ï¿½vï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½iï¿½[ï¿½pï¿½Ìƒfï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ì¬ï¿½B
+ï¿½ï¿½ï¿½Nï¿½Å‚ï¿½ï¿½ÏXï¿½Å‚ï¿½ï¿½ï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½É‚ï¿½ï¿½é‚½ï¿½ßƒXï¿½eï¿½Bï¿½bï¿½Lï¿½[ï¿½rï¿½bï¿½gï¿½ð—˜—pï¿½B
 
 mkdir -p /home/samba/profiles
 chmod 1777 /home/samba/profiles
 
-sambaÝ’èƒtƒ@ƒCƒ‹‘¤
+sambaï¿½Ý’ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½
 
 vi /etc/samba/smb.conf
 
@@ -252,7 +252,7 @@ vi /etc/samba/smb.conf
  
 
 
-EACL(ƒAƒNƒZƒXEƒRƒ“ƒgƒ[ƒ‹EƒŠƒXƒg)‚Ì‹@”\
+ï¿½EACL(ï¿½Aï¿½Nï¿½Zï¿½Xï¿½Eï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½Xï¿½g)ï¿½Ì‹@ï¿½\
 
 
 vi /etc/fstab
@@ -265,24 +265,24 @@ vi /etc/samba/smb.conf
      39         admin users = Administrator
      40         nt acl support = Yes
 
-ã‹LÝ’è‚ÅÄ‹N“®‚·‚ê‚ÎA—LŒø‚É‚È‚éB
-ƒhƒƒCƒ“‚ÉŽQ‰Á‚µ‚½ƒ}ƒVƒ“‚©‚çASambaƒfƒBƒŒƒNƒgƒŠ‚ÉƒAƒNƒZƒX‚µA
-ƒvƒƒpƒeƒB¨ƒZƒLƒ…ƒŠƒeƒB‚ÅAƒ†[ƒU‚ð‘«‚µ‚½‚èAƒAƒNƒZƒXŒ ‚ð•ÏXo—ˆ‚ê‚ÎOKB
-(ã‹L–¢Ý’è‚ÅAƒhƒƒCƒ“‚É“ü‚Á‚½‚¾‚¯‚Å‚ÍuÝ’è‚ª•Û‘¶‚³‚ê‚È‚¢vuƒ†[ƒU’Ç‰Á‚ÅŒ ŒÀ‚Å“{‚ç‚ê‚év‚È‚Ç‚Ì“®‚«‚Æ‚È‚é)
+ï¿½ï¿½Lï¿½Ý’ï¿½ÅÄ‹Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎAï¿½Lï¿½ï¿½ï¿½É‚È‚ï¿½B
+ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ÉŽQï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ASambaï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ÉƒAï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½A
+ï¿½vï¿½ï¿½ï¿½pï¿½eï¿½Bï¿½ï¿½ï¿½Zï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½eï¿½Bï¿½ÅAï¿½ï¿½ï¿½[ï¿½Uï¿½ð‘«‚ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Aï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½ï¿½ÏXï¿½oï¿½ï¿½ï¿½ï¿½ï¿½OKï¿½B
+(ï¿½ï¿½Lï¿½ï¿½ï¿½Ý’ï¿½ÅAï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‚Íuï¿½Ý’è‚ªï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½vï¿½uï¿½ï¿½ï¿½[ï¿½Uï¿½Ç‰ï¿½ï¿½ÅŒï¿½ï¿½ï¿½ï¿½Å“{ï¿½ï¿½ï¿½ï¿½vï¿½È‚Ç‚Ì“ï¿½ï¿½ï¿½ï¿½Æ‚È‚ï¿½)
 
 
-Samba‚ð’Ê‚µ‚ÄÝ’è‚µ‚½acl‚ÌÝ’è‚ª‚ ‚éê‡ALinux‚Ì•W€ƒAƒNƒZƒXŒ ‚æ‚èŠg’£‚³‚ê‚½‚à‚Ì‚Í"+"‚Å•\Ž¦‚³‚ê‚éB
+Sambaï¿½ï¿½Ê‚ï¿½ï¿½ÄÝ’è‚µï¿½ï¿½aclï¿½ÌÝ’è‚ªï¿½ï¿½ï¿½ï¿½ê‡ï¿½ALinuxï¿½Ì•Wï¿½ï¿½ï¿½Aï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ì‚ï¿½"+"ï¿½Å•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
 drwxr-xr-x   7 root   root       4096 2010-09-07 01:44 ..
 drwx------   4 nobody nogroup    4096 2010-09-09 00:44 .trash
 drwxr-xr-x+  2 nobody nogroup    4096 2010-09-09 00:44 abc
 -
 
-Linux‘¤‚Å‚ÌAcl‚ÌŠm”F/Ý’è‚·‚éB‚Ü‚¸aclƒpƒbƒP[ƒW‚ð“±“üB
+Linuxï¿½ï¿½ï¿½Å‚ï¿½Aclï¿½ÌŠmï¿½F/ï¿½Ý’è‚·ï¿½ï¿½Bï¿½Ü‚ï¿½aclï¿½pï¿½bï¿½Pï¿½[ï¿½Wï¿½ð“±“ï¿½ï¿½B
 
 apt-get install acl
 
-ƒtƒHƒ‹ƒ_Eƒtƒ@ƒCƒ‹‚Ìacl‚ÌŠm”F‚ÍAgetfacl ƒRƒ}ƒ“ƒh‚ÅŠm”FB
+ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½Eï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½aclï¿½ÌŠmï¿½Fï¿½ÍAgetfacl ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ÅŠmï¿½Fï¿½B
 
 getfacl abc
 
@@ -300,7 +300,7 @@ default:group::---
 default:mask::rwx
 default:other::---
 
-‚¹‚Á‚Æ‚·‚é‚É‚ÍAsetfacl ‚ðŽg‚¤BˆÈ‰º—á‚Íabc‚Éclamav‚³‚ñ‚Ì“Ç‚ÝŽæ‚èŒ ŒÀ‚ð•t‰ÁB
+ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½É‚ÍAsetfacl ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Bï¿½È‰ï¿½ï¿½ï¿½ï¿½abcï¿½ï¿½clamavï¿½ï¿½ï¿½ï¿½Ì“Ç‚ÝŽï¿½èŒ ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½B
 
 setfacl -d u:clamav:r abc
 
@@ -321,9 +321,9 @@ default:mask::rwx
 default:other::---
 
 
-EWindows‘¤ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚©‚ç‚ÌSambaƒ†[ƒUEƒOƒ‹[ƒvŠÇ—‹@”\
+ï¿½EWindowsï¿½ï¿½ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sambaï¿½ï¿½ï¿½[ï¿½Uï¿½Eï¿½Oï¿½ï¿½ï¿½[ï¿½vï¿½Ç—ï¿½ï¿½@ï¿½\
 
-smb.confC³BˆÈ‰º‚Ì“à—e‚ð’Ç‰ÁB
+smb.confï¿½Cï¿½ï¿½ï¿½Bï¿½È‰ï¿½ï¿½Ì“ï¿½ï¿½eï¿½ï¿½Ç‰ï¿½ï¿½B
 
 vi /etc/samba/smb.conf
 
@@ -338,17 +338,17 @@ vi /etc/samba/smb.conf
  
 
 
---ˆÈ‰ºA\‘z--
-¡NFS&Kerbelos&LFAPƒT[ƒo
-¡SVNƒT[ƒo
-¡Webdav & SSL & LDAP ƒT[ƒo
-¡DNLAƒT[ƒo
+--ï¿½È‰ï¿½ï¿½Aï¿½\ï¿½z--
+ï¿½ï¿½NFS&Kerbelos&LFAPï¿½Tï¿½[ï¿½o
+ï¿½ï¿½SVNï¿½Tï¿½[ï¿½o
+ï¿½ï¿½Webdav & SSL & LDAP ï¿½Tï¿½[ï¿½o
+ï¿½ï¿½DNLAï¿½Tï¿½[ï¿½o
 
---ˆÈ‰ºA—vŒ--
+--ï¿½È‰ï¿½ï¿½Aï¿½vï¿½ï¿½--
 
-¡ƒhƒƒCƒ“‚É–ž‚½‚³‚Ë‚Î‚È‚ç‚È‚¢•¨(—vŒ)
-E‹­Œ ‚ÍDomainAdministrator‚©Aadministrator‚ÉŠñ‚¹‚éB
-Eˆê‰žAkazuhito‚à‹­Œ •t‚¯‚Æ‚­(smb.conf)
-Eroot‚ÍƒhƒƒCƒ“ƒ†[ƒU‚É“ü‚ê‚È‚¢B
-Efriends,miura ‚­‚ç‚¢‚ÌƒOƒ‹[ƒv‚ÅŠÇ—B
-EƒfƒBƒŒƒNƒgƒŠ‚Íhome/ƒ†[ƒU,public(g“à‚Ì‚Ý),share(‘SŠJ•ú)‚Éƒfƒ‚‚µ‚æ‚¤‚©‚Æ(R‹c’†)
+ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½É–ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë‚Î‚È‚ï¿½È‚ï¿½ï¿½ï¿½(ï¿½vï¿½ï¿½)
+ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½DomainAdministratorï¿½ï¿½ï¿½Aadministratorï¿½ÉŠñ‚¹‚ï¿½B
+ï¿½Eï¿½ê‰žï¿½Akazuhitoï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½Æ‚ï¿½(smb.conf)
+ï¿½Erootï¿½Íƒhï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Uï¿½É“ï¿½ï¿½ï¿½È‚ï¿½ï¿½B
+ï¿½Efriends,miura ï¿½ï¿½ï¿½ç‚¢ï¿½ÌƒOï¿½ï¿½ï¿½[ï¿½vï¿½ÅŠÇ—ï¿½ï¿½B
+ï¿½Eï¿½fï¿½Bï¿½ï¿½ï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½home/ï¿½ï¿½ï¿½[ï¿½U,public(ï¿½gï¿½ï¿½ï¿½Ì‚ï¿½),share(ï¿½Sï¿½Jï¿½ï¿½)ï¿½Éƒfï¿½ï¿½ï¿½ï¿½ï¿½æ‚¤ï¿½ï¿½ï¿½ï¿½(ï¿½Rï¿½cï¿½ï¿½)

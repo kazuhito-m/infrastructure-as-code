@@ -1,0 +1,51 @@
+# coding:utf-8
+# for Debian 11
+
+- name: dockerインストールに「在ってはならないパッケージ」を削除。
+  ansible.builtin.apt:
+    state: absent
+    name:
+      - docker
+      - docker.io
+      - containerd
+      - runc
+
+- name: dockerインストールに必要なパッケージをインストール。
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+
+- name: gpgのkeyringsを置くフォルダ作成。
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+
+- name: dockerのaptlineのgpgkeyの追加。
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/debian/gpg 
+    keyring: /etc/apt/keyrings/docker.gpg
+
+- name: dockerのaptlineを追加。
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: dockerのパッケージ群をインストール。
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+
+- name: dockerサービスを起動、スタートアップ登録をする。
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: dockerテストrun。
+  shell: docker run --rm hello-world && docker image rm -f hello-world

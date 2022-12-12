@@ -12,6 +12,7 @@ $TTL	3600
 7		IN	PTR	minoru.local.miu2.f5.si.
 8		IN	PTR	makino.local.miu2.f5.si.
 9		IN	PTR	kei.local.miu2.f5.si.
+11		IN	PTR	hachiro.local.miu2.f5.si.
 21		IN	PTR	wlanconv01.local.miu2.f5.si.
 
 31		IN	PTR	rspi01.local.miu2.f5.si.

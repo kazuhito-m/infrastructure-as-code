@@ -28,7 +28,6 @@
           - byobu
           - vim
           - curl
-          - ntp
           - parted
           - mdadm
           - nfs-kernel-server
@@ -37,30 +36,21 @@
 
   - block:
 
-    # - name: ネットワーク設定ファイルを反映。
-    #   copy: 
-    #     src: resources/etc/network/interfaces
-    #     dest: /etc/network/interfaces
-    #     backup: yes
+    - name: ネットワーク設定ファイルを反映。
+      copy:
+        src: resources/etc/network/interfaces
+        dest: /etc/network/interfaces
+        backup: yes
 
     - name: ホスト名設定。
       hostname:
         name: fumiko
 
-  - block:
-
-    - name: NTP設定ファイルを反映。
+    - name: NTPクライアント設定ファイルを反映。
       copy: 
-        src: resources/etc/ntp.conf
-        dest: /etc/ntp.conf
+        src: resources/etc/systemd/timesyncd.conf
+        dest: /etc/systemd/timesyncd.conf
         backup: yes
-
-    - name: NTPサービス再起動。
-      systemd:
-        name: ntp.service
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
 
   - name: すでにRAIDが構築されているかを確認。
     shell: grep '/home' /etc/fstab

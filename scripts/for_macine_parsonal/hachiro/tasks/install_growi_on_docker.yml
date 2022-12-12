@@ -1,0 +1,48 @@
+# coding:utf-8
+# for Debian 11
+
+- name: GROWIのdocker-composeソースフォルダの存在確認。
+  stat:
+    path: "/var/lib/growi/docker_compose"
+  register: growi_src_dir
+
+- name: GROWIのdocker-composeリポジトリから、ソースアーカイブ(zip)をダウンロード。
+  ansible.builtin.get_url:
+    url: https://github.com/weseek/growi-docker-compose/archive/refs/heads/master.zip
+    dest: /tmp/growi.zip
+  when: not growi_src_dir.stat.exists
+
+- name: 解凍先ディレクトリ作成。
+  file:
+    path: /var/lib/growi/
+    state: directory
+
+- name: ソースアーカイブを解凍。
+  ansible.builtin.unarchive:
+    src: /tmp/growi.zip
+    dest: /var/lib/growi
+    remote_src: yes
+  when: not growi_src_dir.stat.exists
+
+
+- name: ソースフォルダを規定の名前に変更。
+  shell: mv /var/lib/growi/growi-docker-c* /var/lib/growi/docker_compose
+  when: not growi_src_dir.stat.exists
+
+- name: GROWIのdocker-compose.ymlを今回の設定に合わせ変更。
+  shell: |
+    cat ./docker-compose.yml \
+    | sed 's/127\.0\.0\.1://g' \
+    | sed 's/growi_data:\//\/var\/lib\/growi\/data\/app:\//g' \
+    | sed 's/mongo_configdb:\//\/var\/lib\/growi\/data\/mongo\/configdb:\//g' \
+    | sed 's/mongo_db:\//\/var\/lib\/growi\/data\/mongo\/db:\//g' > ./tmp.yml \
+    && mv ./tmp.yml ./docker-compose.yml
+  args:
+    chdir: /var/lib/growi/docker_compose
+
+- name: GROWIのdocker-composeを実行。
+  shell: |
+    docker compose ps | grep "docker_compose-app" \
+    || docker compose up -d
+  args:
+    chdir: /var/lib/growi/docker_compose

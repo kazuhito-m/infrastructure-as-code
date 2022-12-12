@@ -3,13 +3,13 @@ source /etc/network/interfaces.d/*
 auto lo
 iface lo inet loopback
 
-allow-hotplug enp4s0
+allow-hotplug enp5s0
 
-iface enp4s0 inet static
-address 192.168.1.6
+iface enp5s0 inet static
+address 192.168.1.11
 network 192.168.1.0
 netmask 255.255.255.0
 broadcast 192.168.1.255
 gateway 192.168.1.1
-dns-nameservers 192.168.1.5
+dns-nameservers 192.168.1.5 8.8.8.8
 dns-search local.miu2.f5.si

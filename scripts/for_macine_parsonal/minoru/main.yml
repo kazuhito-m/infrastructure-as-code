@@ -1,12 +1,12 @@
 # coding:utf-8
-# for Debian(Raspberry PI OS 11) 11
+# for Raspberry PI OS 11
 
 - hosts: all
   become: yes
   become_user: root
 
-  vars:
-    host_name: minoru
+  vars_files:
+    - settings.yml
 
   tasks:
 
@@ -39,7 +39,7 @@
         name:
           - tree
           - byobu
-          - ntp
+          - curl
 
   - block:
 
@@ -61,15 +61,13 @@
 
   - block:
 
-    - name: NTP設定ファイルを反映。
+    - name: NTPクライアント設定ファイルを反映。
       copy: 
-        src: resources/etc/ntp.conf
-        dest: /etc/ntp.conf
+        src: resources/etc/systemd/timesyncd.conf
+        dest: /etc/systemd/timesyncd.conf
         backup: yes
 
-    - name: NTPサービス再起動。
-      systemd:
-        name: ntp.service
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
+  - block:
+
+    - name: リバースプロキシ用の設定とLet's EncryptのSSL証明書定期更新を有効に。
+      include_tasks: tasks/enable_reverse_proxy_and_ssl.yml
