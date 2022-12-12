@@ -26,11 +26,9 @@
 
 ### Ansbileでのプロビジョニング
 
-1. `settings.yml` の内容を確認
-2. `hosts` を「DHCPで振られたIP」に一時的に変更
-3. `./run.sh`
-4.  rebootし、httpsの接続を確認
-
+1. `settings.yml`, `hosts` の内容を確認
+2. `./run.sh`
+3.  rebootし、httpsの接続を確認
 
 ---
 
