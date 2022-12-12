@@ -23,10 +23,10 @@ tmp_file_path=${TMP_DIR}/${file_name}
 mkdir -p ${BACKUP_DIR}
 
 echo "archive中... ${tmp_file_path}"
-tar \
+tar czf ${tmp_file_path} \
   --exclude="${TARGET_DIR}/data/mongo/db/diagnostic.data" \
   --exclude="${TARGET_DIR}/data/mongo/db/journal" \
-  -czf ${tmp_file_path} ${TARGET_DIR}
+  ${TARGET_DIR}
 
 echo "ファイル転送中..."
 chown kazuhito:kazuhito ${tmp_file_path}  # 環境依存の問題への苦肉の策。
