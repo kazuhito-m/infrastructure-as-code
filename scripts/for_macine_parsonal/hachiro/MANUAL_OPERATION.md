@@ -95,6 +95,29 @@ dfコマンド上の容量が変わっていたら、リサイズ終了。
 
 ---
 
+## 定期メンテの操作
+
+運用している途中での特殊操作について、記述する。
+
+### バックアップに取ってたGrowiデータのレストア
+
+Wikiデータであるmonogdbとアプリが使う画像系、また元となったdocker-composeのソースは、gzipの形でファイルサーバにコピーする仕組みに成っている。
+
+そのバックアップのtgzからGrowiのデータを復帰させる方法を記述する。
+
+```bash
+cd /var/lib/growi/docker_compose
+sudo docker compose down
+cd /tmp
+# 当該tgzをコピーしてくる
+tar xzf backup_growi_*.tgz
+sudo rm -rf /var/lib/growi/data/
+sudo mv ./var/lib/growi/data/ /var/lib/growi/data/
+cd /var/lib/growi/docker_compose
+sudo docker compose up -d
+```
+---
+
 ## その他の設定
 
 - フタがしまってもサスペンドしないようにする
