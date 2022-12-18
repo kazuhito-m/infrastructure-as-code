@@ -82,6 +82,15 @@ elasticsearchにつながらないせいで死んでるかはわからないが�
 
 通常のパッケージインストールでGROWIを動かす方針にする。(インストールはAnsibleで行う方向で)
 
+### その後の取り組み
+
+- Elasticsearchが「立ち上がらない理由」のトラブルシュートする
+- [これっぽい](https://stackoverflow.com/questions/56126244/unable-to-start-elasticsearch-in-my-machine-startupexception-is-occuring-while) ので対応した
+  - `elasticsearch.yml` に `x-pack-ml.enabled: false` を指定することによりでなくなった
+- 数十分かかって、正しく立ち上がった
+  - 上記の解決のせいかはわからない
+  - メモリが増えたのも上手く行った原因かもしれない
+
 
 ## 手動でDocker使わずGROWIインストール
 
