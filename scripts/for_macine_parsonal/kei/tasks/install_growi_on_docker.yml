@@ -42,14 +42,10 @@
 
 - name: GROWIのelasticsearch.ymlを今回の設定(このマシンに合わせた設定)に変更。
   shell: |
-    cat ./docker-compose.yml \
-    | sed 's/127\.0\.0\.1://g' \
-    | sed 's/growi_data:\//\/var\/lib\/growi\/data\/app:\//g' \
-    | sed 's/mongo_configdb:\//\/var\/lib\/growi\/data\/mongo\/configdb:\//g' \
-    | sed 's/mongo_db:\//\/var\/lib\/growi\/data\/mongo\/db:\//g' > ./tmp.yml \
-    && mv ./tmp.yml ./docker-compose.yml
+    grep 'x-pack-ml.enabled' ./elasticsearch.yml
+    || echo 'x-pack-ml.enabled: false' >> ./elasticsearch.yml
   args:
-    chdir: /var/lib/growi/docker_compose
+    chdir: /var/lib/growi/docker_compose/elasticsearch/config
 
 
 - name: GROWIのdocker-composeを実行。
