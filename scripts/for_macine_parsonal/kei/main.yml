@@ -40,7 +40,7 @@
 
     - name: ホスト名設定。
       hostname:
-        name: hachiro
+        name: kei
 
     - name: NTPクライアント設定ファイルを反映。
       copy: 
