@@ -1,0 +1,83 @@
+# coding:utf-8
+# for Debian 11
+
+- hosts: all
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - block:
+
+    - name: システム全更新。
+      ansible.builtin.apt:
+        update_cache: "yes"
+        upgrade: "dist"
+        autoremove: true
+
+    - name: 必要なツールをインストール。
+      ansible.builtin.apt:
+        name:
+          - tree
+          - byobu
+          - vim
+          - curl
+          - ntp
+          - nfs-common
+          - sudo
+          - parted
+          - dnsutils
+          - unzip
+          - file
+
+  - block:
+
+    - name: ネットワーク設定ファイルを反映。
+      copy: 
+        src: resources/etc/network/interfaces
+        dest: /etc/network/interfaces
+        backup: yes
+
+    - name: ホスト名設定。
+      hostname:
+        name: hachiro
+
+    - name: NTPクライアント設定ファイルを反映。
+      copy: 
+        src: resources/etc/systemd/timesyncd.conf
+        dest: /etc/systemd/timesyncd.conf
+        backup: yes
+
+  - block:
+
+    - name: Swapをファイルで設定する。
+      include_tasks: tasks/generate_and_mount_swapfile.yml
+
+  - block: 
+
+    - name: 本家からのdocker/docker-composeインストール。
+      include_tasks: tasks/install_docker.yml
+
+    - name: GROWIのdocker-composeからのインストール＆起動。
+      include_tasks: tasks/install_growi_on_docker.yml
+
+  - block:
+
+    - name: マウントポイントのディレクトリ作成。
+      file:
+        path: /dev/nfs/fumiko
+        state: directory
+
+    - name: ファイルサーバをマウント。
+      mount:
+        path: /dev/nfs/fumiko
+        src: fumiko.local.miu2.f5.si:/home/kazuhito/preliminary
+        fstype: nfs
+        opts: "user,auto"
+        state: mounted
+
+    - name: バックアップスクリプトを毎日実行cronに登録。
+      copy:
+        src: ./resources/etc/cron.daily/backup_growi_daily
+        dest: /etc/cron.daily
+        mode: 0755
