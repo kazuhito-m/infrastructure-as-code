@@ -42,8 +42,8 @@
 
 - name: GROWIのelasticsearch.ymlを今回の設定(このマシンに合わせた設定)に変更。
   shell: |
-    grep 'x-pack-ml.enabled' ./elasticsearch.yml \
-    || echo "\nx-pack-ml.enabled: false" >> ./elasticsearch.yml
+    grep 'xpack.ml.enabled' ./elasticsearch.yml \
+    || echo "\nxpack.ml.enabled: false" >> ./elasticsearch.yml
   args:
     chdir: /var/lib/growi/docker_compose/elasticsearch/config
 
