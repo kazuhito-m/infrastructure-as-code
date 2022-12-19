@@ -4,10 +4,9 @@
 - name: スワップファイルの定義。
   set_fact:
     swap_file_path: /var/swapfile
-    swap_file_size: 2G
 
 - name: スワップファイルの作成。
-  shell: dd if=/dev/zero of={{ swap_file_path }} bs={{ swap_file_size }} count=1
+  shell: dd if=/dev/zero of={{ swap_file_path }} bs=1024k count=2048
   args:
     creates: '{{ swap_file_path }}'
 
