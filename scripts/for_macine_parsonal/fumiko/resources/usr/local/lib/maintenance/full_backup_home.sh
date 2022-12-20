@@ -3,7 +3,7 @@
 # 
 # 週に一度フルバックアップをサブディスクに取得するスクリプト
 # 
-# - 異常ならSlackに報告する
+# - 異常ならDiscordに報告する
 #
 # Premise
 #   以下のコマンドを必要とする
@@ -56,29 +56,28 @@ lsblk_state=$(lsblk)
 
 data=`cat <<_EOT_
 {
-     "attachments": [
+     "embeds": [
         {
-	        "mrkdwn_in": ["text"],
-            "color": "danger",
+            "color": 16711680,
             "title": "/home full backup failed.",
-            "pretext": "${SELF_HOST_NAME} の /home のフル・バックアップに失敗しました。",
+            "description": "\\\`${SELF_HOST_NAME}\\\` の /home のフル・バックアップに失敗しました。",
             "fields": [
                 {
-                    "title": "Host Name(IP Address)",
+                    "name": "Host Name(IP Address)",
                     "value": "${SELF_HOST_DOMAIN_NAME}(${SELF_HOST_IP})",
-                    "short": false
+                    "inline": false
                 },
                 {
-                    "title": "Disk status",
-                    "value": "df -h said... \\\`\\\`\\\`${df_state}\\\`\\\`\\\` ",
-                    "short": false
+                    "name": "MD Status",
+                    "value": "cat /proc/mdadm said... \\\`\\\`\\\`${mdstat}\\\`\\\`\\\` ",
+                    "inline": false
                 },
                 {
-                    "title": "Block Device status",
-                    "value": "lsblk said... \\\`\\\`\\\`${lsblk_state}\\\`\\\`\\\` ",
-                    "short": false
-                },
-            ],
+                    "name": "mdadm Details",
+                    "value": "mdadm --detail said... \\\`\\\`\\\`${mdadm_detail}\\\`\\\`\\\` ",
+                    "inline": false
+                }
+            ]
         }
     ]
 }

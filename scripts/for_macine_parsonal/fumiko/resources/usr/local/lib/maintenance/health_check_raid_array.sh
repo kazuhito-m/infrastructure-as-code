@@ -41,27 +41,26 @@ mdadm_detail=$(mdadm --detail /dev/md/0)
 
 data=`cat <<_EOT_
 {
-     "attachments": [
+     "embeds": [
         {
-	        "mrkdwn_in": ["text"],
-            "color": "danger",z
+            "color": 16711680,
             "title": "MD Array Invalid Status",
-            "pretext": "${SELF_HOST_NAME} のソフトウェアRAIDのArrayの状態異常です。",
+            "description": "\\\`${SELF_HOST_NAME}\\\` のソフトウェアRAIDのArrayの状態異常です。",
             "fields": [
                 {
-                    "title": "Host Name(IP Address)",
+                    "name": "Host Name(IP Address)",
                     "value": "${SELF_HOST_DOMAIN_NAME}(${SELF_HOST_IP})",
-                    "short": false
+                    "inline": false
                 },
                 {
-                    "title": "MD Status",
+                    "name": "MD Status",
                     "value": "cat /proc/mdadm said... \\\`\\\`\\\`${mdstat}\\\`\\\`\\\` ",
-                    "short": false
+                    "inline": false
                 },
                 {
-                    "title": "mdadm Details",
+                    "name": "mdadm Details",
                     "value": "mdadm --detail said... \\\`\\\`\\\`${mdadm_detail}\\\`\\\`\\\` ",
-                    "short": false
+                    "inline": false
                 },
             ],
         }
