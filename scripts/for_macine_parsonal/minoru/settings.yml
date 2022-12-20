@@ -1,0 +1,4 @@
+host_name: minoru
+wiki_server_domain_name: wiki.example.com
+wiki_server_domain_email: mail@example.com
+wiki_server_local_url: http://kei.local.miu2.f5.si:3000/
