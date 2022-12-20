@@ -3,7 +3,7 @@
 # 
 # 週に一度フルバックアップをサブディスクに取得するスクリプト
 # 
-# - 異常ならDiscordに報告する
+# - 異常ならチャットに報告する
 #
 # Premise
 #   以下のコマンドを必要とする
@@ -68,13 +68,13 @@ data=`cat <<_EOT_
                     "inline": false
                 },
                 {
-                    "name": "MD Status",
-                    "value": "cat /proc/mdadm said... \\\`\\\`\\\`${mdstat}\\\`\\\`\\\` ",
+                    "name": "Disk Status",
+                    "value": "df -h said... \\\`\\\`\\\`${df_state}\\\`\\\`\\\` ",
                     "inline": false
                 },
                 {
-                    "name": "mdadm Details",
-                    "value": "mdadm --detail said... \\\`\\\`\\\`${mdadm_detail}\\\`\\\`\\\` ",
+                    "name": "Block Device Status",
+                    "value": "lsblk said... \\\`\\\`\\\`${lsblk_state}\\\`\\\`\\\` ",
                     "inline": false
                 }
             ]
