@@ -61,8 +61,8 @@ data=`cat <<_EOT_
                     "name": "mdadm Details",
                     "value": "mdadm --detail said... \\\`\\\`\\\`${mdadm_detail}\\\`\\\`\\\` ",
                     "inline": false
-                },
-            ],
+                }
+            ]
         }
     ]
 }
