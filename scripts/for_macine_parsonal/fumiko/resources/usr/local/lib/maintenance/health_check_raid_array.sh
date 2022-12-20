@@ -49,7 +49,7 @@ data=`cat <<_EOT_
             "fields": [
                 {
                     "name": "Host Name(IP Address)",
-                    "value": "${SELF_HOST_DOMAIN_NAME}(${SELF_HOST_IP})",
+                    "value": "\\\`${SELF_HOST_DOMAIN_NAME}(${SELF_HOST_IP})\\\`",
                     "inline": false
                 },
                 {
