@@ -51,8 +51,8 @@ fi
 
 ## 異常時
 
-df_state=$(df -h)
-lsblk_state=$(lsblk)
+df_state=$(df -h | sed -z 's/\n/\\\\n/g')
+lsblk_state=$(lsblk | sed -z 's/\n/\\\\n/g')
 
 data=`cat <<_EOT_
 {
