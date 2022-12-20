@@ -28,7 +28,7 @@ SCRIPT_DIR=$(cd $(dirname $(readlink -f $0 || echo $0));pwd -P)
 cd ${SCRIPT_DIR}
 
 # 設定読込
-source ../../etc/maintenance/slack.conf
+source ../../etc/maintenance/chat.conf
 
 # main part
 
@@ -84,7 +84,7 @@ data=`cat <<_EOT_
 }
 _EOT_`
 
-./slack_send.sh "${data}" ${SLACK_WEBHOOK_URL}
+./chat_send.sh "${data}" ${CHAT_WEBHOOK_URL}
 
 echo '異常在り。異常終了。'
 echo "${0} end   at `date '+%Y/%m/%d %R'`"

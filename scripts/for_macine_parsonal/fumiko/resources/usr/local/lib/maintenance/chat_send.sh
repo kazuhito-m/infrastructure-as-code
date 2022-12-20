@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Slackへ投稿するスクリプト。
+# Slack/Discordへ投稿するスクリプト。
 #
-# JenkinsPipelineで使える `slackSend` メソッドリスペクト。
 # Usage
 #   slackSend.sh data webhookUrl
 
