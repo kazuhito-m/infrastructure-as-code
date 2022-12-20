@@ -15,7 +15,7 @@
 
 # 定数
 SELF_HOST_NAME=$(hostname)
-SELF_HOST_DOMAIN_NAME=${SELF_HOST_NAME}.local.miu2.f5.si
+SELF_HOST_DOMAIN_NAME=$(domainname -A | cut -d' ' -f1)
 SELF_HOST_IP=$(host ${SELF_HOST_DOMAIN_NAME} | sed 's/.*address //g')
 
 BACKUP_DIR='/subarea/backup_home'
