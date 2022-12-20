@@ -36,8 +36,8 @@ fi
 
 ## 異常時
 
-mdstat=$(cat /proc/mdstat)
-mdadm_detail=$(mdadm --detail /dev/md/0)
+mdstat=$(cat /proc/mdstat | sed -z 's/\n/\\n/g')
+mdadm_detail=$(mdadm --detail /dev/md/0 | sed -z 's/\n/\\n/g')
 
 data=`cat <<_EOT_
 {
