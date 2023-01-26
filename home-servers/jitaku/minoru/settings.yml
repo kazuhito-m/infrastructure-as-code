@@ -2,3 +2,6 @@ host_name: minoru
 wiki_server_domain_name: domain.example.com
 wiki_server_domain_email: xxx@example.com
 wiki_server_local_url: http://kei.local.miu2.f5.si:3000/
+smarthome_server_domain_name: smarthome.f5.si
+smarthome_server_domain_email: kazuhito.sumpic@gmail.com
+smarthome_server_local_url: http://kazuhito-d5.local.miu2.f5.si:8080/
