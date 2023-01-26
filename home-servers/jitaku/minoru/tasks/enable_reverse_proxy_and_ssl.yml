@@ -8,28 +8,5 @@
       - certbot
       - python3-certbot-nginx
 
-- name: バーチャルドメイン設定ファイルの存在確認。
-  stat:
-    path: "/etc/nginx/sites-available/wiki.conf"
-  register: domain_file
-
-- name: バーチャルドメインの設定ファイルを追加。
-  template:
-    src: resources/etc/nginx/sites-available/wiki.conf
-    dest: /etc/nginx/sites-available/wiki.conf
-  when: not domain_file.stat.exists
-
-- name: バーチャルドメインの設定ファイルを有効にする。
-  file:
-    src: /etc/nginx/sites-available/wiki.conf
-    dest: /etc/nginx/sites-enabled/wiki.conf
-    state: link
-
-- name: 証明書の取得が必要かどうかをディレクトリの存在有無で確かめる。
-  stat:
-    path: "/etc/letsencrypt/archive/{{ wiki_server_domain_name }}"
-  register: cert_dir
-
-- name: SertBotを使いLetsEncriptから証明書を取得しnginxの設定も書き換える。
-  shell: certbot --nginx --agree-tos --non-interactive -d {{ wiki_server_domain_name }} -m {{ wiki_server_domain_email }}
-  when: not cert_dir.stat.exists
+- name: wiki用ドメインのリバースプロキシ用の設定とLet's EncryptのSSL証明書定期更新を有効に。
+  include_tasks: tasks/auto_update_cert_domain_wiki.yml
