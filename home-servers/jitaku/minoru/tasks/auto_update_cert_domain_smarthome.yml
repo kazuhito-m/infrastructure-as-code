@@ -1,0 +1,28 @@
+# coding:utf-8
+# for Raspberry PI OS 11
+
+- name: バーチャルドメイン設定ファイルの存在確認。
+  stat:
+    path: "/etc/nginx/sites-available/smarthome.conf"
+  register: domain_file_smarthome
+
+- name: バーチャルドメインの設定ファイルを追加。
+  template:
+    src: resources/etc/nginx/sites-available/smarthome.conf
+    dest: /etc/nginx/sites-available/smarthome.conf
+  when: not domain_file_smarthome.stat.exists
+
+- name: バーチャルドメインの設定ファイルを有効にする。
+  file:
+    src: /etc/nginx/sites-available/smarthome.conf
+    dest: /etc/nginx/sites-enabled/smarthome.conf
+    state: link
+
+- name: 証明書の取得が必要かどうかをディレクトリの存在有無で確かめる。
+  stat:
+    path: "/etc/letsencrypt/archive/{{ smarthome_server_domain_name }}"
+  register: cert_dir_smarthome
+
+- name: SertBotを使いLetsEncriptから証明書を取得しnginxの設定も書き換える。
+  shell: certbot --nginx --agree-tos --non-interactive -d {{ smarthome_server_domain_name }} -m {{ smarthome_server_domain_email }}
+  when: not cert_dir_smarthome.stat.exists

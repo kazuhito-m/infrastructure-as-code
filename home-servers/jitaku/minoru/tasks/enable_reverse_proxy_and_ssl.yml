@@ -10,3 +10,6 @@
 
 - name: wiki用ドメインのリバースプロキシ用の設定とLet's EncryptのSSL証明書定期更新を有効に。
   include_tasks: tasks/auto_update_cert_domain_wiki.yml
+
+- name: smarthome用ドメインのリバースプロキシ用の設定とLet's EncryptのSSL証明書定期更新を有効に。
+  include_tasks: tasks/auto_update_cert_domain_smarthome.yml
