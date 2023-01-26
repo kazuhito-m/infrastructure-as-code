@@ -12,7 +12,5 @@ ansible-playbook \
     -i ./hosts \
     -u kazuhito \
     --ask-pass \
-    --ask-become-pass \
-    -e 'ansible_python_interpreter=/usr/bin/python3'
-
+    --ask-become-pass
 
