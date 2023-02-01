@@ -30,7 +30,7 @@ apt-get install -y sudo parted python3
 必要なユーザをsudoグループに入れる。
 
 ```bash
-adduser kazuhito sudo 
+adduser kazuhito sudo
 ```
 
 おそらく、suでrootになってると、戻っても有効になってないので、ログアウトか再起動後確認。
@@ -78,4 +78,17 @@ sudo mv ./var/lib/growi/data/ /var/lib/growi/data/
 cd /var/lib/growi/docker_compose
 sudo docker compose up -d
 ```
----
+### ストレージ(USBメモリ)同士のイメージバックアップとレストア
+
+現在、同容量(128GB)のUSBメモリを二本指しており、先に認識するほうのUSBメモリを実運用、もう一本を「メインが破壊された場合のコールドスタンバイ用のストレージ」として、一週間ごと(cron.weekly任せ)にイメージコピーを行っている。
+
+メインストレージが破損して動かなく成った場合、以下の手順で「正常運用」に戻す。
+
+1. 電源を切る
+2. 先に認識するほう(刺している側/本体後側からみて左)のUSBメモリを抜く
+3. 右のUSBメモリを、元メインが在った左のスロットに刺し直す
+4. 電源を入れる
+5. おそらく、ジャーナルがおかしくなっていると思われるので、grubで `fsck` を実行して修復する
+   - https://www.linuxquestions.org/questions/linux-desktop-74/boot-problems-with-ssd-drive-post-grub-on-manjaro-4175622555/#post5812671
+   - 具体的には `fsck -f /dev/sda1` を打ち、画面の表示を確認しながら対処
+6. 再起動し、正常に立ち上がるかを確認
