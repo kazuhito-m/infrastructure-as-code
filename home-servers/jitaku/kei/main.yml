@@ -81,3 +81,9 @@
         src: ./resources/etc/cron.daily/backup_growi_daily
         dest: /etc/cron.daily
         mode: 0755
+
+    - name: USBメモリ間のイメージコピースクリプトを週一実行cronに登録。
+      copy:
+        src: ./resources/etc/cron.weekly/mirroring_main_storage_weekly
+        dest: /etc/cron.weekly
+        mode: 0755

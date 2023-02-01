@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# メイン・ストレージのフルバックアップを、イメージコピーで行うスクリプト
+#
+# メインのストレージ(/dev/sda)と同サイズのUSBメモリが、
+# /dev/sdbに刺さってる前提で、イメージコピーを行う。
+#
+
+# main.
+
+MAIN_STORAGE=/dev/sda
+MIRROR_STORAGE=/dev/sdb
+
+echo "$(date '+%Y/%m/%d %H:%M:%S') メインストレージ(${MAIN_STORAGE})のミラーリングを開始します。"
+
+time dd if=${MAIN_STORAGE} of=${MIRROR_STORAGE} bs=256M
+
+echo "$(date '+%Y/%m/%d %H:%M:%S') メインストレージ(${MAIN_STORAGE})のミラーリングが完了しました。"
