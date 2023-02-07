@@ -35,9 +35,9 @@ source ../../etc/maintenance/chat.conf
 echo "${0} start at `date '+%Y/%m/%d %R'`"
 
 mkdir -p ${BACKUP_DIR}
-rm -f ${BACKUP_DIR}/*.dump
+rm -f ${BACKUP_DIR}/*.dump*
 
-dump_file_name="$(hostname)_home_dir_$(date '+%Y%m%d%H%M%S').dump.lzo"
+dump_file_name="$(hostname)_home_dir_$(date '+%Y%m%d%H%M%S').dump"
 dump_file_path="${BACKUP_DIR}/${dump_file_name}"
 
 # 実行
