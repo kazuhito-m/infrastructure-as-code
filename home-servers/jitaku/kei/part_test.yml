@@ -1,0 +1,13 @@
+# coding:utf-8
+# for Debian 11
+
+- hosts: all
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - block:
+
+    - name: テスト用のタスクを実行する。
+      include_tasks: tasks/install_delge.yml
