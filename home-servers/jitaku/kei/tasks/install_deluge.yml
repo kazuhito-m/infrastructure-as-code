@@ -1,0 +1,38 @@
+# coding:utf-8
+# for Debian 11
+
+- name: deluge環境に必要なパッケージをインストール。
+  ansible.builtin.apt:
+    name:
+      - nfs-kernel-server
+
+- name: マウントポイントのディレクトリを作成。
+  file:
+    path: /additionalssd
+    state: directory
+
+- name: SSDのマウントを確約する。
+  mount:
+    name: /additionalssd
+    src: /dev/sdc1
+    fstype: ext4
+    opts: defaults
+    state: mounted
+
+- name: delugeが使うディレクトリを掘る
+  file:
+    path: /additionalssd/deluge
+    state: directory
+
+- name: docker-compose.yml の配置。
+  copy:
+    src: ./resources//additionalssd/deluge/docker-compose.yml
+    dest: /additionalssd/deluge
+    mode: 0644
+
+- name: delugeのdocker-composeを実行。
+  shell: |
+    docker compose ps | grep "deluge" \
+    || docker compose up -d
+  args:
+    chdir: /additionalssd/deluge

@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest 
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    restart: unless-stopped
+    volumes:
+      - /additionalssd/deluge/config:/config
+      - /additionalssd/deluge/progress:/downloads
+      - /additionalssd/deluge/results:/completed
+      - /additionalssd/deluge/targets_inhale:/targets_inhale
