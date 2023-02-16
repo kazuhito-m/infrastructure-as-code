@@ -24,6 +24,15 @@
     path: /additionalssd/deluge
     state: directory
 
+- name: delugeが使うディレクトリで外から参照するものも掘る。
+  file:
+    path: /additionalssd/deluge/{{ item }}
+    state: directory
+    mode : 0777
+  with_items:
+    - results
+    - targets_inhale
+
 - name: docker-compose.yml の配置。
   copy:
     src: ./resources//additionalssd/deluge/docker-compose.yml

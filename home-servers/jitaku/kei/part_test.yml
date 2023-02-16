@@ -10,4 +10,4 @@
   - block:
 
     - name: テスト用のタスクを実行する。
-      include_tasks: tasks/install_delge.yml
+      include_tasks: tasks/install_deluge.yml
