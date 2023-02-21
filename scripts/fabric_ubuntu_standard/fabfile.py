@@ -455,6 +455,8 @@ def install_and_setting_nfs_local()
 	sudo("apt-get install -y nfs-common", pty=False)
 	sudo("grep 'fumiko' /etc/fstab || echo 'fumiko.local.miu2.f5.si:/home/kazuhito/preliminary /mnt/fumiko nfs user,auto 0 0' >> /etc/fstab", pty=False)
 	run('ln -s /mnt/fumiko /home/' + USER_NAME + '/fumiko')
+	sudo("grep 'kei' /etc/fstab || echo 'kei.local.miu2.f5.si:/additionalssd/deluge /mnt/kei nfs user,auto 0 0' >> /etc/fstab", pty=False)
+	run('ln -s /mnt/kei /home/' + USER_NAME + '/kei')
 
 # TODOList
 # + Amazonの検索とか「余計なお世話」を殺す
