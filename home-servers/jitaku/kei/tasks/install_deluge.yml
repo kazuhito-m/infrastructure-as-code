@@ -39,12 +39,12 @@
     dest: /additionalssd/deluge
     mode: 0644
 
-# - name: delugeのdocker-composeを実行。
-#   shell: |
-#     docker compose ps | grep "deluge" \
-#     || docker compose up -d
-#   args:
-#     chdir: /additionalssd/deluge
+- name: delugeのdocker-composeを実行。
+  shell: |
+    docker compose ps | grep "deluge" \
+    || docker compose up -d
+  args:
+    chdir: /additionalssd/deluge
 
 - name: NFS設定ファイルを配置
   copy: 
