@@ -87,3 +87,8 @@
         src: ./resources/etc/cron.weekly/mirroring_main_storage_weekly
         dest: /etc/cron.weekly
         mode: 0755
+
+  - block: 
+
+    - name: delugeインストール。
+      include_tasks: tasks/install_deluge.yml
