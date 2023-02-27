@@ -46,6 +46,12 @@
   args:
     chdir: /additionalssd/deluge
 
+- name: バックアップスクリプトを週一実行cronに登録。
+  copy:
+    src: ./resources/etc/cron.weekly/backup_deluge_weekly
+    dest: /etc/cron.weekly
+    mode: 0755
+
 - name: NFS設定ファイルを配置
   copy: 
     src: resources/etc/exports
