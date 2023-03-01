@@ -130,16 +130,18 @@ delugeアプリの設定とDL中のキャッシュ、また元となったdocker
 
 ```bash
 su -
-cd /additionalssd
+cd /additionalssd/deluge
 # docker-composeでデプロイしているアプリを止める。
 docker compose down
 docker compose rm
 # 一回起動したことにより出来た設定やフォルダを削除する。
-rm -rf ./deluge/config ./deluge/progress
+rm -rf ./config ./progress
 # バックアップファイルを展開する。
+cd /additionalssd
 backup_dir=/dev/nfs/fumiko/Backup/machine/RealMachine/server/kei/deluge
 tar xzf $(ls -t ${backup_dir}/*.tgz | head -n 1)
 # docker-composeで再度デプロイ。
+cd /additionalssd/deluge
 docker compose up -d
 ```
 
