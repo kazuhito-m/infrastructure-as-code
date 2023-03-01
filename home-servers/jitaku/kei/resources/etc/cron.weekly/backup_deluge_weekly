@@ -24,9 +24,9 @@ mkdir -p ${BACKUP_DIR}
 
 echo "archive中... ${tmp_file_path}"
 tar czf ${tmp_file_path} \
-  --exclude="${TARGET_DIR}/results" \
-  --exclude="${TARGET_DIR}/targets_inhale" \
-  ${TARGET_DIR}
+  --exclude="results" \
+  --exclude="targets_inhale" \
+  -C $(dirname ${TARGET_DIR}) $(basename ${TARGET_DIR})
 
 echo "ファイル転送中..."
 chown kazuhito:kazuhito ${tmp_file_path}  # 環境依存の問題への苦肉の策。

@@ -87,6 +87,21 @@ mkfs.ext4 /dev/sdc1
 
 運用している途中での特殊操作について、記述する。
 
+### ストレージ(USBメモリ)同士のイメージバックアップとレストア
+
+現在、同容量(128GB)のUSBメモリを二本指しており、先に認識するほうのUSBメモリを実運用、もう一本を「メインが破壊された場合のコールドスタンバイ用のストレージ」として、一週間ごと(cron.weekly任せ)にイメージコピーを行っている。
+
+メインストレージが破損して動かなく成った場合、以下の手順で「正常運用」に戻す。
+
+1. 電源を切る
+2. 先に認識するほう(刺している側/本体後側からみて左)のUSBメモリを抜く
+3. 右のUSBメモリを、元メインが在った左のスロットに刺し直す
+4. 電源を入れる
+5. おそらく、ジャーナルがおかしくなっていると思われるので、grubで `fsck` を実行して修復する
+   - https://www.linuxquestions.org/questions/linux-desktop-74/boot-problems-with-ssd-drive-post-grub-on-manjaro-4175622555/#post5812671
+   - 具体的には `fsck -f /dev/sda1` を打ち、画面の表示を確認しながら対処
+6. 再起動し、正常に立ち上がるかを確認
+
 ### バックアップに取ってたGrowiデータのレストア
 
 Wikiデータであるmonogdbとアプリが使う画像系、また元となったdocker-composeのソースは、gzipの形でファイルサーバにコピーする仕組みに成っている。
@@ -104,17 +119,28 @@ sudo mv ./var/lib/growi/data/ /var/lib/growi/data/
 cd /var/lib/growi/docker_compose
 sudo docker compose up -d
 ```
-### ストレージ(USBメモリ)同士のイメージバックアップとレストア
 
-現在、同容量(128GB)のUSBメモリを二本指しており、先に認識するほうのUSBメモリを実運用、もう一本を「メインが破壊された場合のコールドスタンバイ用のストレージ」として、一週間ごと(cron.weekly任せ)にイメージコピーを行っている。
+### バックアップを取っているdelugeデータのレストア
 
-メインストレージが破損して動かなく成った場合、以下の手順で「正常運用」に戻す。
+delugeアプリの設定とDL中のキャッシュ、また元となったdocker-composeファイルは、tgzの形でファイルサーバにコピーをする仕組みになっている。
 
-1. 電源を切る
-2. 先に認識するほう(刺している側/本体後側からみて左)のUSBメモリを抜く
-3. 右のUSBメモリを、元メインが在った左のスロットに刺し直す
-4. 電源を入れる
-5. おそらく、ジャーナルがおかしくなっていると思われるので、grubで `fsck` を実行して修復する
-   - https://www.linuxquestions.org/questions/linux-desktop-74/boot-problems-with-ssd-drive-post-grub-on-manjaro-4175622555/#post5812671
-   - 具体的には `fsck -f /dev/sda1` を打ち、画面の表示を確認しながら対処
-6. 再起動し、正常に立ち上がるかを確認
+※DLしたファイル自体はバックアップしていない。
+
+サーバが大破壊orディスクが死んだなど、ダメになった場合のため、サーバプロビジョニング後にデータを復帰させる方法を記述する。
+
+```bash
+su -
+cd /additionalssd
+# docker-composeでデプロイしているアプリを止める。
+docker compose down
+docker compose rm
+# 一回起動したことにより出来た設定やフォルダを削除する。
+rm -rf ./deluge/config ./deluge/progress
+# バックアップファイルを展開する。
+backup_dir=/dev/nfs/fumiko/Backup/machine/RealMachine/server/kei/deluge
+tar xzf $(ls -t ${backup_dir}/*.tgz | head -n 1)
+# docker-composeで再度デプロイ。
+docker compose up -d
+```
+
+復帰後、UIから `Error` な要素を片っ端から削除すること。
