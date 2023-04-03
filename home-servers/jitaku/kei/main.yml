@@ -76,6 +76,13 @@
         opts: "user,auto"
         state: mounted
 
+    - name: cronのログファイルを/var/log/syslogから単品ログファイルに分離
+      lineinfile:
+        path: "/etc/rsyslog.conf"
+        state: "present"
+        regexp: "^#cron"
+        line: "cron"    
+
     - name: バックアップスクリプトを毎日実行cronに登録。
       copy:
         src: ./resources/etc/cron.daily/backup_growi_daily
