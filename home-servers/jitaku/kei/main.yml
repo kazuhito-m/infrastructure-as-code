@@ -80,8 +80,8 @@
       lineinfile:
         path: "/etc/rsyslog.conf"
         state: "present"
-        regexp: "^#cron"
-        line: "cron"    
+        regexp: "^#(cron.*)$"
+        line: "\1"    
 
     - name: バックアップスクリプトを毎日実行cronに登録。
       copy:
