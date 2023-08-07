@@ -117,3 +117,11 @@ sudo vi /etc/fstab
 ```
 
 再起動して、mount状況を確認。
+
+## lm_sensors(CPU温度取得)まわりの設定
+
+```bash
+sudo sensors-detect
+# すべてにYesで答える。
+sudo /etc/init.d/kmod start
+```
