@@ -13,6 +13,7 @@ minoru		IN	A	192.168.1.7
 makino		IN	A	192.168.1.8
 kei		IN	A	192.168.1.9
 hachiro		IN	A	192.168.1.11
+macmini		IN	A	192.168.1.15
 wlanconv01	IN	A	192.168.1.21
 
 rspi01		IN 	A 	192.168.1.31
