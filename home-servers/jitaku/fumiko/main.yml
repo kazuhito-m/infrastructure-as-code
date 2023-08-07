@@ -33,6 +33,7 @@
           - nfs-kernel-server
           - fdisk
           - dump
+          - lm-sensors
 
   - block:
 
