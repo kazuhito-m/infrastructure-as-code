@@ -53,7 +53,8 @@ function notify_chat() {
 }
 _EOT_`
 
-./chat_send.sh "${data}" ${CHAT_WEBHOOK_URL}}
+  ./chat_send.sh "${data}" ${CHAT_WEBHOOK_URL}
+}
 
 # initialize
 
@@ -88,4 +89,3 @@ if [ $(echo "${celsius} > ${WARNING_CELSIUS}" | bc) -eq 1 ]; then
 fi
 
 exit 0
-
