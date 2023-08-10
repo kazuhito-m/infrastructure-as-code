@@ -20,6 +20,7 @@ WARNING_CELSIUS=83
 DANGER_CELSIUS=90
 
 SELF_HOST_NAME=$(hostname)
+SELF_HOST_DOMAIN_NAME=$(domainname -A | cut -d' ' -f1)
 
 # functions
 
