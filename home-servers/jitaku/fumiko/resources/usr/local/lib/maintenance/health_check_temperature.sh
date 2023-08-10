@@ -21,6 +21,7 @@ DANGER_CELSIUS=90
 
 SELF_HOST_NAME=$(hostname)
 SELF_HOST_DOMAIN_NAME=$(domainname -A | cut -d' ' -f1)
+SELF_HOST_IP=$(host ${SELF_HOST_DOMAIN_NAME} | sed 's/.*address //g')
 
 # functions
 
