@@ -29,9 +29,11 @@ function notify_chat() {
   status=${1}
   celsius=${2}
 
+  status='Warning'
   status_comment='高温'
   color_code=16776960
   if [ ${status} = "d" ]; then
+    status='Dangerous'
     status_comment='非常に高く、危険な状態'
     color_code=16711680
   fi
@@ -41,12 +43,17 @@ function notify_chat() {
      "embeds": [
         {
             "color": ${color_code},
-            "title": "MD Array Invalid Status",
+            "title": "CPU Temperature ${status}",
             "description": "\\\`${SELF_HOST_NAME}\\\` のCPU温度が${status_comment}です。",
             "fields": [
                 {
-                    "name": "CPU温度",
+                    "name": "Host Name(IP Address)",
                     "value": "\\\`${SELF_HOST_DOMAIN_NAME}(${SELF_HOST_IP})\\\`",
+                    "inline": false
+                },
+                {
+                    "name": "CPU温度",
+                    "value": "\\\`摂氏 ${celsius} 度\\\`",
                     "inline": false
                 }
             ]
