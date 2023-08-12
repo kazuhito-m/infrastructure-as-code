@@ -153,3 +153,10 @@
         weekday: "1" # 月曜
         job: "/usr/local/lib/maintenance/full_backup_home.sh >> /var/log/maintenance/full_backup_home.log 2>&1"
         state: present
+
+    - name: CPU温度チェックスクリプトのcrontab設定。
+      cron:
+        name: CPUの高温警告チェック。
+        minute: "*"
+        job: "/usr/local/lib/maintenance/health_check_temperature.sh >> /var/log/maintenance/health_check_temperature.log 2>&1"
+        state: present
