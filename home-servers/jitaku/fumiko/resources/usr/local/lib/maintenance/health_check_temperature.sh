@@ -26,13 +26,13 @@ SELF_HOST_IP=$(host ${SELF_HOST_DOMAIN_NAME} | sed 's/.*address //g')
 # functions
 
 function notify_chat() {
-  status=${1}
+  status_code=${1}
   celsius=${2}
 
   status='Warning'
   status_comment='高温'
   color_code=16776960
-  if [ ${status} = "d" ]; then
+  if [ ${status_code} = 'd' ]; then
     status='Dangerous'
     status_comment='非常に高く、危険な状態'
     color_code=16711680
@@ -87,13 +87,13 @@ echo "$(date '+%Y-%m-%dT%H:%M:%S')${celsius}" >> ${LOG_FILE}
 ## notification
 
 if [ $(echo "${celsius} > ${WARNING_CELSIUS}" | bc) -eq 1 ]; then
-  status='w'
+  status_code='w'
   if [ $(echo "${celsius} > ${DANGER_CELSIUS}" | bc) -eq 1 ]; then
-    status='d'
+    status_code='d'
   fi
 
   if [ $(( $(date '+%M') % ${NOTIFICATION_INTERVAL_MINUTES} )) -eq 0 ] ; then
-    notify_chat ${status} ${celsius}
+    notify_chat ${status_code} ${celsius}
   fi
 fi
 
