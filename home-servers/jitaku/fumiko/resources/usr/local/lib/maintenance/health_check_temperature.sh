@@ -12,7 +12,7 @@ set -eu
 # constant
 
 LOG_DIR=/var/log/sensors
-LOG_FILE=${LOG_DIR}/temperature.log
+LOG_FILE=${LOG_DIR}/cpu_temperature.log
 
 NOTIFICATION_INTERVAL_MINUTES=5
 
