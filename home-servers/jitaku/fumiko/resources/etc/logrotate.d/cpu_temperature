@@ -1,0 +1,9 @@
+/var/log/sensors/cpu_temperature.log {
+    rotate 24
+    compress
+    monthly
+    dateformat .%Y%m%d
+    missingok
+    notifempty
+    noolddir
+}
