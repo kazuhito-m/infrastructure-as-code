@@ -145,14 +145,14 @@
         job: "/usr/local/lib/maintenance/health_check_raid_array.sh >> /var/log/maintenance/health_check_raid_array.log 2>&1"
         state: present
 
-    - name: homeのフルバックアップスクリプトのcrontab設定。
-      cron:
-        name: homeのフルバックアップ。
-        minute: "12"
-        hour: "1"
-        weekday: "1" # 月曜
-        job: "/usr/local/lib/maintenance/full_backup_home.sh >> /var/log/maintenance/full_backup_home.log 2>&1"
-        state: present
+    # - name: homeのフルバックアップスクリプトのcrontab設定。
+    #   cron:
+    #     name: homeのフルバックアップ。
+    #     minute: "12"
+    #     hour: "1"
+    #     weekday: "1" # 月曜
+    #     job: "/usr/local/lib/maintenance/full_backup_home.sh >> /var/log/maintenance/full_backup_home.log 2>&1"
+    #     state: present
 
     - name: CPU温度チェックスクリプトのcrontab設定。
       cron:
