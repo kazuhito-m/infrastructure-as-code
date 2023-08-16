@@ -14,10 +14,10 @@ set -eu
 LOG_DIR=/var/log/sensors
 LOG_FILE=${LOG_DIR}/cpu_temperature.log
 
-NOTIFICATION_INTERVAL_MINUTES=5
-
 WARNING_CELSIUS=83
 DANGER_CELSIUS=90
+
+NOTIFICATION_INTERVAL_MINUTES=5
 
 SELF_HOST_NAME=$(hostname)
 SELF_HOST_DOMAIN_NAME=$(domainname -A | cut -d' ' -f1)
