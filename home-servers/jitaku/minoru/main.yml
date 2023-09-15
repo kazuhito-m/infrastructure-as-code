@@ -85,3 +85,11 @@
         state: present
         key: "{{ lookup('file', './resources/user/upload_key.pub') }}"
       become: yes
+
+    - name: アップロード用の共有フォルダを作成。
+      file:
+        path: "/var/uploaded"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "777"
