@@ -71,3 +71,17 @@
 
     - name: リバースプロキシ用の設定とLet's EncryptのSSL証明書定期更新を有効に。
       include_tasks: tasks/enable_reverse_proxy_and_ssl.yml
+
+  - block:
+
+    - name: アップロード作業用ユーザを作成。
+      user: 
+        name: upload
+        uid: 2000
+
+    - name: アップロード作業用ユーザの公開鍵を登録する。
+      authorized_key:
+        user: upload
+        state: present
+        key: "{{ lookup('file', './resources/user/upload_key.pub') }}"
+      become: yes
