@@ -42,3 +42,6 @@
 
   - name: ネットワーク系のコマンドをインストール。
     include_tasks: ./tasks/install_network_tools.yaml
+
+  - name: 救援系のツールをインストール。
+    include_tasks: ./tasks/install_rescure_tools.yaml

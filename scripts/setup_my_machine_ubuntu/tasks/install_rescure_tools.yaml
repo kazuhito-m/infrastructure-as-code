@@ -1,0 +1,9 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: 救援系ツール(コマンド)をインストール。。
+  apt:
+    name:
+      - testdisk
+      - foremost
+    state: present
