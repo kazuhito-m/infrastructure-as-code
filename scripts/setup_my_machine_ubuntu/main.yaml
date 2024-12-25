@@ -25,5 +25,5 @@
     include_tasks: ./tasks/rename_home_template_dirs.yaml
 
   - name: 基本パッケージのインストール。
-    include_tasks: ./tasks/setup_basic_tools.yaml
+    include_tasks: ./tasks/install_basic_tools.yaml
 
