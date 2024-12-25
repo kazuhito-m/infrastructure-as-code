@@ -13,6 +13,11 @@
     dest: /etc/apt/sources.list.d/vscode.list
     mode: 0644
 
+- name: apt updateを実行。
+  apt:
+    upgrade: yes
+    update_cache: yes
+
 - name: VSCodeをインストール。
   apt:
     name: code
