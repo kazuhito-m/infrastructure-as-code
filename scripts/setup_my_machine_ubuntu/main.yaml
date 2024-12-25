@@ -57,3 +57,6 @@
 
   - name: メインユーザのgit環境をセットアップ。
     include_tasks: ./tasks/setup_git_command_for_mainuser.yaml
+
+  - name: vim環境をセットアップ。
+    include_tasks: ./tasks/setup_vim.yaml

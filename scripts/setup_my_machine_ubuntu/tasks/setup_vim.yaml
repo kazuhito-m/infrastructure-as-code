@@ -1,0 +1,22 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: vimのインストール。
+  apt:
+    name: vim
+
+- name: vimの設定ファイルをコピー。
+  copy:
+    src: resources/.vimrc
+    dest: /home/{{ user_name }}/.vimrc
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0644
+
+- name: vimのバンドルファイルを設定(冪等制考慮)。
+  become: yes
+  become_user: "{{ user_name }}"
+  shell: |
+    mkdir -p ~/.vim/bundle
+    rm -rf ~/.vim/bundle/neobundle.vim
+    git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
