@@ -45,3 +45,12 @@
 
   - name: 救援系のツールをインストール。
     include_tasks: ./tasks/install_rescure_tools.yaml
+
+  # FIXME 一時的にコメントアウトするので、完成後は戻す事。
+  # - name: モダンなフォントをセットアップ。
+  #   include_tasks: ./tasks/setup_modan_fonts.yaml
+
+# TODO vncserverを入れるか入れないかを判断、要るなら実装。
+
+  - name: Webブラウザ等、Webに関するツールをセットアップ。
+    include_tasks: ./tasks/setup_web_tools.yaml
