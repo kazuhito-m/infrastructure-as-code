@@ -1,0 +1,12 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: 別のパッケージ管理システム、
+  apt:
+    name: flatpak
+    state: present
+
+- name: InteliJ IDEA をFlatpack経由でインストール。
+  community.general.flatpak:
+    name:  https://s3.amazonaws.com/alexlarsson/spotify-repo/spotify.flatpakref
+    state: latest
