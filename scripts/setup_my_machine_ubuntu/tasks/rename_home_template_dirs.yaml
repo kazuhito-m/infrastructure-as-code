@@ -1,0 +1,9 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: ディレクトリ名の言語を英語に変更。
+  become: yes
+  become_user: "{{ user_name }}"
+  shell: |
+    LC_ALL=C xdg-user-dirs-update --force
+    find ~/ -maxdepth 1 -type d  | LANG=C grep  -v '^[[:cntrl:][:print:]]*$' | xargs rm -rf

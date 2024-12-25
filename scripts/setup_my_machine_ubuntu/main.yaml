@@ -20,3 +20,7 @@
 
   - name: 日本語Limux”以外”を使う場合はonにする。
     include_tasks: ./tasks/japanize.yaml
+
+  - name: Home下のディレクトリ名を英語に変更する。
+    include_tasks: ./tasks/rename_home_template_dirs.yaml
+
