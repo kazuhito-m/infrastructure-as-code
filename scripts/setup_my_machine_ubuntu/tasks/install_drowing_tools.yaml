@@ -1,0 +1,14 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: お絵描き系ソフト(もしくはコマンド)をインストール。
+  apt:
+    name:
+      - gimp
+      - imagemagick
+      - graphicsmagick
+    state: present
+
+  # アニメGIFを作るツールの動作方法は…
+  # xwininfo # ここでウィンドウを指定し、情報を取得する
+  # byzanz-record -d 180 -x 1379 -y 234 -w 1008 -h 722 test2.gif # その情報を元にキャプチャを始める。(終了したくなったらCtrl+c)

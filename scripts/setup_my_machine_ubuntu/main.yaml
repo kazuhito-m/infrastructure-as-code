@@ -63,3 +63,19 @@
 
   - name: マルチメディア再生系のソフトをインストール。
     include_tasks: ./tasks/install_multi_media.yaml
+
+  - name: お絵描き系のソフトをインストール。
+    include_tasks: ./tasks/install_drowing_tools.yaml
+  
+# TODO DTMのツールを標準で入れるか入れないかを判断、要るなら実装。
+
+  - name: システムのメンテンナンスを行うソフト・コマンドをインストール。
+    include_tasks: ./tasks/install_drowinstall_system_maintenance.yaml
+
+  - name: 基本的な開発ツールをインストール。
+    include_tasks: ./tasks/install_developers_tools.yaml
+
+# TODO Ansibleのインストール。Ubuntuでの「最新が入る」「標準」なインストール方法を調べる。
+
+  - name: Microsoft VSCodeのセットアップ。
+    include_tasks: ./tasks/setup_vscode.yaml

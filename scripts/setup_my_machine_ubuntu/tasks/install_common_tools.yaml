@@ -19,6 +19,7 @@
       - nkf
       - apt-file
       - jq
+      - apt-transport-https
     state: present
 
 - name: apt-file用の辞書ファイルを更新。
