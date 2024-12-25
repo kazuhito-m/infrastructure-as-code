@@ -1,0 +1,20 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: MicrosoftAPTkeyをリポジトリに加える。
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: VSCode用のsource.listをaptに登録する。
+  copy:
+    src: resources/etc/apt/sources.list.d/vscode.list
+    dest: /etc/apt/sources.list.d/vscode.list
+    mode: 0644
+
+- name: VSCodeをインストール。
+  apt:
+    name: code
+    state: present
+
