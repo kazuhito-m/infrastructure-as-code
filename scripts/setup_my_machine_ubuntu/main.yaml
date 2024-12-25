@@ -27,3 +27,5 @@
   - name: 基本パッケージのインストール。
     include_tasks: ./tasks/install_basic_tools.yaml
 
+  - name: 共通的なツールをインストール。
+    include_tasks: ./tasks/install_common_tools.yaml

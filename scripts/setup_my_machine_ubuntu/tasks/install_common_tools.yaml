@@ -1,0 +1,25 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: 共通的なツール(無くてもクリティカルではないもの)をインストール。
+  apt:
+    name:
+      - stopwatch
+      - convmv
+      - incron
+      - indicator-multiload
+      - tree
+      - clipit
+      - xbacklight
+      - byobu
+      - screen
+      - pandoc
+      - ffmpeg
+      - unrar
+      - nkf
+      - apt-file
+      - jq
+    state: present
+
+- name: apt-file用の辞書ファイルを更新。
+  shell: apt-file update
