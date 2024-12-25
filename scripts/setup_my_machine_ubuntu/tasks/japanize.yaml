@@ -1,0 +1,17 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: 日本語環境に必要なパッケージをインストールする。
+  apt:
+    name:
+      - language-pack-ja
+      - ibus-mozc
+    state: present
+
+- name: ロケールを生成。
+  locale_gen:
+    name: ja_JP.UTF-8
+
+- name: タイムゾーンの設定。
+  community.general.timezone:
+    name: Asia/Tokyo

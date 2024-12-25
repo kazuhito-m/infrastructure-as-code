@@ -1,0 +1,22 @@
+# coding:utf-8
+
+# for Ubuntu 24.10 on LocalMachine
+
+- hosts: all
+  become: yes
+
+  vars_files:
+    - ./settings.yaml
+
+  handlers:
+
+  - name: tzdataのアップグレード。
+    command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
+
+  tasks:
+
+  - name: ライブラリの全アップグレード
+    include_tasks: ./tasks/all_upgrade.yaml
+
+  - name: 日本語Limux”以外”を使う場合はonにする。
+    include_tasks: ./tasks/japanize.yaml
