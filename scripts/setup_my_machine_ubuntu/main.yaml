@@ -60,3 +60,6 @@
 
   - name: vim環境をセットアップ。
     include_tasks: ./tasks/setup_vim.yaml
+
+  - name: マルチメディア再生系のソフトをインストール。
+    include_tasks: ./tasks/install_multi_media.yaml

@@ -1,0 +1,7 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: マルチメディア再生(クリエイティブではない)ツールをインストール。
+  apt:
+    name: ffmpeg
+    state: present
