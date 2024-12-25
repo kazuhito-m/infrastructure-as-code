@@ -1,0 +1,14 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: インストールされていなければ、nvmをインストール。
+  become: yes
+  become_user: "{{ user_name }}"
+  shell: which nvm || curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+- name: node.jsのビルド＆インストール。
+  become: yes
+  become_user: "{{ user_name }}"
+  shell: |
+    nvm install stable
+    nvm use stable

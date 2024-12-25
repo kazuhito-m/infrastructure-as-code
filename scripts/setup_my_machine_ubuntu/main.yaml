@@ -79,3 +79,7 @@
 
   - name: Microsoft VSCodeのセットアップ。
     include_tasks: ./tasks/setup_vscode.yaml
+
+  - name: NodeJS/npmのセットアップ。
+    include_tasks: ./tasks/setup_nodejs.yaml
+
