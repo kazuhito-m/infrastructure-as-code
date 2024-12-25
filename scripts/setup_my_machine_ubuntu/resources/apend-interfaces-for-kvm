@@ -1,0 +1,14 @@
+# bridge setting for KVM
+auto ${マシン固有IF名}
+iface ${マシン固有IF名} inet manual
+
+auto br0 
+iface br0 inet static
+address 192.168.1.130
+network 192.168.1.0
+netmask 255.255.255.0
+broadcast 192.168.1.255
+gateway 192.168.1.1
+dns-nameservers 192.168.1.5
+bridge_ports ${マシン固有IF名}
+bridge_stp off 

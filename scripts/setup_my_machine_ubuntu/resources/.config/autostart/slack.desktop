@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Slack
+GenericName=slack
+Comment=Chat Application
+Exec=/usr/bin/slack
+Terminal=false
+Type=Application
+Icon=slack
+Categories=Message;
+StartupNotify=false
