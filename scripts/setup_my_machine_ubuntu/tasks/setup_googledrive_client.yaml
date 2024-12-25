@@ -15,6 +15,6 @@
   file:
     path: "/home/{{ user_name }}/GoogleDrive"
     state: directory
-    owner: "root"
-    group: "root"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
     mode: "755"
