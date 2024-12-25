@@ -1,0 +1,16 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: git関連コマンド・ツールをインストール。
+  apt:
+    name:
+      - git
+      - tig
+    state: present
+
+- name: gitの個人プロファイル情報をセット。
+  become: yes
+  become_user: "{{ user_name }}"
+  shell: |
+    git config --global user.email {{ self_mail_address }}
+    git config --global user.name {{ git_user }}

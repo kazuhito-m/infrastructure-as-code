@@ -54,3 +54,6 @@
 
   - name: Webブラウザ等、Webに関するツールをセットアップ。
     include_tasks: ./tasks/setup_web_tools.yaml
+
+  - name: メインユーザのgit環境をセットアップ。
+    include_tasks: ./tasks/setup_git_command_for_mainuser.yaml
