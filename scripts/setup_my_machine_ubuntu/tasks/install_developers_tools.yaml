@@ -1,0 +1,25 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: Javaのインストール。
+  apt:
+    name:
+      - openjdk-11-jdk
+      - openjdk-17-jdk
+      - openjdk-21-jdk
+      - galternatives
+    state: present
+
+- name: nautilusのソース管理系プラグインをインストール。
+  apt:
+    name:
+      - rabbitvcs-nautilus
+      - rabbitvcs-gedit
+      - rabbitvcs-cli
+    state: present
+
+- name: RDBMSのクライアントツール・ビューアをインストール。
+  apt:
+    name:
+      - -client-common
+    state: present
