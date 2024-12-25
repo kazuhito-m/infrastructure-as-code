@@ -70,7 +70,7 @@
 # TODO DTMのツールを標準で入れるか入れないかを判断、要るなら実装。
 
   - name: システムのメンテンナンスを行うソフト・コマンドをインストール。
-    include_tasks: ./tasks/install_drowinstall_system_maintenance.yaml
+    include_tasks: ./tasks/install_system_maintenance.yaml
 
   - name: 基本的な開発ツールをインストール。
     include_tasks: ./tasks/install_developers_tools.yaml
