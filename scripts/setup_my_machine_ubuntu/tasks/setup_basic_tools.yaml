@@ -1,0 +1,13 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: 基本的パッケージ(コマンド・サーバソフト)をインストール。
+  apt:
+    name:
+      - curl
+      - ca-certificates
+      - openssl
+      - nkf
+      - cifs-utils
+      - unity-tweak-tool
+    state: present

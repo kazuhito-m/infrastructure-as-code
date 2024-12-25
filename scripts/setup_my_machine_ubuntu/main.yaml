@@ -24,3 +24,6 @@
   - name: Home下のディレクトリ名を英語に変更する。
     include_tasks: ./tasks/rename_home_template_dirs.yaml
 
+  - name: 基本パッケージのインストール。
+    include_tasks: ./tasks/setup_basic_tools.yaml
+
