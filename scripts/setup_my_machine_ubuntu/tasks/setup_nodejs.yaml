@@ -10,5 +10,4 @@
   become: yes
   become_user: "{{ user_name }}"
   shell: |
-    nvm install stable
-    nvm use stable
+    bash -ic "nvm install stable && nvm use stable"
