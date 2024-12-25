@@ -35,3 +35,10 @@
 
   - name: ローカルでGoogleDriveをマウントできる環境のセットアップ。
     include_tasks: ./tasks/setup_googledrive_client.yaml
+
+# TODO ResilioSyncを入れるか入れないかを判断、要るなら実装。
+
+# TODO ascidocを入れるか入れないかを判断、要るなら実装。
+
+  - name: ネットワーク系のコマンドをインストール。
+    include_tasks: ./tasks/install_network_tools.yaml

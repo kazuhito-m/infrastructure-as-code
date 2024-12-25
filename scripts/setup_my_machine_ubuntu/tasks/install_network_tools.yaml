@@ -1,0 +1,9 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: ネットワーク系のツール(コマンド・サーバソフト)をインストール。
+  apt:
+    name:
+      - wireshark
+      - bind9-dnsutils
+    state: present
