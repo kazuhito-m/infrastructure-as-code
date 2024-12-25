@@ -33,3 +33,5 @@
   - name: Dropboxをnautilusで同期させる環境のセットアップ。
     include_tasks: ./tasks/setup_dropbox_client.yaml
 
+  - name: ローカルでGoogleDriveをマウントできる環境のセットアップ。
+    include_tasks: ./tasks/setup_googledrive_client.yaml

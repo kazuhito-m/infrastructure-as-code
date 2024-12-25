@@ -1,0 +1,20 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: GoogleDriveをfuseで使えるツールを作ってる人のリポジトリを追加。
+  ansible.builtin.apt_repository:
+    repo: ppa:alessandro-strada/ppa
+    state: present
+
+- name: GoogleDriveをfuseで使えるツールをインストール。
+  apt:
+    name: google-drive-ocamlfuse
+    state: present
+
+- name: fuseでマウントするディレクトリを作成。。
+  file:
+    path: "/home/{{ user_name }}/GoogleDrive"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "755"
