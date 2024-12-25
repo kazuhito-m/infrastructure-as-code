@@ -29,3 +29,7 @@
 
   - name: 共通的なツールをインストール。
     include_tasks: ./tasks/install_common_tools.yaml
+
+  - name: Dropboxをnautilusで同期させる環境のセットアップ。
+    include_tasks: ./tasks/setup_dropbox_client.yaml
+

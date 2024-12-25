@@ -1,0 +1,12 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: nautilusのDropboxプラグインをインストール。
+  apt:
+    name: nautilus-dropbox
+    state: present
+
+- name: Dropboxプラグインをユーザ権限で実行。
+  become: yes
+  become_user: "{{ user_name }}"
+  shell: dropbox start -i
