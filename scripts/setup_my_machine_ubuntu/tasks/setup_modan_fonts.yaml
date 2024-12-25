@@ -1,0 +1,26 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: aptから落とせるfontはすべて入れておく。
+  apt:
+    name: fonts-migmix
+    state: present
+
+- name: Drobpoxからファイルを落とすためのスクリプトをセットアップ。
+  shell: |
+    wget --no-check-certificate -O /tmp/dropbox_uploader.sh https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh
+    chmod +x /tmp/dropbox_uploader.sh
+
+- name: Dropbox操作用の設定ファイルをテンポラリ領域にコピー。
+  copy:
+    src: resources/.dropbox_uploader
+    dest: /tmp/.dropbox_uploader
+
+- name: fontファイルをDropboxからダウンロード。
+  shell: /tmp/dropbox_uploader.sh -k -f /tmp/.dropbox_uploader download fonts /tmp/fonts
+
+- name:  DropBox内にあったスクリプトで全量インストール。
+  shell: |
+    cd /tmp/fonts/ && for i in $(find ./ -type f | grep -i '^.*\..t.$') ; do cp ${i} /usr/local/share/fonts/ ; done
+    chmod 644 /usr/local/share/fonts/*
+    fc-cache -fv
