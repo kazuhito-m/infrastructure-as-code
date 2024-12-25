@@ -1,0 +1,9 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: システムのメンテンナンスを行うソフト・コマンドをインストール
+  apt:
+    name:
+      - gparted
+      - gpart
+    state: present
