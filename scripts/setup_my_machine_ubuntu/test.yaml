@@ -1,0 +1,20 @@
+# coding:utf-8
+
+# for Ubuntu 24.10 on LocalMachine
+
+- hosts: all
+  become: yes
+
+  vars_files:
+    - ./settings.yaml
+
+  handlers:
+
+  - name: tzdataのアップグレード。
+    command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
+
+  tasks:
+
+  - name: InteliJ IDEAをセットアップ。
+    include_tasks: ./tasks/setup_intelijidea.yaml
+  

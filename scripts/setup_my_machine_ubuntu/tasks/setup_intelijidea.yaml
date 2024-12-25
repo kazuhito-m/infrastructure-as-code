@@ -8,5 +8,5 @@
 
 - name: InteliJ IDEA をFlatpack経由でインストール。
   community.general.flatpak:
-    name:  https://s3.amazonaws.com/alexlarsson/spotify-repo/spotify.flatpakref
+    name: https://dl.flathub.org/repo/appstream/com.jetbrains.IntelliJ-IDEA-Community.flatpakref
     state: latest
