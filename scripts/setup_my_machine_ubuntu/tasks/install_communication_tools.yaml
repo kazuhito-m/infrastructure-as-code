@@ -12,7 +12,8 @@
 
 - name: Discordの最新debパッケージを見つけ出し、インストール。
   shell: |
-    dl_url=$(curl https://discordapp.com/api/download?platform=linux&format=deb | tr -d '\n' | sed -e 's/<\/a>.*//g' | sed -e 's/<a href="//g')
+    latest_info_url="https://discord.com/api/download?platform=linux&format=deb"
+    dl_url=$(curl -w "%{url_effective}" -ILSs "$latest_info_url" -o /dev/null)
     echo "url: ${dl_url}"
     curl -o /tmp/discord.deb ${dl_url}
     apt install -y /tmp/discord.deb
