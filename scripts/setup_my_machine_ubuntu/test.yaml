@@ -15,5 +15,5 @@
 
   tasks:
 
-  - name: dockerをセットアップ。
-    include_tasks: ./tasks/setup_docker.yaml
+  - name: コミニュケーションツールをインストール。
+    include_tasks: ./tasks/install_communication_tools.yaml

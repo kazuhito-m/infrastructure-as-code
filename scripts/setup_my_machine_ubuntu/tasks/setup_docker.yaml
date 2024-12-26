@@ -1,0 +1,33 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: docker用のgpg keyをkeyringsに登録。
+  get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+    force: true
+
+- name: docker用のsoruce.listのファイルを作成する。
+  shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+- name: apt updateを実行。
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: dockerをインストール。
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+
+- name: メインユーザをdockerグループに加える。
+  user:
+    name: "{{ user_name }}"
+    groups: docker
+    append: yes

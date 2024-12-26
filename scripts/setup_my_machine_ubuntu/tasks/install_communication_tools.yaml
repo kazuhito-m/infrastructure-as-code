@@ -1,0 +1,18 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: Slackの最新debパッケージを見つけ出し、インストール。
+  shell: |
+    slack_version=$(curl https://slack.com/intl/ja-jp/release-notes/linux | tr -d '\n' | sed -e 's/<\/h2>.*//g' | sed -e 's/.*>Slack //g')
+    echo "version: ${slack_version}"
+    dl_url=https://downloads.slack-edge.com/desktop-releases/linux/x64/${slack_version}/slack-desktop-${slack_version}-amd64.deb
+    echo "url: ${dl_url}"
+    curl -o /tmp/slack.deb ${dl_url}
+    apt install -y /tmp/slack.deb
+
+- name: Discordの最新debパッケージを見つけ出し、インストール。
+  shell: |
+    dl_url=$(curl https://discordapp.com/api/download?platform=linux&format=deb | tr -d '\n' | sed -e 's/<\/a>.*//g' | sed -e 's/<a href="//g')
+    echo "url: ${dl_url}"
+    curl -o /tmp/discord.deb ${dl_url}
+    apt install -y /tmp/discord.deb
