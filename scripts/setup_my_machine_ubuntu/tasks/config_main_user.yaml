@@ -1,0 +1,37 @@
+# coding:utf-8
+# for Ubuntu on LocalMachine
+
+- name: bashの設定ファイルである.bashrc の末尾に、自身が必要な記述を加える。
+  become: yes
+  become_user: "{{ user_name }}"
+  blockinfile:
+    path: "/home/{{ user_name }}/.bashrc"
+    block: "{{ item }}"
+  with_file:
+    - resources/user_home/.bashrc.endpart
+
+- name: bash_areasl をコピー。
+  become: yes
+  become_user: "{{ user_name }}"
+  copy:
+    src: resources/user_home/.bash_aliases
+    dest: "/home/{{ user_name }}/.bash_aliases"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 0644
+
+- name: sshcconfigをシンボリックリンク。
+  become: yes
+  become_user: "{{ user_name }}"
+  file:
+    src: "/home/{{ user_name }}/Dropbox/ubuntu_profile/home/{{ user_name }}/.ssh/config"
+    dest: "/home/{{ user_name }}/.ssh/config"
+    state: link
+
+- name: netrcをシンボリックリンク。
+  become: yes
+  become_user: "{{ user_name }}"
+  file:
+    src: "/home/{{ user_name }}/Dropbox/ubuntu_profile/home/{{ user_name }}/.netrc"
+    dest: "/home/{{ user_name }}/.netrc"
+    state: link

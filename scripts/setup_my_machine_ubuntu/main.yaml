@@ -100,3 +100,6 @@
 
   - name: コミニュケーションツールをインストール。
     include_tasks: ./tasks/install_communication_tools.yaml
+
+  - name: メインになるユーザーに関する設定を仕込む。
+    include_tasks: ./tasks/config_main_user.yaml
