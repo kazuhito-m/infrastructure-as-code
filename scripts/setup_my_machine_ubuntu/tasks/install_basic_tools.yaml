@@ -10,4 +10,6 @@
       - nkf
       - cifs-utils
       - unity-tweak-tool
+      - gnupg
+      - lsb-release
     state: present

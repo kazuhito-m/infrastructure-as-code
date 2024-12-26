@@ -92,4 +92,5 @@
   - name: InteliJ IDEAをセットアップ。
     include_tasks: ./tasks/setup_intelijidea.yaml
 
-
+  - name: dockerをセットアップ。
+    include_tasks: ./tasks/setup_docker.yaml
