@@ -453,7 +453,7 @@ def config_current_user():
 
 def install_and_setting_nfs_local()
 	sudo("apt-get install -y nfs-common", pty=False)
-	sudo("grep 'fumiko' /etc/fstab || echo 'fumiko.local.miu2.f5.si:/home/kazuhito/preliminary /mnt/fumiko nfs user,auto 0 0' >> /etc/fstab", pty=False)
+    sudo("grep 'fumiko' /etc/fstab || echo 'umiko.local.miu2.f5.si:/home/kazuhito/preliminary /mnt/fumiko nfs noauto,x-systemd.automount,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,soft,retrans=2,timeo=50,user,nofail 0 0' >> /etc/fstab", pty=False)
 	run('ln -s /mnt/fumiko /home/' + USER_NAME + '/fumiko')
 	sudo("grep 'kei' /etc/fstab || echo 'kei.local.miu2.f5.si:/additionalssd/deluge /mnt/kei nfs user,auto 0 0' >> /etc/fstab", pty=False)
 	run('ln -s /mnt/kei /home/' + USER_NAME + '/kei')
