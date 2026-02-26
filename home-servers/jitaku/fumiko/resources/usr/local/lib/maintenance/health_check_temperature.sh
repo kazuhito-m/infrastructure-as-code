@@ -81,18 +81,18 @@ source ../../etc/maintenance/chat.conf
 ls ${LOG_DIR} > /dev/null || mkdir ${LOG_DIR}
 ls ${LOG_FILE} > /dev/null || touch ${LOG_FILE} && chmod +r ${LOG_FILE}
 
-celsius=$(sensors -u | grep 'temp1_input:' | sed 's/.*://g')
+celsius=$(sensors -u | grep 'temp[0-9]_input:' | head -n 1 | sed 's/.*://g')
 echo "$(date '+%Y-%m-%dT%H:%M:%S')${celsius}" >> ${LOG_FILE}
 
 ## notification
 
-if [ $(echo "${celsius} > ${WARNING_CELSIUS}" | bc) -eq 1 ]; then
+if [[ $(echo "${celsius} > ${WARNING_CELSIUS}" | bc) -eq 1 ]]; then
   status_code='w'
-  if [ $(echo "${celsius} > ${DANGER_CELSIUS}" | bc) -eq 1 ]; then
+  if [[ $(echo "${celsius} > ${DANGER_CELSIUS}" | bc) -eq 1 ]]; then
     status_code='d'
   fi
 
-  if [ $(( $(date '+%M') % ${NOTIFICATION_INTERVAL_MINUTES} )) -eq 0 ] ; then
+  if [[ $(( $(date '+%M') % ${NOTIFICATION_INTERVAL_MINUTES} )) -eq 0 ]] ; then
     notify_chat ${status_code} ${celsius}
   fi
 fi
